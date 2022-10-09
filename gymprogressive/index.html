@@ -93,16 +93,18 @@
           </li>
         </ul>
         <form class="d-flex">
-          <div class="text-end">
-              <div id="_userProfile"></div>
-              <button type="button" id="_getToken" class="btn btn-dark" onclick="getToken();" title="Войти через Google"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-                <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
-              </svg></button>
-              <button type="button" id="_revokeToken" class="btn btn-dark" onclick="revokeToken();" title="Выйти"  style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
-                <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
-              </svg></button>
-            
-          </div>
+
+          <button id="_btnAvatar" type="button" class="btn" style="display: none;">
+            <img id="_imgAvatar" src="https://via.placeholder.com/24.png" class="rounded-circle" width="24" height="24"></img> 
+          </button>
+          <button type="button" id="_getToken" class="btn btn-dark" onclick="getToken();" title="Войти через Google"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+            <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+          </svg></button>
+          <button type="button" id="_revokeToken" class="btn btn-light" onclick="revokeToken();" title="Выйти"  style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+            <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+          </svg></button>
+              
+
         </form>
       </div>
     </div>
@@ -196,19 +198,27 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
     function checkBeforeStart() {
       let btnGetToken = document.getElementById("_getToken");
       let btnRevokeToken = document.getElementById("_revokeToken");
+      let btnAvatar = document.getElementById("_btnAvatar");
+      let imgAvatar = document.getElementById("_imgAvatar");
+      
       console.log(`checkBeforeStart ${gapiInited} ${gisInited}`);
       if (gapiInited && gisInited){
 
         USER_PROFILE_DATA = getUserProfileData(access_token);
-        console.log(USER_PROFILE_DATA);
+        
           // Start only when both gapi and gis are initialized.
           //document.getElementById("showEventsBtn").style.visibility="visible";
           //document.getElementById("revokeBtn").style.visibility="visible";
+        
         btnGetToken.style.display="none";
         btnRevokeToken.style.display="block";
-      } else if (!gisInited) {
+        btnAvatar.style.display="block";
+      } else {
         btnGetToken.style.display="block";
         btnRevokeToken.style.display="none";
+        btnAvatar.style.display="none";
+        imgAvatar.src="https://via.placeholder.com/24.png";
+
       }
         
 
@@ -278,11 +288,14 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
       let cred = gapi.client.getToken();
       if (cred !== null) {
         google.accounts.oauth2.revoke(cred.access_token, () => {
-          console.log('Revoked: ' + cred.access_token)
+          console.log('Revoked: ' + cred.access_token);
+          gapi.client.setToken('');
+          gisInited = false;
+          checkBeforeStart();
         });
-        gapi.client.setToken('');
+        
       }
-      checkBeforeStart();
+      
     }
 
 
@@ -293,9 +306,24 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
     }
 
     function getUserProfile() {
-      USER_PROFILE_DATA = getUserProfileData(access_token);
+      
       console.log(USER_PROFILE_DATA);
     }
+
+// +%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+% 
+// асинхронная функция для запроса данных профиля
+//
+const getUserProfileData = async (accessToken) => {
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${accessToken}`)
+    const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers
+    })
+    const data = await response.json();
+    let imgAvatar = document.getElementById("_imgAvatar");
+    imgAvatar.src = data.picture;
+    return data;
+}
 
     //миграция в gis
     //https://developers.google.com/identity/oauth2/web/guides/migration-to-gis?hl=en#gapi-callback
