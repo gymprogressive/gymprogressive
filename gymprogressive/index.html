@@ -8,11 +8,9 @@
     <meta name="generator" content="Hugo 0.101.0">
     <title>Progressive Gym</title>
 
-    <!--<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/starter-template/">
-    -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="js/gapi.js"></script>
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -66,57 +64,63 @@
       }
     </style>
 
-    
-    <!-- Custom styles for this template -->
     <link href="starter-template.css" rel="stylesheet">
-  </head>
-  <body>
-    
-<div class="col-lg-8 mx-auto p-4 py-md-5">
-  <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="javascript:void(0)"><a href="/" class="d-flex align-items-center text-dark text-decoration-none">
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
             <title>Progressive Gym</title>
             <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
           </svg>
       <span class="fs-4">Progressive Gym</span>
-    </a>
-  </header>
+    </a></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void(0)">Link</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <div class="text-end">
+              <div id="_userProfile"></div>
+              <button type="button" id="_getToken" class="btn btn-dark" onclick="getToken();" title="Войти через Google"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
+              </svg></button>
+              <button type="button" id="_revokeToken" class="btn btn-dark" onclick="revokeToken();" title="Выйти"  style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+                <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+              </svg></button>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav> 
 
+<div class="col-lg-8 mx-auto p-4 py-md-5">
   <main>
-<!--
-    <h1>Get started with Bootstrap</h1>
-    <p class="fs-5 col-md-8">Quickly and easily get started with Bootstrap's compiled, production-ready files with this barebones example featuring some basic HTML and helpful links. Download all our examples to get started.</p>
 
-    <div class="mb-5">
-      <a href="../examples/" class="btn btn-primary btn-lg px-4">Download examples</a>
-    </div>
+    <h1>Авторизация Google Identity Services Authorization и GAPI</h1>
 
-    <hr class="col-3 col-md-2 mb-5">
 
-    <div class="row g-5">
-        <div class="col-md-6">
-        <h2>Starter projects</h2>
-        <p>Ready to beyond the starter template? Check out these open source projects that you can quickly duplicate to a new GitHub repository.</p>
-        <ul class="icon-list ps-0">
-          <li class="d-flex align-items-start mb-1"><a href="https://github.com/twbs/bootstrap-npm-starter" rel="noopener" target="_blank">Bootstrap npm starter</a></li>
-          <li class="text-muted d-flex align-items-start mb-1">Bootstrap Parcel starter (coming soon!)</li>
-        </ul>
-      </div>
+    <button onclick="listMajors();">Запрос через Sheets API</button> <br><br>
 
-      <div class="col-md-6">
-        <h2>Guides</h2>
-        <p>Read more detailed instructions and documentation on using or contributing to Bootstrap.</p>
-        <ul class="icon-list ps-0">
-          <li class="d-flex align-items-start mb-1"><a href="../getting-started/introduction/">Bootstrap quick start guide</a></li>
-          <li class="d-flex align-items-start mb-1"><a href="../getting-started/webpack/">Bootstrap Webpack guide</a></li>
-          <li class="d-flex align-items-start mb-1"><a href="../getting-started/parcel/">Bootstrap Parcel guide</a></li>
-          <li class="d-flex align-items-start mb-1"><a href="../getting-started/vite/">Bootstrap Vite guide</a></li>
-          <li class="d-flex align-items-start mb-1"><a href="../getting-started/contribute/">Contributing to Bootstrap</a></li>
-        </ul>
-      </div>
-    </div>
--->
+    <button onclick="loadCalendar();">Load Calendar</button><br><br>
+    <button onclick="console.log('GapiLoaded: ' + isGapiLoaded());">isGapiLoaded</button> <br><br>
+    <button onclick="getUserProfile();">Get User Profile</button><br><br>
+
+
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
     Created by Gym Progressive &middot; &copy; 2022
@@ -132,7 +136,7 @@
 
 const GOOGLE_API_KEY = 'AIzaSyBPtXcGno5ywS42kvzSpB6HAvgzgct6rLc';
 const GOOGLE_CLIENT_ID = '624974603531-khuubvttovq900rh9iki38cta657d0bc.apps.googleusercontent.com';
-const SCOPES = 'openid \
+const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
                 https://www.googleapis.com/auth/userinfo.profile \
                 https://www.googleapis.com/auth/userinfo.email \
                 https://www.googleapis.com/auth/spreadsheets.readonly \
@@ -146,50 +150,67 @@ const SCOPES = 'openid \
 
     let tokenClient;
     let access_token;
+    let gapiInited = false;
+    let gisInited = false;
 
-    function handleCredentialResponse(response) {
-        // decodeJwtResponse() is a custom function defined by you
-        // to decode the credential response.
-        const responsePayload = decodeJwtResponse(response.credential);
+    let USER_PROFILE_DATA;
 
-        console.log("ID: " + responsePayload.sub);
-        console.log('Full Name: ' + responsePayload.name);
-        console.log('Given Name: ' + responsePayload.given_name);
-        console.log('Family Name: ' + responsePayload.family_name);
-        console.log("Image URL: " + responsePayload.picture);
-        console.log("Email: " + responsePayload.email);
-        }
-
-
-    function gapiStart() {
-        gapi.client.init({
+    async function gapiStart() {
+        await gapi.client.init({
         }).then(function() {
             gapi.client.load('drive', 'v3');
             gapi.client.load('sheets', 'v4');
             gapi.client.load('calendar','v3');
-            
+            console.log('gapiStart');
+            gapiInited = true;
+            checkBeforeStart();
         }).then(function(response) {
             console.log('документ загржен');
         }, function(reason) {
             console.log('Ошибка: ' + reason.result.error.message);
         }).then(function() {
-            //onSignIn();
+          //  console.log("access_token: ");
+          //  console.log(access_token);
         });
     }
 
     function gapiLoad() {
-        gapi.load('client', gapiStart)
+      // обрабатываем загрузку библиотеки gapi
+      gapi.load('client', gapiStart)
     }
 
     function gisInit() {
-        tokenClient = google.accounts.oauth2.initTokenClient({
-            client_id: GOOGLE_CLIENT_ID,
-            scope: SCOPES,
-            callback: (tokenResponse) => {
-                access_token = tokenResponse.access_token;
-                console.log(tokenResponse);
-            },
-        });
+      // обрабатываем загрузку библиотеки gis
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: GOOGLE_CLIENT_ID,
+        scope: SCOPES,
+        callback: (tokenResponse) => {
+          access_token = tokenResponse.access_token;
+          console.log('gisInit');
+          gisInited = true;
+          checkBeforeStart();
+        },
+      });
+    }
+
+    function checkBeforeStart() {
+      let btnGetToken = document.getElementById("_getToken");
+      let btnRevokeToken = document.getElementById("_revokeToken");
+      console.log(`checkBeforeStart ${gapiInited} ${gisInited}`);
+      if (gapiInited && gisInited){
+
+        USER_PROFILE_DATA = getUserProfileData(access_token);
+        console.log(USER_PROFILE_DATA);
+          // Start only when both gapi and gis are initialized.
+          //document.getElementById("showEventsBtn").style.visibility="visible";
+          //document.getElementById("revokeBtn").style.visibility="visible";
+        btnGetToken.style.display="none";
+        btnRevokeToken.style.display="block";
+      } else if (!gisInited) {
+        btnGetToken.style.display="block";
+        btnRevokeToken.style.display="none";
+      }
+        
 
     }
 
@@ -211,52 +232,77 @@ const SCOPES = 'openid \
     }
 
     function loadCalendar() {
-        var xhr = new XMLHttpRequest();
+      tokenClient.callback = (resp) => {
+        if (resp.error !== undefined) {
+          throw(resp);
+        }
+        // GIS has automatically updated gapi.client with the newly issued access token.
+        console.log('gapi.client access token: ' + JSON.stringify(gapi.client.getToken()));
+        let xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://www.googleapis.com/calendar/v3/calendars/primary/events');
         xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
         xhr.send();
+        /*
+        gapi.client.calendar.events.list({ 'calendarId': 'primary' })
+        .then(calendarAPIResponse => console.log(JSON.stringify(calendarAPIResponse)))
+        .catch(err => console.log(err));
+
+        document.getElementById("showEventsBtn").innerText = "Refresh Calendar";
+        */
+      }
+
+      // Conditionally ask users to select the Google Account they'd like to use,
+      // and explicitly obtain their consent to fetch their Calendar.
+      // NOTE: To request an access token a user gesture is necessary.
+      if (gapi.client.getToken() === null) {
+        // Prompt the user to select an Google Account and asked for consent to share their data
+        // when establishing a new session.
+        tokenClient.requestAccessToken({prompt: 'consent'});
+      } else {
+        // Skip display of account chooser and consent dialog for an existing session.
+        tokenClient.requestAccessToken({prompt: ''});
+      }
+
+
+        
       }
 
 
     function revokeToken() {
-        // отозвать токен
-      google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
+      // отозвать токен
+      
+      // 1st version
+      // google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
+      
+      // 2nd version
+      let cred = gapi.client.getToken();
+      if (cred !== null) {
+        google.accounts.oauth2.revoke(cred.access_token, () => {
+          console.log('Revoked: ' + cred.access_token)
+        });
+        gapi.client.setToken('');
+      }
+      checkBeforeStart();
     }
 
-    const getUserProfileData = async (accessToken) => {
-      const headers = new Headers();
-      headers.append('Authorization', `Bearer ${accessToken}`)
-      const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-        headers
-      })
-      const data = await response.json();
-      return data;
-  }
+
 
     function isGapiLoaded() {
-        //console.log(gapi);
-        //console.log(gapi.auth2);
-        //let bp = gapi.auth2.getAuthInstance();
-        //console.log(bp);
-        console.log(getUserProfileData());
+        
         return gapi && gapi.auth2;
     }
 
+    function getUserProfile() {
+      USER_PROFILE_DATA = getUserProfileData(access_token);
+      console.log(USER_PROFILE_DATA);
+    }
 
-
+    //миграция в gis
+    //https://developers.google.com/identity/oauth2/web/guides/migration-to-gis?hl=en#gapi-callback
 
 
   </script>
     <div id="buttonDiv"></div> 
-
-  <h1>Авторизация Google Identity Services Authorization и GAPI</h1>
-  <button onclick="getToken();">Авторизоваться</button> <br><br>
-  <button onclick="listMajors();">Запрос через Sheets API</button> <br><br>
-  <button onclick="revokeToken();">Отозвать токен</button> <br><br>
-  <button onclick="loadCalendar();">Load Calendar</button><br><br>
-  <button onclick="console.log('GapiLoaded: ' + isGapiLoaded());">isGapiLoaded</button> <br><br>
-  <!--<button onclick="console.log(initApp());">initApp</button> <br><br>-->
-  
 
 
       
