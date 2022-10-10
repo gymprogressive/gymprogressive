@@ -167,7 +167,7 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
             gapiInited = true;
             checkBeforeStart();
         }).then(function(response) {
-            console.log('документ загржен');
+            console.log('документ загружен');
         }, function(reason) {
             console.log('Ошибка: ' + reason.result.error.message);
         }).then(function() {
