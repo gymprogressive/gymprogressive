@@ -62,9 +62,11 @@
     <button onclick="listMajors();">Запрос через Sheets API</button> <br><br>
 
     <button onclick="loadCalendar();">Загрузить Календарь</button><br><br>
+<!--
     <button onclick="console.log('GapiLoaded: ' + isGapiLoaded());">GAPI Загружена?</button> <br><br>
-    <button onclick="getUserProfile();">Получить данные Профиля</button><br><br>
 
+    <button onclick="getUserProfile();">Получить данные Профиля</button><br><br>
+-->
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
@@ -358,11 +360,7 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
 
     function revokeToken() {
       // отозвать токен
-      
-      // 1st version
-      // google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
-      
-      // 2nd version
+
       let cred = gapi.client.getToken();
 
       if (cred !== null) {
@@ -373,6 +371,7 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
           localStorage.setItem("access_token","");
           
           gisInited = false;
+          
           checkBeforeStart();
         });
         
@@ -381,40 +380,38 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
     }
 
 
-    function isGapiLoaded() {
+    // +%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+% 
+    // асинхронная функция для запроса данных профиля
+    //
+    const getUserProfileData = async (accessToken) => {
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${accessToken}`)
+        const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers
+        })
+        const data = await response.json();
+
+        console.log(data);
+
+        // сохраняем полученные данные в глобальные переменные
+        USER_PICTURE = data.picture;
+
+        // обрабатываем полученные данные
+        let imgAvatar = document.getElementById("_imgAvatar");
+
+        imgAvatar.src = USER_PICTURE;
         
+        return data;
+    }
+/*
+    function isGapiLoaded() {
         return gapi && gapi.auth2;
     }
 
     function getUserProfile() {
-      
       console.log(USER_PROFILE_DATA);
     }
-
-// +%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+% 
-// асинхронная функция для запроса данных профиля
-//
-const getUserProfileData = async (accessToken) => {
-    const headers = new Headers();
-    headers.append('Authorization', `Bearer ${accessToken}`)
-    const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-      headers
-    })
-    const data = await response.json();
-
-    console.log(data);
-
-    // сохраняем полученные данные в глобальные переменные
-    USER_PICTURE = data.picture;
-
-    // обрабатываем полученные данные
-    let imgAvatar = document.getElementById("_imgAvatar");
-
-    imgAvatar.src = USER_PICTURE;
-    
-    return data;
-}
-
+*/
     //миграция в gis
     //https://developers.google.com/identity/oauth2/web/guides/migration-to-gis?hl=en#gapi-callback
     //https://developers.google.com/identity/gsi/web/reference/js-reference?hl=en&authuser=19
@@ -423,7 +420,7 @@ const getUserProfileData = async (accessToken) => {
     //https://github.com/sashee/drive-api-from-js
     //https://sashee.github.io/drive-api-from-js/
   </script>
-    <div id="buttonDiv"></div> 
+
 
 
       
