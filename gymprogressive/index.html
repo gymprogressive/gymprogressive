@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.101.0">
-    <title>Progressive Gym</title>
+    <title>Жим "Прогрессивный"</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -68,6 +68,7 @@
 
 </head>
 <body>
+  <!--
   <nav class="navbar navbar-expand-sm navbar-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="javascript:void(0)"><a href="/" class="d-flex align-items-center text-dark text-decoration-none">
@@ -109,11 +110,45 @@
       </div>
     </div>
   </nav> 
+-->
+  <header class="p-3 mb-3 border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a class="navbar-brand" href="javascript:void(0)"><a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+              <title>Жим "Прогрессивный"</title>
+              <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+            </svg>
+        <span class="fs-4">Жим "Прогрессивный"</span>
+      </a></a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 link-secondary">О сайте</a></li>
+          <li><a href="#" class="nav-link px-2 link-dark">Контакты</a></li>
+        </ul>
+
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <!--<img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">-->
+            <img id="_imgAvatar" src="https://via.placeholder.com/32/343a40/FFFFFF/?text=Ё" class="rounded-circle" width="32" height="32"></img> 
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark text-small">
+            <li><a id="itemStart" class="dropdown-item" href="#">Начать тренировку...</a></li>
+            <li><a id="itemSettings" class="dropdown-item" href="#">Настройки</a></li>
+            <li><a id="itemProfile" class="dropdown-item" href="#">Профиль</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li id="_getToken"><a class="dropdown-item" href="#" onclick="getToken();">Войти через Google</a></li>
+            <li id="_revokeToken" style="display: none;"><a class="dropdown-item" href="#" onclick="revokeToken();">Выйти</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
 
 <div class="col-lg-8 mx-auto p-4 py-md-5">
   <main>
 
-    <h1>Авторизация Google Identity Services Authorization и GAPI</h1>
+    <h1>Авторизация через GSI и GAPI</h1>
 
 
     <button onclick="listMajors();">Запрос через Sheets API</button> <br><br>
@@ -125,19 +160,76 @@
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
-    Created by Gym Progressive &middot; &copy; 2022
+    Создано командой Жим "Прогрессивный" &middot; &copy; 2022
   </footer>
 </div>
 
+<!-- The Profile -->
+<div class="modal" id="modProfile">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Профиль</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Тело профиля..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- The Settings -->
+<div class="modal" id="modSettings">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Настройки</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Тело настроек..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
 <script src="https://accounts.google.com/gsi/client" onload="gisInit()" async defer></script>
 <script src="https://apis.google.com/js/api.js" onload="gapiLoad()" async defer></script>
-<script>
 
+<script>
+// Ключи доступа
 const GOOGLE_API_KEY = 'AIzaSyBPtXcGno5ywS42kvzSpB6HAvgzgct6rLc';
 const GOOGLE_CLIENT_ID = '624974603531-khuubvttovq900rh9iki38cta657d0bc.apps.googleusercontent.com';
+
+/* 
+ * Разрешения
+ *
+ * Список по ссылке:
+ * https://developers.google.com/identity/protocols/oauth2/scopes
+ */
 const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
                 https://www.googleapis.com/auth/userinfo.profile \
                 https://www.googleapis.com/auth/userinfo.email \
@@ -152,22 +244,41 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
 
     let tokenClient;
     let access_token;
+
+    if (window.localStorage.getItem("access_token"))
+        access_token = localStorage.getItem("access_token");
+
     let gapiInited = false;
     let gisInited = false;
 
     let USER_PROFILE_DATA;
 
+    let USER_PICTURE;
+    let USER_EMAIL;
+    let USER_NAME;
+    let USER_FAMILY_NAME;
+    let USER_GIVEN_NAME;
+
     async function gapiStart() {
         await gapi.client.init({
-        }).then(function() {
+          }).then(function() {
+            
+            // Инициализация библиотеки Google API с полученным ключом
+            if (access_token) {
+              gapi.auth.setToken({access_token: access_token});
+              gisInited = true;
+            }
+            
             gapi.client.load('drive', 'v3');
             gapi.client.load('sheets', 'v4');
             gapi.client.load('calendar','v3');
+
             console.log('gapiStart');
+            
             gapiInited = true;
             checkBeforeStart();
         }).then(function(response) {
-            console.log('документ загржен');
+            console.log('документ загружен');
         }, function(reason) {
             console.log('Ошибка: ' + reason.result.error.message);
         }).then(function() {
@@ -186,39 +297,87 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
       tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: GOOGLE_CLIENT_ID,
         scope: SCOPES,
+        prompt: '',
         callback: (tokenResponse) => {
-          access_token = tokenResponse.access_token;
+          localStorage.setItem("access_token", tokenResponse.access_token);
+          
           console.log('gisInit');
           gisInited = true;
+
           checkBeforeStart();
         },
       });
     }
 
+    
     function checkBeforeStart() {
+      console.log("*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*"+
+                  "\n"+
+                  localStorage.access_token+
+                  "\n"+
+                  "*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*");
+
       let btnGetToken = document.getElementById("_getToken");
       let btnRevokeToken = document.getElementById("_revokeToken");
-      let btnAvatar = document.getElementById("_btnAvatar");
       let imgAvatar = document.getElementById("_imgAvatar");
+      let itemStart = document.getElementById("itemStart")
+      let itemSettings = document.getElementById("itemSettings")
+      let itemProfile = document.getElementById("itemProfile")
+
+      let profile = document.getElementById('modProfile');
+      let settings = document.getElementById('modSettings');
+      let modProfile = new bootstrap.Modal(profile, {});
+      let modSettings = new bootstrap.Modal(settings, {});
+
+      itemStart.onclick=function(){
+        console.log('тренировка');
+      }
+
+      itemSettings.onclick=function(){
+        console.log('настройки');
+        modSettings.show();
+      }
+
+      itemProfile.onclick=function(){
+        console.log('профиль');
+        modProfile.show();
+      }
+
+      settings.addEventListener('shown.bs.modal', function () {
+        console.log("окно 'Настройки' открыто");
       
+      })
+
+      //var myInput = document.getElementById('myInput')
+
+      profile.addEventListener('shown.bs.modal', function () {
+        console.log("окно 'Профиль' открыто");
+        //myInput.focus()
+      })
+
       console.log(`checkBeforeStart ${gapiInited} ${gisInited}`);
+
       if (gapiInited && gisInited){
 
         USER_PROFILE_DATA = getUserProfileData(access_token);
         
-          // Start only when both gapi and gis are initialized.
-          //document.getElementById("showEventsBtn").style.visibility="visible";
-          //document.getElementById("revokeBtn").style.visibility="visible";
+        itemStart.classList.remove("disabled");
+        itemSettings.classList.remove("disabled");
+        itemProfile.classList.remove("disabled");
         
         btnGetToken.style.display="none";
         btnRevokeToken.style.display="block";
-        btnAvatar.style.display="block";
+        
       } else {
+        itemStart.classList.add("disabled");
+        itemSettings.classList.add("disabled");
+        itemProfile.classList.add("disabled");
+        
         btnGetToken.style.display="block";
         btnRevokeToken.style.display="none";
-        btnAvatar.style.display="none";
-        imgAvatar.src="https://via.placeholder.com/24.png";
-
+        
+        imgAvatar.src="https://via.placeholder.com/32/343a40/FFFFFF/?text=Ё";
+        
       }
         
 
@@ -242,6 +401,23 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
     }
 
     function loadCalendar() {
+      if (access_token) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://www.googleapis.com/calendar/v3/calendars/primary/events');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+        xhr.send();
+        
+        gapi.client.calendar.events.list({ 'calendarId': 'primary' })
+        .then(calendarAPIResponse => console.log(JSON.stringify(calendarAPIResponse)))
+        .catch(err => console.log(err));
+        /*
+        document.getElementById("showEventsBtn").innerText = "Refresh Calendar";
+        */
+      }
+
+      // Старая версия
+      // этот алгоритм можно использовать если истек токен
+      /*
       tokenClient.callback = (resp) => {
         if (resp.error !== undefined) {
           throw(resp);
@@ -252,30 +428,27 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
         xhr.open('GET', 'https://www.googleapis.com/calendar/v3/calendars/primary/events');
         xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
         xhr.send();
-        /*
-        gapi.client.calendar.events.list({ 'calendarId': 'primary' })
-        .then(calendarAPIResponse => console.log(JSON.stringify(calendarAPIResponse)))
-        .catch(err => console.log(err));
-
-        document.getElementById("showEventsBtn").innerText = "Refresh Calendar";
-        */
       }
 
       // Conditionally ask users to select the Google Account they'd like to use,
       // and explicitly obtain their consent to fetch their Calendar.
       // NOTE: To request an access token a user gesture is necessary.
+
       if (gapi.client.getToken() === null) {
         // Prompt the user to select an Google Account and asked for consent to share their data
         // when establishing a new session.
+        console.log("consent")
+
         tokenClient.requestAccessToken({prompt: 'consent'});
       } else {
         // Skip display of account chooser and consent dialog for an existing session.
+        console.log("_______")
         tokenClient.requestAccessToken({prompt: ''});
       }
-
+*/
 
         
-      }
+    }
 
 
     function revokeToken() {
@@ -286,18 +459,21 @@ const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly \
       
       // 2nd version
       let cred = gapi.client.getToken();
+
       if (cred !== null) {
         google.accounts.oauth2.revoke(cred.access_token, () => {
           console.log('Revoked: ' + cred.access_token);
+          
           gapi.client.setToken('');
+          localStorage.setItem("access_token","");
+          
           gisInited = false;
           checkBeforeStart();
         });
         
       }
-      
-    }
 
+    }
 
 
     function isGapiLoaded() {
@@ -320,15 +496,27 @@ const getUserProfileData = async (accessToken) => {
       headers
     })
     const data = await response.json();
+
+    console.log(data);
+
+    // сохраняем полученные данные в глобальные переменные
+    USER_PICTURE = data.picture;
+
+    // обрабатываем полученные данные
     let imgAvatar = document.getElementById("_imgAvatar");
-    imgAvatar.src = data.picture;
+
+    imgAvatar.src = USER_PICTURE;
+    
     return data;
 }
 
     //миграция в gis
     //https://developers.google.com/identity/oauth2/web/guides/migration-to-gis?hl=en#gapi-callback
+    //https://developers.google.com/identity/gsi/web/reference/js-reference?hl=en&authuser=19
 
-
+    //https://advancedweb.hu/using-google-auth-in-javascript/
+    //https://github.com/sashee/drive-api-from-js
+    //https://sashee.github.io/drive-api-from-js/
   </script>
     <div id="buttonDiv"></div> 
 
