@@ -65,11 +65,11 @@
     <button onclick="listMajors();">Запрос через Sheets API</button> <br><br>
 
     <button onclick="loadCalendar();">Загрузить Календарь</button><br><br>
-
+<!--
     <button onclick="createConfigFile();">Создать файл конфигурации</button><br><br>
 
     <button onclick="getConfigFileId();">Получить идентификатор файла конфигурации</button><br><br>
-
+-->
     <button onclick="saveConfigFile();">Сохранить файл конфигурации</button><br><br>
 
     <button onclick="loadConfigFile();">Загрузить файл конфигурации</button><br><br>
@@ -148,6 +148,11 @@
   let gapiInited = false;
   let gisInited = false;
 
+  function isLoggedIn() {
+    const now = new Date().getTime();
+    return gapiInited && gisInited && now < expires_in;
+  }
+
   async function gapiStart() {
     await gapi.client.init({
       }).then(function() {
@@ -174,9 +179,9 @@
         console.info('Библиотека Client Google API инциализирована');
         
         gapiInited = true;
-        //console.log(tokenClient);
+
         checkApp();
-        //getConfig_onSignIn();
+
     }).then(function(response) {
       console.info('Библиотеки загружены');
     }, function(reason) {
@@ -213,7 +218,6 @@
         gisInited = true;
 
         checkApp();
-        //getConfig_onSignIn();
       },
     });
   }
@@ -235,8 +239,7 @@
   let modSettings = new bootstrap.Modal(settings, {});
   
   function checkApp() {
-    let now = new Date().getTime();
-
+  
     itemStart.onclick=function(){
       console.log('тренировка');
     }
@@ -265,11 +268,12 @@
 
     console.info(`Проверка элементов управления. Параметры gapi: ${gapiInited}, gis: ${gisInited}.`);
 
-    if (gapiInited && gisInited && now < expires_in){
+    if (isLoggedIn){
       console.log ("gapiInited && gisInited = true");
       console.log("-------------------------------");
       console.log(access_token);
       console.log("-------------------------------");
+
       USER = getUserProfileData(access_token);
       
       itemStart.classList.remove("disabled");
@@ -326,39 +330,6 @@
       document.getElementById("showEventsBtn").innerText = "Refresh Calendar";
       */
     }
-
-    // Старая версия
-    // этот алгоритм можно использовать если истек токен
-    /*
-    tokenClient.callback = (resp) => {
-      if (resp.error !== undefined) {
-        throw(resp);
-      }
-      // GIS has automatically updated gapi.client with the newly issued access token.
-      console.log('gapi.client access token: ' + JSON.stringify(gapi.client.getToken()));
-      let xhr = new XMLHttpRequest();
-      xhr.open('GET', 'https://www.googleapis.com/calendar/v3/calendars/primary/events');
-      xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-      xhr.send();
-    }
-
-    // Conditionally ask users to select the Google Account they'd like to use,
-    // and explicitly obtain their consent to fetch their Calendar.
-    // NOTE: To request an access token a user gesture is necessary.
-
-    if (gapi.client.getToken() === null) {
-      // Prompt the user to select an Google Account and asked for consent to share their data
-      // when establishing a new session.
-      console.log("consent")
-
-      tokenClient.requestAccessToken({prompt: 'consent'});
-    } else {
-      // Skip display of account chooser and consent dialog for an existing session.
-      console.log("_______")
-      tokenClient.requestAccessToken({prompt: ''});
-    }
-*/
-
       
   }
 
@@ -379,7 +350,7 @@
         gisInited = false;
         
         checkApp();
-        //getConfig_onSignIn();
+
       });
       
     }
@@ -417,17 +388,6 @@
     return data;
 
   }
-
-      
-
-  
-  //миграция в gis
-  //https://developers.google.com/identity/oauth2/web/guides/migration-to-gis?hl=en#gapi-callback
-  //https://developers.google.com/identity/gsi/web/reference/js-reference?hl=en&authuser=19
-
-  //https://advancedweb.hu/using-google-auth-in-javascript/
-  //https://github.com/sashee/drive-api-from-js
-  //https://sashee.github.io/drive-api-from-js/
 
   /**
    * Получение идентификатора файла данных
@@ -530,15 +490,7 @@
         });   
       }
     );
-    /*
-    findFile(configFileName).then(
-      function(response){
-        configFileId = response[0].id;
-        downloadFile(configFileId).then(
-          function(appData){
-            console.log(appData);
-      });    
-    });*/
+
   }
 
   async function deleteConfigFile() {
@@ -548,29 +500,6 @@
         localStorage.removeItem(app_name + '_configFileId');
           if (info) console.log("Файл удалён");
     });
-    /*
-    getConfigFileId().then(
-      function(response) {
-        configFileId = response;
-        console.log("Удаление файла конфигурации с идентификатором " + configFileId);
-        
-        deleteFile(configFileId).then(
-          function(info){
-            localStorage.removeItem(app_name + '_configFileId');
-            if (info) console.log("Файл удалён");
-        });   
-      }
-    );*/
-    /*
-    findFile(configFileName).then(
-      function(response){
-        configFileId = response[0].id;
-        deleteFile(configFileId).then(
-          function(info){
-            console.log(info);
-      });    
-    });
-    */
   }
 
   async function getConfigFileId() {
@@ -590,9 +519,7 @@
           // сохраняем ID
           localStorage.setItem(app_name + '_configFileId', configFileId);
       }
-      console.log("-//-//-//-//-//-//-//-//-//-//-//-//-");
-      console.log(configFileId);
-      console.log("-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-");
+
       return configFileId;
 
   }
@@ -622,6 +549,48 @@
         'Файлы:\n');
     console.log(output);
   }
+
+  async function syncConfig() {
+    if (!isLoggedIn) {
+        return;
+    }
+    // получаем config file ID
+    const configFileId = await getConfigFileId();
+    try {
+      // загружаем конфиг
+      const remoteConfig = await download(configFileId);
+      if (!remoteConfig || typeof remoteConfig !== 'object') {
+        // пустой или испорченный конфиг, перезаписываем текущим
+        upload(configFileId, getConfig());
+      } else {
+        // сохраняем локально, перезаписывая существующие данные
+        localStorage.setItem(app_name + '_config', JSON.stringify(remoteConfig))
+      }
+      // синхронизация завершена, в localStorage актуальный конфиг
+    } catch(e) {
+      if (e.status === 404) {
+        // кто-то удалил наш конфиг, забываем неверный fileID и пробуем еще раз
+        localStorage.removeItem(app_name + '_configFileId');
+        syncConfig();
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  function scheduleConfigSync(delay) {
+    // сбрасываем старый таймер, если он был
+    if (configSyncTimeoutId) {
+      clearTimeout(configSyncTimeoutId);
+    }
+    configSyncTimeoutId = setTimeout(() => {
+      // выполняем синхронизацию и шедулим снова
+      syncConfig()
+        .catch(e => console.log('Ошибка синхронизации файла конфигурации', e))
+        .finally(() => scheduleConfigSync());
+    }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
+}
+
 
 </script>
 

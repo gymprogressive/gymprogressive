@@ -106,9 +106,7 @@ async function getConfigFileId() {
         // сохраняем ID
         localStorage.setItem(app_name + '_configFileId', configFileId);
     }
-    console.log("-//-//-//-//-//-//-//-//-//-//-//-//-");
-    console.log(configFileId);
-    console.log("-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-");
+
     return configFileId;
 }
 
@@ -123,7 +121,7 @@ async function getConfig_onSignIn() {
         // пользователь вышел
         // в следующий раз пользователь может зайти под другим аккаунтом
         // поэтому забываем config file ID
-        localStorage.removeItem(app_name + 'configFileId');
+        localStorage.removeItem(app_name + '_configFileId');
         // в localStorage лежит актуальный конфиг, дальше пользуемся им
     }
 }
@@ -173,7 +171,7 @@ async function syncConfig() {
     } catch(e) {
         if (e.status === 404) {
             // кто-то удалил наш конфиг, забываем неверный fileID и пробуем еще раз
-            localStorage.removeItem(app_name + 'configFileId');
+            localStorage.removeItem(app_name + '_configFileId');
             syncConfig();
         } else {
             throw e;
@@ -209,23 +207,17 @@ function initApp() {
 }
 */
 
-// Old version
-/*
-  function getConfigFileNameId() {
-    configFileId = localStorage.getItem(app_name + '_configFileId');
-    if (!configFileId) {
-      findFile(configFileName).then(
-        function(response){
-          configFileId = response[0].id;
-          localStorage.setItem(app_name + 'configFileId', configFileId);
-          console.log(response[0].id);
-      })
-    }
-    return configFileId;
-  }
-*/
-
 // 2nd version
 
 // 3rd version
 
+      
+
+  
+  //миграция в gis
+  //https://developers.google.com/identity/oauth2/web/guides/migration-to-gis?hl=en#gapi-callback
+  //https://developers.google.com/identity/gsi/web/reference/js-reference?hl=en&authuser=19
+
+  //https://advancedweb.hu/using-google-auth-in-javascript/
+  //https://github.com/sashee/drive-api-from-js
+  //https://sashee.github.io/drive-api-from-js/
