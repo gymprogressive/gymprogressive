@@ -149,8 +149,12 @@
   let gisInited = false;
 
   function isLoggedIn() {
-    const now = new Date().getTime();
-    return gapiInited && gisInited && now < expires_in;
+    const not_expired = (new Date().getTime()) < expires_in;
+    return gapiInited && gisInited && not_expired;
+  }
+
+  function isExpired() {
+    return (new Date().getTime()) > expires_in;
   }
 
   async function gapiStart() {
@@ -237,7 +241,7 @@
   let settings = document.getElementById('modSettings');
   let modProfile = new bootstrap.Modal(profile, {});
   let modSettings = new bootstrap.Modal(settings, {});
-  
+
   function checkApp() {
   
     itemStart.onclick=function(){
@@ -266,13 +270,13 @@
       //myInput.focus()
     })
 
-    console.info(`Проверка элементов управления. Параметры gapi: ${gapiInited}, gis: ${gisInited}.`);
+    log(`Проверка элементов управления.\nПараметры gapi: ${gapiInited}, gis: ${gisInited}, not expired: ${!isExpired()}.`,'Blue');
 
-    if (isLoggedIn){
+    if (gapiInited && gisInited && !isExpired()){
       console.log ("gapiInited && gisInited = true");
-      console.log("-------------------------------");
-      console.log(access_token);
-      console.log("-------------------------------");
+      log(`--------------------------------------------------------\n`+
+          access_token+
+          `\n--------------------------------------------------------`,'Tomato');
 
       USER = getUserProfileData(access_token);
       
@@ -282,7 +286,8 @@
       
       btnGetToken.style.display="none";
       btnRevokeToken.style.display="block";
-      
+
+      scheduleConfigSync();
     } else {
       itemStart.classList.add("disabled");
       itemSettings.classList.add("disabled");
@@ -558,15 +563,16 @@
     const configFileId = await getConfigFileId();
     try {
       // загружаем конфиг
-      const remoteConfig = await download(configFileId);
+      const remoteConfig = await downloadFile(configFileId);
       if (!remoteConfig || typeof remoteConfig !== 'object') {
         // пустой или испорченный конфиг, перезаписываем текущим
-        upload(configFileId, getConfig());
+        uploadFile(configFileId, getConfig());
       } else {
         // сохраняем локально, перезаписывая существующие данные
         localStorage.setItem(app_name + '_config', JSON.stringify(remoteConfig))
       }
       // синхронизация завершена, в localStorage актуальный конфиг
+      console.log('Синхронизация завершена, в localStorage актуальный конфиг');
     } catch(e) {
       if (e.status === 404) {
         // кто-то удалил наш конфиг, забываем неверный fileID и пробуем еще раз
@@ -589,8 +595,40 @@
         .catch(e => console.log('Ошибка синхронизации файла конфигурации', e))
         .finally(() => scheduleConfigSync());
     }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
-}
+  }
+    
+  function log(msg, color) {
+    color = color || "black";
+    bgc = "White";
+    switch (color) {
+        case "success":  color = "Green";      bgc = "LimeGreen";       break;
+        case "info":     color = "DodgerBlue"; bgc = "Turquoise";       break;
+        case "error":    color = "Red";        bgc = "Black";           break;
+        case "start":    color = "OliveDrab";  bgc = "PaleGreen";       break;
+        case "warning":  color = "Tomato";     bgc = "Black";           break;
+        case "end":      color = "Orchid";     bgc = "MediumVioletRed"; break;
+        default: color = color;
+    }
 
+    if (typeof msg == "object") {
+      console.log(msg);
+    } else if (typeof color == "object") {
+      console.log("%c" + msg, "color: PowderBlue;font-weight:bold; background-color: RoyalBlue;");
+      console.log(color);
+    } else {
+      console.log("%c" + msg, "color:" + color + ";font-weight:bold; background-color: " + bgc + ";");
+    }
+  }
+
+  /*
+  log("hey"); // Will be black
+  log("Hows life?", "green"); // Will be green
+  log("I did it", "success"); // Styled so as to show how great of a success it was!
+  log("FAIL!!", "error"); // Red on black!
+  var someObject = {prop1: "a", prop2: "b", prop3: "c"};
+  log(someObject); // prints out object
+  log("someObject", someObject); // prints out "someObect" in blue followed by the someObject
+  */
 
 </script>
 
