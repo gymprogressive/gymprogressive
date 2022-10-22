@@ -175,7 +175,7 @@
         
         gapiInited = true;
         //console.log(tokenClient);
-        checkBeforeStart();
+        checkApp();
         //getConfig_onSignIn();
     }).then(function(response) {
       console.info('Библиотеки загружены');
@@ -212,7 +212,7 @@
         console.info('Библиотека GIS инициализирована');
         gisInited = true;
 
-        checkBeforeStart();
+        checkApp();
         //getConfig_onSignIn();
       },
     });
@@ -234,7 +234,8 @@
   let modProfile = new bootstrap.Modal(profile, {});
   let modSettings = new bootstrap.Modal(settings, {});
   
-  function checkBeforeStart() {
+  function checkApp() {
+    let now = new Date().getTime();
 
     itemStart.onclick=function(){
       console.log('тренировка');
@@ -264,7 +265,7 @@
 
     console.info(`Проверка элементов управления. Параметры gapi: ${gapiInited}, gis: ${gisInited}.`);
 
-    if (gapiInited && gisInited){
+    if (gapiInited && gisInited && now < expires_in){
       console.log ("gapiInited && gisInited = true");
       console.log("-------------------------------");
       console.log(access_token);
@@ -377,7 +378,7 @@
         
         gisInited = false;
         
-        checkBeforeStart();
+        checkApp();
         //getConfig_onSignIn();
       });
       
@@ -570,6 +571,30 @@
       });    
     });
     */
+  }
+
+  async function getConfigFileId() {
+
+      // берем configFileId
+      let configFileId = localStorage.getItem(app_name + '_configFileId');
+      if (!configFileId) {
+          // ищем нужный файл на Google Drive
+          const configFiles = await find('name = "' + configFileName + '"');
+          if (configFiles.length > 0) {
+              // берем первый (раньше всех созданный) файл
+              configFileId = configFiles[0].id;
+          } else {
+              // создаем новый
+              configFileId = await createEmptyFile(configFileName);
+          }
+          // сохраняем ID
+          localStorage.setItem(app_name + '_configFileId', configFileId);
+      }
+      console.log("-//-//-//-//-//-//-//-//-//-//-//-//-");
+      console.log(configFileId);
+      console.log("-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-\\-");
+      return configFileId;
+
   }
 
   /**
