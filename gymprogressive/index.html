@@ -11,13 +11,14 @@
     
     <link href="css/template.css" rel="stylesheet">
 
+    <script src="js/gapi.js" async defer></script>
+    <script src="js/config.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
-    <script src="js/config.js" async defer></script>
-    <script src="js/gapi.js"></script>
 </head>
 <body>
 
@@ -41,7 +42,7 @@
 
       <div class="dropdown text-end">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <img id="_imgAvatar" src="https://via.placeholder.com/32/343a40/FFFFFF/?text=Ё" class="rounded-circle" width="32" height="32"></img> 
+          <img id="_imgAvatar" src="placeholder.png" class="rounded-circle" width="32" height="32"></img> 
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small">
           <li><a id="itemStart" class="dropdown-item" href="#">Начать тренировку...</a></li>
@@ -64,6 +65,18 @@
     <button onclick="listMajors();">Запрос через Sheets API</button> <br><br>
 
     <button onclick="loadCalendar();">Загрузить Календарь</button><br><br>
+
+    <button onclick="createConfigFile();">Создать файл конфигурации</button><br><br>
+
+    <button onclick="getConfigFileId();">Получить идентификатор файла конфигурации</button><br><br>
+
+    <button onclick="saveConfigFile();">Сохранить файл конфигурации</button><br><br>
+
+    <button onclick="loadConfigFile();">Загрузить файл конфигурации</button><br><br>
+
+    <button onclick="deleteConfigFile();">Удалить файл конфигурации</button><br><br>
+
+    <button onclick="listFiles();">Список файлов</button><br><br>
 
   </main>
   <footer class="pt-5 my-5 text-muted border-top">
@@ -125,7 +138,7 @@
   let tokenClient;
   let access_token;
   let expires_in;
-
+  
   if (window.localStorage.getItem("access_token"))
     access_token = localStorage.getItem("access_token");
 
@@ -141,14 +154,18 @@
         
         // Инициализация библиотеки Google API с полученным ключом
         if (access_token) {
+          console.log (access_token);
           gapi.auth.setToken({access_token: access_token});
           gisInited = true;
-
         } 
 
         let now = new Date().getTime(); // текущее время в милисекундах
-        
-        if (now > expires_in) gisInited = false;
+        console.log (now + " " + new Date(now));
+        console.log (expires_in + " " + new Date(expires_in));
+        if (now > expires_in) {
+          console.log("Текущее время больше времени действия токена")
+          gisInited = false;
+        }
         
         gapi.client.load('drive', 'v3');
         gapi.client.load('sheets', 'v4');
@@ -159,6 +176,7 @@
         gapiInited = true;
         //console.log(tokenClient);
         checkBeforeStart();
+        //getConfig_onSignIn();
     }).then(function(response) {
       console.info('Библиотеки загружены');
     }, function(reason) {
@@ -179,14 +197,15 @@
     tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: GOOGLE_CLIENT_ID,
       scope: SCOPES,
-      expires_in: 60*60*4-1,
       prompt: '',
       callback: (tokenResponse) => {
-        let milliseconds = new Date().getTime() + (1 * Number(tokenResponse.expires_in) * 1000);
-        let later = new Date(milliseconds);
+        let later = new Date(new Date().getTime() + (1 * Number(tokenResponse.expires_in) * 1000));
+
         localStorage.setItem("token_expires_in", later);
         expires_in = later;
-        console.warn("Токен истекает через " + tokenResponse.expires_in + " милисекунд");
+ 
+        console.warn("Токен истекает через " + tokenResponse.expires_in + " секунд");
+        
         localStorage.setItem("access_token", tokenResponse.access_token);
         access_token = tokenResponse.access_token;
 
@@ -194,6 +213,7 @@
         gisInited = true;
 
         checkBeforeStart();
+        //getConfig_onSignIn();
       },
     });
   }
@@ -245,7 +265,10 @@
     console.info(`Проверка элементов управления. Параметры gapi: ${gapiInited}, gis: ${gisInited}.`);
 
     if (gapiInited && gisInited){
-
+      console.log ("gapiInited && gisInited = true");
+      console.log("-------------------------------");
+      console.log(access_token);
+      console.log("-------------------------------");
       USER = getUserProfileData(access_token);
       
       itemStart.classList.remove("disabled");
@@ -263,7 +286,7 @@
       btnGetToken.style.display="block";
       btnRevokeToken.style.display="none";
       
-      imgAvatar.src="https://via.placeholder.com/32/343a40/FFFFFF/?text=Ё";
+      imgAvatar.src="placeholder.png";
       
     }
   
@@ -355,43 +378,48 @@
         gisInited = false;
         
         checkBeforeStart();
+        //getConfig_onSignIn();
       });
       
     }
 
   }
 
-  // +%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+%+% 
-  // асинхронная функция для запроса данных профиля
-  //
-  const getUserProfileData = async (accessToken) => {
+  /**
+   * Запрос данных профиля
+   */ 
+  async function getUserProfileData (accessToken) {
     let data;
-      try {
-        
-        const headers = new Headers();
-        
-        headers.append('Authorization', `Bearer ${accessToken}`)
-        const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-          headers
-        })
-        data = await response.json();
-        console.info("Загружены данные пользователя");
-        //console.log(data);
-
-        // обрабатываем полученные данные
-        let imgAvatar = document.getElementById("_imgAvatar");
-
-        imgAvatar.src = data.picture;
-
-      } catch(err) {
-        console.error("Error:" + err); // TypeError: failed to fetch
-
-      }
-
+    
+    try {
       
-      return data;
+      const headers = new Headers();
+      
+      headers.append('Authorization', `Bearer ${accessToken}`)
+      const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers
+      })
+      data = await response.json();
+      console.info("Данные пользователя загружены");
+      //console.log(data);
+
+      // обрабатываем полученные данные
+      let imgAvatar = document.getElementById("_imgAvatar");
+
+      imgAvatar.src = data.picture;
+
+    } catch(err) {
+      console.error("Ошибка:" + err);
+
+    }
+
+    return data;
+
   }
 
+      
+
+  
   //миграция в gis
   //https://developers.google.com/identity/oauth2/web/guides/migration-to-gis?hl=en#gapi-callback
   //https://developers.google.com/identity/gsi/web/reference/js-reference?hl=en&authuser=19
@@ -399,6 +427,177 @@
   //https://advancedweb.hu/using-google-auth-in-javascript/
   //https://github.com/sashee/drive-api-from-js
   //https://sashee.github.io/drive-api-from-js/
+
+  /**
+   * Получение идентификатора файла данных
+   */ 
+  async function getAppDataFileId(fileName) {
+    return await gapi.client.drive.files.list({
+      q: 'name="' + fileName + '"',
+      spaces: 'appDataFolder',
+      fields: 'files(id)',
+      pageSize: 100,
+      orderBy: 'createdTime'
+    }).then(
+      function (data) {
+        if (_.isEmpty(data.result.files)) {
+          throw "Файлы не найдены";
+        }
+        return data.result.files[0].id;
+      }
+    );
+  };
+
+  /**
+   * Поиск файлов
+   */ 
+  async function findFile(query) {
+    return await prom(gapi.client.drive.files.list, {
+      // вместо 'appDataFolder' можно использовать ID папки
+      spaces: 'appDataFolder',
+      fields: 'files(id,name)',
+      pageSize: 100,
+      orderBy: 'createdTime',
+      q: 'name="' + query + '"'
+    }).then(
+      function (data) {
+        if (_.isEmpty(data.result.files)) {
+          throw "Файлы не найдены";
+        }
+        // результат: массив объектов вида [{id: '...', name: '...'}], 
+        // отсортированных по времени создания
+        return data.result.files;
+      }
+    );
+  };
+
+  /**
+   * Сохранение файла данных на Google диске
+   */ 
+  async function uploadFile(fileId, content) {
+    console.log("Сохранено содержимое файла с идентификатором " + fileId);
+    // функция принимает либо строку, либо объект, который можно сериализовать в JSON
+    return prom(gapi.client.request, {
+      path: `/upload/drive/v3/files/${fileId}`,
+      method: 'PATCH',
+      params: {uploadType: 'media'},
+      body: typeof content === 'string' ? content : JSON.stringify(content)
+    })
+  }
+
+  /**
+   * Скачивание файла данных с Google диска
+   */
+  async function downloadFile(fileId) {
+    const resp = await prom(gapi.client.drive.files.get, {
+      fileId: fileId,
+      alt: 'media'
+    });
+    // resp.body хранит ответ в виде строки
+    // resp.result — это попытка интерпретировать resp.body как JSON.
+    // Если она провалилась, значение resp.result будет false
+    // Т.о. функция возвращает либо объект, либо строку
+    console.log("Загружен файл с идентификатором " + fileId);
+
+    return resp.result || resp.body;
+  }
+
+  function createConfigFile() {
+    createEmptyFile(configFileName);
+  }
+
+  function saveConfigFile() {
+    getConfigFileId().then(
+      function(response) {
+        configFileId = response;
+        console.log("Сохранение конфигурации в файл с идентификатором " + configFileId);
+        
+        uploadFile(configFileId, DEFAULT_CONFIG);
+      }
+    );
+  }
+
+  function loadConfigFile() {
+    getConfigFileId().then(
+      function(response) {
+        configFileId = response;
+        console.log("Загрузка файла конфигурации с идентификатором " + configFileId);
+        
+        downloadFile(configFileId).then(
+          function(appData){
+            console.log(appData);
+        });   
+      }
+    );
+    /*
+    findFile(configFileName).then(
+      function(response){
+        configFileId = response[0].id;
+        downloadFile(configFileId).then(
+          function(appData){
+            console.log(appData);
+      });    
+    });*/
+  }
+
+  async function deleteConfigFile() {
+    configFileId = await getConfigFileId();
+    deleteFile(configFileId).then(
+      function(info){
+        localStorage.removeItem(app_name + '_configFileId');
+          if (info) console.log("Файл удалён");
+    });
+    /*
+    getConfigFileId().then(
+      function(response) {
+        configFileId = response;
+        console.log("Удаление файла конфигурации с идентификатором " + configFileId);
+        
+        deleteFile(configFileId).then(
+          function(info){
+            localStorage.removeItem(app_name + '_configFileId');
+            if (info) console.log("Файл удалён");
+        });   
+      }
+    );*/
+    /*
+    findFile(configFileName).then(
+      function(response){
+        configFileId = response[0].id;
+        deleteFile(configFileId).then(
+          function(info){
+            console.log(info);
+      });    
+    });
+    */
+  }
+
+  /**
+  * Вывод метаданных для первых 10 файлов.
+  */
+  async function listFiles() {
+    let response;
+    try {
+      response = await gapi.client.drive.files.list({
+        'pageSize': 10,
+        'fields': 'files(id, name)',
+      });
+    } catch (err) {
+      console.log(err.message);
+      return;
+    }
+    const files = response.result.files;
+    if (!files || files.length == 0) {
+      console.log('Файлы не найдены.');
+      return;
+    }
+    // Подготовка строки вывода
+    const output = files.reduce(
+        (str, file) => `${str}${file.name} (${file.id}\n`,
+        'Файлы:\n');
+    console.log(output);
+  }
+
 </script>
 
 <script src="https://accounts.google.com/gsi/client" onload="gisInit()" async defer></script>
