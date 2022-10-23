@@ -137,7 +137,7 @@ function getConfig() {
         ret = JSON.parse(localStorage.getItem(app_name + '_config'));
     } catch(e) {}
     // если сохраненного конфига нет, возвращаем копию дефолтного
-    return ret || {...DEFAULT_CONFIG};
+    return ret || {...CONFIG};
 }
 
 async function saveConfig(newConfig) {
@@ -221,3 +221,5 @@ function initApp() {
   //https://advancedweb.hu/using-google-auth-in-javascript/
   //https://github.com/sashee/drive-api-from-js
   //https://sashee.github.io/drive-api-from-js/
+
+  //https://www.bootdey.com/snippets/view/Profile-settings

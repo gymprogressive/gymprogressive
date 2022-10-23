@@ -1,108 +1,130 @@
 <!doctype html>
-<html lang="ru">
+<html lang='ru'>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.101.0">
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name="description" content=''>
+    <meta name='author' content='Alexey Kuznetsov'>
 
     <title>Жим "Прогрессивный"</title>
     
-    <link href="css/template.css" rel="stylesheet">
+    <link href='css/template.css' rel='stylesheet'>
 
-    <script src="js/gapi.js" async defer></script>
-    <script src="js/config.js"></script>
+    <script src='js/gapi.js' async defer></script>
+    <script src='js/config.js'></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT' crossorigin='anonymous'>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js' integrity='sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8' crossorigin='anonymous'></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js' integrity='sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==' crossorigin='anonymous' referrerpolicy='no-referrer'></script>
 </head>
 <body>
 
-<header class="p-3 mb-3 border-bottom">
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a class="navbar-brand" href="javascript:void(0)">
-        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+<header class='p-3 mb-3 border-bottom'>
+  <div class='container'>
+    <div class='d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start'>
+      <a class='navbar-brand' href='javascript:void(0)'>
+        <a href='#' class='d-flex align-items-center text-dark text-decoration-none'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='40' height='32' fill='currentColor' class='bi bi-bar-chart-fill' viewBox='0 0 16 16'>
             <title>Жим "Прогрессивный"</title>
-            <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+            <path d='M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z'/>
           </svg>
-          <span class="fs-4">Жим "Прогрессивный"</span>
+          <span class='fs-4'>Жим "Прогрессивный"</span>
         </a>
       </a>
 
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="#" class="nav-link px-2 link-secondary">О сайте</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">Контакты</a></li>
+      <ul class='nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0'>
+        <li><a href='#' class='nav-link px-2 link-secondary'>О сайте</a></li>
+        <li><a href='#' class='nav-link px-2 link-dark'>Контакты</a></li>
       </ul>
 
-      <div class="dropdown text-end">
-        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <img id="_imgAvatar" src="placeholder.png" class="rounded-circle" width="32" height="32"></img> 
+      <div class='dropdown text-end'>
+        <a href='#' class='d-block link-dark text-decoration-none dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false'>
+          <img id='_imgAvatar' src='placeholder.png' class='rounded-circle' width='32' height='32'></img> 
         </a>
-        <ul class="dropdown-menu dropdown-menu-dark text-small">
-          <li><a id="itemStart" class="dropdown-item" href="#">Начать тренировку...</a></li>
-          <li><a id="itemSettings" class="dropdown-item" href="#">Настройки</a></li>
-          <li><a id="itemProfile" class="dropdown-item" href="#">Профиль</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li id="_getToken"><a class="dropdown-item" href="#" onclick="getToken();">Войти через Google</a></li>
-          <li id="_revokeToken" style="display: none;"><a class="dropdown-item" href="#" onclick="revokeToken();">Выйти</a></li>
+        <ul class='dropdown-menu dropdown-menu-dark text-small'>
+          <li><a id='itemStart' class='dropdown-item' href='#'>Начать тренировку...</a></li>
+          <li><a id='itemSettings' class='dropdown-item' href='#'>Настройки</a></li>
+          <li><a id='itemProfile' class='dropdown-item' href='#'>Профиль</a></li>
+          <li><hr class='dropdown-divider'></li>
+          <li id='_getToken'><a class='dropdown-item' href='#' onclick='getToken();'>Войти через Google</a></li>
+          <li id='_revokeToken' style='display: none;'><a class='dropdown-item' href='#' onclick='revokeToken();'>Выйти</a></li>
         </ul>
       </div>
     </div>
   </div>
 </header>
 
-<div class="col-lg-8 mx-auto p-4 py-md-5">
+<div class='col-lg-8 mx-auto p-4 py-md-5'>
   <main>
 
     <h1>Авторизация через GSI и GAPI</h1>
 
-    <button onclick="listMajors();">Запрос через Sheets API</button> <br><br>
+    <button onclick='listMajors();'>Запрос через Sheets API</button> <br><br>
 
-    <button onclick="loadCalendar();">Загрузить Календарь</button><br><br>
+    <button onclick='loadCalendar();'>Загрузить Календарь</button><br><br>
 <!--
     <button onclick="createConfigFile();">Создать файл конфигурации</button><br><br>
 
     <button onclick="getConfigFileId();">Получить идентификатор файла конфигурации</button><br><br>
--->
+
     <button onclick="saveConfigFile();">Сохранить файл конфигурации</button><br><br>
-
-    <button onclick="loadConfigFile();">Загрузить файл конфигурации</button><br><br>
-
+-->
+    <button onclick='loadConfigFile();'>Загрузить файл конфигурации</button><br><br>
+<!--
     <button onclick="deleteConfigFile();">Удалить файл конфигурации</button><br><br>
-
-    <button onclick="listFiles();">Список файлов</button><br><br>
+-->
+    <button onclick='listFiles();'>Список файлов</button><br><br>
 
   </main>
-  <footer class="pt-5 my-5 text-muted border-top">
+  <footer class='pt-5 my-5 text-muted border-top'>
     Создано командой Жим "Прогрессивный" &middot; &copy; 2022
   </footer>
 </div>
 
 <!-- Профиль -->
-<div class="modal" id="modProfile">
-  <div class="modal-dialog">
-    <div class="modal-content bg-dark text-light">
+<div class='modal' id='modProfile'>
+  <div class='modal-dialog'>
+    <div class='modal-content bg-dark text-light'>
 
       <!-- Заголовок модального окна -->
-      <div class="modal-header">
-        <h4 class="modal-title">Профиль</h4>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      <div class='modal-header'>
+        <h4 class='modal-title'>Профиль</h4>
+        <button type='button' class='btn-close btn-close-white' data-bs-dismiss='modal'></button>
       </div>
 
       <!-- Тело модального окна -->
-      <div class="modal-body">
-        Тело профиля..
+      <div class='modal-body bg-light text-dark'>
+        <h3 class="mt-2 mb-0">Учётная запись Google</h3>
+        <div class="card p-3 py-4">
+          <div class="text-center">
+              <img id='profile_avatar' src="" width="100" class="rounded-circle">
+          </div>
+          <div class="text-center mt-3">
+              <!--<span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>-->
+              <h5 id='profile_name' class="mt-2 mb-0">...</h5>
+              <span> </span>
+              <div class="px-4 mt-1">
+                  <br><p id='profile_email' class="fonts">...</p>
+              </div>
+              <!--<ul class="social-list">
+                  <li><i class="fa fa-facebook"></i></li>
+                  <li><i class="fa fa-dribbble"></i></li>
+                  <li><i class="fa fa-instagram"></i></li>
+                  <li><i class="fa fa-linkedin"></i></li>
+                  <li><i class="fa fa-google"></i></li>
+              </ul>
+              <div class="buttons">
+                  <button class="btn btn-outline-primary px-4">Message</button>
+                  <button class="btn btn-primary px-4 ms-3">Contact</button>
+              </div>-->
+          </div>
+        </div>
       </div>
 
       <!-- Подвал модального окна -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-danger' data-bs-dismiss='modal'>Закрыть</button>
       </div>
 
     </div>
@@ -121,12 +143,217 @@
       </div>
 
       <!-- Тело модального окна -->
-      <div class="modal-body">
-        Тело настроек..
+      <div class="modal-body bg-light text-dark">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link text-dark active" data-bs-toggle="tab" href="#home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" data-bs-toggle="tab" href="#menu1">Menu 1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" data-bs-toggle="tab" href="#menu2">Menu 2</a>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane container active" id="home">
+            <h5 class="mb-0 mt-5">Notifications Settings</h5>
+            <p>Select notification you want to receive</p>
+            <hr class="my-4" />
+            <strong class="mb-0">Security</strong>
+            <p>Control security alert you will be notified.</p>
+            <div class="list-group mb-5 shadow">
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Unusual activity notifications</strong>
+                          <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                      </div>
+                      <div class="col-auto">
+                          <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="alert1" checked="" />
+                              <span class="custom-control-label"></span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Unauthorized financial activity</strong>
+                          <p class="text-muted mb-0">Fusce lacinia elementum eros, sed vulputate urna eleifend nec.</p>
+                      </div>
+                      <div class="col-auto">
+                          <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="alert2" />
+                              <span class="custom-control-label"></span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <strong class="mb-0">System</strong>
+            <p>Please enable system alert you will get.</p>
+            <div class="list-group mb-5 shadow">
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me about new features and updates</strong>
+                          <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                      </div>
+                      <div class="col-auto">
+                          <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="alert3" checked="" />
+                              <span class="custom-control-label"></span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me by email for latest news</strong>
+                          <p class="text-muted mb-0">Nulla et tincidunt sapien. Sed eleifend volutpat elementum.</p>
+                      </div>
+                      <div class="col-auto">
+                          <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="alert4" checked="" />
+                              <span class="custom-control-label"></span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me about tips on using account</strong>
+                          <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                      </div>
+                      <div class="col-auto">
+                          <div class="custom-control custom-switch">
+                              <input type="checkbox" class="custom-control-input" id="alert5" />
+                              <span class="custom-control-label"></span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane container fade" id="menu1">
+            <p>2</p>
+          </div>
+          <div class="tab-pane container fade" id="menu2">
+            <p>3</p>
+          </div>
+        </div>
+
+<!--
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+              <h2 class="h3 mb-4 page-title">Settings</h2>
+              <div class="my-4">
+                  <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                      <li class="nav-item">
+                          <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Notifications</a>
+                      </li>
+                  </ul>
+                  <h5 class="mb-0 mt-5">Notifications Settings</h5>
+                  <p>Select notification you want to receive</p>
+                  <hr class="my-4" />
+                  <strong class="mb-0">Security</strong>
+                  <p>Control security alert you will be notified.</p>
+                  <div class="list-group mb-5 shadow">
+                      <div class="list-group-item">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  <strong class="mb-0">Unusual activity notifications</strong>
+                                  <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                              </div>
+                              <div class="col-auto">
+                                  <div class="custom-control custom-switch">
+                                      <input type="checkbox" class="custom-control-input" id="alert1" checked="" />
+                                      <span class="custom-control-label"></span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="list-group-item">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  <strong class="mb-0">Unauthorized financial activity</strong>
+                                  <p class="text-muted mb-0">Fusce lacinia elementum eros, sed vulputate urna eleifend nec.</p>
+                              </div>
+                              <div class="col-auto">
+                                  <div class="custom-control custom-switch">
+                                      <input type="checkbox" class="custom-control-input" id="alert2" />
+                                      <span class="custom-control-label"></span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <hr class="my-4" />
+                  <strong class="mb-0">System</strong>
+                  <p>Please enable system alert you will get.</p>
+                  <div class="list-group mb-5 shadow">
+                      <div class="list-group-item">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  <strong class="mb-0">Notify me about new features and updates</strong>
+                                  <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                              </div>
+                              <div class="col-auto">
+                                  <div class="custom-control custom-switch">
+                                      <input type="checkbox" class="custom-control-input" id="alert3" checked="" />
+                                      <span class="custom-control-label"></span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="list-group-item">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  <strong class="mb-0">Notify me by email for latest news</strong>
+                                  <p class="text-muted mb-0">Nulla et tincidunt sapien. Sed eleifend volutpat elementum.</p>
+                              </div>
+                              <div class="col-auto">
+                                  <div class="custom-control custom-switch">
+                                      <input type="checkbox" class="custom-control-input" id="alert4" checked="" />
+                                      <span class="custom-control-label"></span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="list-group-item">
+                          <div class="row align-items-center">
+                              <div class="col">
+                                  <strong class="mb-0">Notify me about tips on using account</strong>
+                                  <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                              </div>
+                              <div class="col-auto">
+                                  <div class="custom-control custom-switch">
+                                      <input type="checkbox" class="custom-control-input" id="alert5" />
+                                      <span class="custom-control-label"></span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      
+      
+      </div>
+-->
       </div>
 
       <!-- Подвал модального окна -->
-      <div class="modal-footer">
+      <div class="modal-footer bg-dark">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
       </div>
 
@@ -139,11 +366,11 @@
   let access_token;
   let expires_in;
   
-  if (window.localStorage.getItem("access_token"))
-    access_token = localStorage.getItem("access_token");
+  if (window.localStorage.getItem('access_token'))
+    access_token = localStorage.getItem('access_token');
 
-  if (window.localStorage.getItem("token_expires_in"))
-    expires_in = new Date(localStorage.getItem("token_expires_in")).getTime(); // время действия токена в милисекундах
+  if (window.localStorage.getItem('token_expires_in'))
+    expires_in = new Date(localStorage.getItem('token_expires_in')).getTime(); // время действия токена в милисекундах
   
   let gapiInited = false;
   let gisInited = false;
@@ -157,22 +384,25 @@
     return (new Date().getTime()) > expires_in;
   }
 
+
   async function gapiStart() {
+    Logo();
     await gapi.client.init({
       }).then(function() {
         
         // Инициализация библиотеки Google API с полученным ключом
         if (access_token) {
-          console.log (access_token);
+          //log (access_token,'Red','LemonChiffon');
           gapi.auth.setToken({access_token: access_token});
           gisInited = true;
         } 
 
+        
         let now = new Date().getTime(); // текущее время в милисекундах
-        console.log (now + " " + new Date(now));
-        console.log (expires_in + " " + new Date(expires_in));
+        
+        TokenExpires(now,expires_in);
+
         if (now > expires_in) {
-          console.log("Текущее время больше времени действия токена")
           gisInited = false;
         }
         
@@ -180,19 +410,20 @@
         gapi.client.load('sheets', 'v4');
         gapi.client.load('calendar','v3');
 
-        console.info('Библиотека Client Google API инциализирована');
+        //console.info('Библиотека Client Google API инциализирована');
+        log('Библиотека Client Google API инциализирована','info');
         
         gapiInited = true;
 
         checkApp();
 
     }).then(function(response) {
-      console.info('Библиотеки загружены');
+        log('Библиотеки загружены','info');
     }, function(reason) {
       console.error('Ошибка: ' + reason.result.error.message);
     }).then(function() {
-      //  console.log("access_token: ");
-      //  console.log(access_token);
+      //  log("access_token: ");
+      //  log(access_token);
     });
   }
 
@@ -210,15 +441,15 @@
       callback: (tokenResponse) => {
         let later = new Date(new Date().getTime() + (1 * Number(tokenResponse.expires_in) * 1000));
 
-        localStorage.setItem("token_expires_in", later);
+        localStorage.setItem('token_expires_in', later);
         expires_in = later;
  
-        console.warn("Токен истекает через " + tokenResponse.expires_in + " секунд");
+        log('Токен истекает через ' + tokenResponse.expires_in + ' секунд','warning');
         
-        localStorage.setItem("access_token", tokenResponse.access_token);
+        localStorage.setItem('access_token', tokenResponse.access_token);
         access_token = tokenResponse.access_token;
 
-        console.info('Библиотека GIS инициализирована');
+        log('Библиотека GIS инициализирована','info');
         gisInited = true;
 
         checkApp();
@@ -230,12 +461,12 @@
    * Элементы управления
    */
 
-  let btnGetToken = document.getElementById("_getToken");
-  let btnRevokeToken = document.getElementById("_revokeToken");
-  let imgAvatar = document.getElementById("_imgAvatar");
-  let itemStart = document.getElementById("itemStart")
-  let itemSettings = document.getElementById("itemSettings")
-  let itemProfile = document.getElementById("itemProfile")
+  let btnGetToken = document.getElementById('_getToken');
+  let btnRevokeToken = document.getElementById('_revokeToken');
+  let imgAvatar = document.getElementById('_imgAvatar');
+  let itemStart = document.getElementById('itemStart')
+  let itemSettings = document.getElementById('itemSettings')
+  let itemProfile = document.getElementById('itemProfile')
 
   let profile = document.getElementById('modProfile');
   let settings = document.getElementById('modSettings');
@@ -245,16 +476,16 @@
   function checkApp() {
   
     itemStart.onclick=function(){
-      console.log('тренировка');
+      log('тренировка');
     }
 
     itemSettings.onclick=function(){
-      console.log('настройки');
+      log('настройки');
       modSettings.show();
     }
 
     itemProfile.onclick=function(){
-      console.log('профиль');
+      log('профиль');
       modProfile.show();
     }
 
@@ -270,37 +501,41 @@
       //myInput.focus()
     })
 
-    log(`Проверка элементов управления.\nПараметры gapi: ${gapiInited}, gis: ${gisInited}, not expired: ${!isExpired()}.`,'Blue');
+    log(` Проверка элементов управления.\ 
+ Параметры
+ -------------------- 
+ gapi:         ${gapiInited}
+ gis:          ${gisInited}
+ not expired:  ${!isExpired()}`,'MidnightBlue');
 
     if (gapiInited && gisInited && !isExpired()){
-      console.log ("gapiInited && gisInited = true");
-      log(`--------------------------------------------------------\n`+
-          access_token+
-          `\n--------------------------------------------------------`,'Tomato');
-
+      log ('Активация элементов управления','info');
+      //log(access_token,'White','Tomato');
+      
       USER = getUserProfileData(access_token);
+
+      itemStart.classList.remove('disabled');
+      itemSettings.classList.remove('disabled');
+      itemProfile.classList.remove('disabled');
       
-      itemStart.classList.remove("disabled");
-      itemSettings.classList.remove("disabled");
-      itemProfile.classList.remove("disabled");
-      
-      btnGetToken.style.display="none";
-      btnRevokeToken.style.display="block";
+      btnGetToken.style.display='none';
+      btnRevokeToken.style.display='block';
 
       scheduleConfigSync();
     } else {
-      itemStart.classList.add("disabled");
-      itemSettings.classList.add("disabled");
-      itemProfile.classList.add("disabled");
+      log ('Дезактивация элементов управления','info');
+      itemStart.classList.add('disabled');
+      itemSettings.classList.add('disabled');
+      itemProfile.classList.add('disabled');
       
-      btnGetToken.style.display="block";
-      btnRevokeToken.style.display="none";
+      btnGetToken.style.display='block';
+      btnRevokeToken.style.display='none';
       
-      imgAvatar.src="placeholder.png";
+      imgAvatar.src='placeholder.png';
       
     }
   
-    console.info("Проверка авторизации выполнена")
+    log('Проверка авторизации выполнена','info');
 
   }
 
@@ -317,7 +552,7 @@
           range: 'Class Data!A1:E1',
       }).then(function(response) {
           let range = response.result;
-          console.log(range);
+          log(range);
       });
   }
 
@@ -329,8 +564,8 @@
       xhr.send();
       
       gapi.client.calendar.events.list({ 'calendarId': 'primary' })
-      .then(calendarAPIResponse => console.log(JSON.stringify(calendarAPIResponse)))
-      .catch(err => console.log(err));
+      .then(calendarAPIResponse => log(JSON.stringify(calendarAPIResponse)))
+      .catch(err => log(err));
       /*
       document.getElementById("showEventsBtn").innerText = "Refresh Calendar";
       */
@@ -345,19 +580,18 @@
     let cred = gapi.client.getToken();
 
     if (cred !== null) {
+      deleteConfigFile();
       google.accounts.oauth2.revoke(cred.access_token, () => {
         console.warn('Токен отозван: ' + cred.access_token);
         
         gapi.client.setToken('');
         access_token = null;
-        localStorage.setItem("access_token","");
+        localStorage.setItem('access_token','');
         
         gisInited = false;
         
         checkApp();
-
       });
-      
     }
 
   }
@@ -377,17 +611,24 @@
         headers
       })
       data = await response.json();
-      console.info("Данные пользователя загружены");
-      //console.log(data);
-
+      log(data);
+      log('Данные пользователя загружены','info');
+      
       // обрабатываем полученные данные
-      let imgAvatar = document.getElementById("_imgAvatar");
-
-      imgAvatar.src = data.picture;
+      let imgAvatar = document.getElementById('_imgAvatar');
+      let profileAvatar = document.getElementById('profile_avatar');
+      let profileName = document.getElementById('profile_name');
+      let profileEmail = document.getElementById('profile_email');
+      //log(profileName);
+      profileAvatar.src = imgAvatar.src = data.picture;
+      profileName.innerText = data.name;
+      profileEmail.innerText = data.email;
 
     } catch(err) {
-      console.error("Ошибка:" + err);
-
+      log("Ошибка:" + err,'error');
+      imgAvatar.src='placeholder.png';
+      gisInited = false;
+      checkApp();
     }
 
     return data;
@@ -407,7 +648,7 @@
     }).then(
       function (data) {
         if (_.isEmpty(data.result.files)) {
-          throw "Файлы не найдены";
+          throw 'Файлы не найдены';
         }
         return data.result.files[0].id;
       }
@@ -428,7 +669,7 @@
     }).then(
       function (data) {
         if (_.isEmpty(data.result.files)) {
-          throw "Файлы не найдены";
+          throw 'Файлы не найдены';
         }
         // результат: массив объектов вида [{id: '...', name: '...'}], 
         // отсортированных по времени создания
@@ -441,7 +682,7 @@
    * Сохранение файла данных на Google диске
    */ 
   async function uploadFile(fileId, content) {
-    console.log("Сохранено содержимое файла с идентификатором " + fileId);
+    log('Сохранено содержимое файла с идентификатором ' + fileId);
     // функция принимает либо строку, либо объект, который можно сериализовать в JSON
     return prom(gapi.client.request, {
       path: `/upload/drive/v3/files/${fileId}`,
@@ -463,7 +704,7 @@
     // resp.result — это попытка интерпретировать resp.body как JSON.
     // Если она провалилась, значение resp.result будет false
     // Т.о. функция возвращает либо объект, либо строку
-    console.log("Загружен файл с идентификатором " + fileId);
+    log('Загружен файл с идентификатором ' + fileId);
 
     return resp.result || resp.body;
   }
@@ -476,7 +717,7 @@
     getConfigFileId().then(
       function(response) {
         configFileId = response;
-        console.log("Сохранение конфигурации в файл с идентификатором " + configFileId);
+        log('Сохранение конфигурации в файл с идентификатором ' + configFileId);
         
         uploadFile(configFileId, DEFAULT_CONFIG);
       }
@@ -487,11 +728,11 @@
     getConfigFileId().then(
       function(response) {
         configFileId = response;
-        console.log("Загрузка файла конфигурации с идентификатором " + configFileId);
+        log('Загрузка файла конфигурации с идентификатором ' + configFileId);
         
         downloadFile(configFileId).then(
           function(appData){
-            console.log(appData);
+            log(appData);
         });   
       }
     );
@@ -503,7 +744,7 @@
     deleteFile(configFileId).then(
       function(info){
         localStorage.removeItem(app_name + '_configFileId');
-          if (info) console.log("Файл удалён");
+          if (info) log('Файл конфигурации удалён','warning');
     });
   }
 
@@ -540,19 +781,19 @@
         'fields': 'files(id, name)',
       });
     } catch (err) {
-      console.log(err.message);
+      log(err.message);
       return;
     }
     const files = response.result.files;
     if (!files || files.length == 0) {
-      console.log('Файлы не найдены.');
+      log('Файлы не найдены.');
       return;
     }
     // Подготовка строки вывода
     const output = files.reduce(
         (str, file) => `${str}${file.name} (${file.id}\n`,
         'Файлы:\n');
-    console.log(output);
+    log(output);
   }
 
   async function syncConfig() {
@@ -572,7 +813,7 @@
         localStorage.setItem(app_name + '_config', JSON.stringify(remoteConfig))
       }
       // синхронизация завершена, в localStorage актуальный конфиг
-      console.log('Синхронизация завершена, в localStorage актуальный конфиг');
+      log('Синхронизация завершена, в localStorage актуальный конфиг');
     } catch(e) {
       if (e.status === 404) {
         // кто-то удалил наш конфиг, забываем неверный fileID и пробуем еще раз
@@ -585,6 +826,7 @@
   }
 
   function scheduleConfigSync(delay) {
+    log('Запущен таймер синхронизации конфига','info');
     // сбрасываем старый таймер, если он был
     if (configSyncTimeoutId) {
       clearTimeout(configSyncTimeoutId);
@@ -592,48 +834,16 @@
     configSyncTimeoutId = setTimeout(() => {
       // выполняем синхронизацию и шедулим снова
       syncConfig()
-        .catch(e => console.log('Ошибка синхронизации файла конфигурации', e))
+        .catch(e => log('Ошибка синхронизации файла конфигурации', e))
         .finally(() => scheduleConfigSync());
     }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
   }
-    
-  function log(msg, color) {
-    color = color || "black";
-    bgc = "White";
-    switch (color) {
-        case "success":  color = "Green";      bgc = "LimeGreen";       break;
-        case "info":     color = "DodgerBlue"; bgc = "Turquoise";       break;
-        case "error":    color = "Red";        bgc = "Black";           break;
-        case "start":    color = "OliveDrab";  bgc = "PaleGreen";       break;
-        case "warning":  color = "Tomato";     bgc = "Black";           break;
-        case "end":      color = "Orchid";     bgc = "MediumVioletRed"; break;
-        default: color = color;
-    }
-
-    if (typeof msg == "object") {
-      console.log(msg);
-    } else if (typeof color == "object") {
-      console.log("%c" + msg, "color: PowderBlue;font-weight:bold; background-color: RoyalBlue;");
-      console.log(color);
-    } else {
-      console.log("%c" + msg, "color:" + color + ";font-weight:bold; background-color: " + bgc + ";");
-    }
-  }
-
-  /*
-  log("hey"); // Will be black
-  log("Hows life?", "green"); // Will be green
-  log("I did it", "success"); // Styled so as to show how great of a success it was!
-  log("FAIL!!", "error"); // Red on black!
-  var someObject = {prop1: "a", prop2: "b", prop3: "c"};
-  log(someObject); // prints out object
-  log("someObject", someObject); // prints out "someObect" in blue followed by the someObject
-  */
 
 </script>
 
-<script src="https://accounts.google.com/gsi/client" onload="gisInit()" async defer></script>
-<script src="https://apis.google.com/js/api.js" onload="gapiLoad()" async defer></script>
+<script src='js/logger.js'></script>
+<script src='https://accounts.google.com/gsi/client' onload='gisInit()' async defer></script>
+<script src='https://apis.google.com/js/api.js' onload='gapiLoad()' async defer></script>
     
 </body>
 </html>
