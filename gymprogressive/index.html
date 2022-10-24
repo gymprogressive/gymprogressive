@@ -594,7 +594,8 @@
     let cred = gapi.client.getToken();
 
     if (cred !== null) {
-      deleteConfigFile();
+      //Перед удалением конфига вызвать диалог для подтверждения
+      //deleteConfigFile();
       google.accounts.oauth2.revoke(cred.access_token, () => {
         console.warn('Токен отозван: ' + cred.access_token);
         
