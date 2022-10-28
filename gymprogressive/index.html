@@ -768,6 +768,7 @@
       // берем configFileId
       let configFileId = localStorage.getItem(app_name + '_configFileId');
       if (!configFileId) {
+        try {
           // ищем нужный файл на Google Drive
           const configFiles = await find('name = "' + configFileName + '"');
           if (configFiles.length > 0) {
@@ -779,6 +780,11 @@
           }
           // сохраняем ID
           localStorage.setItem(app_name + '_configFileId', configFileId);
+        } catch(e){
+          // в случае ошибки перегружаем страницу
+          log(e.status,'error');
+          location.reload();
+        }
       }
 
       return configFileId;
@@ -849,7 +855,10 @@
     configSyncTimeoutId = setTimeout(() => {
       // выполняем синхронизацию и шедулим снова
       syncConfig()
-        .catch(e => log('Ошибка синхронизации файла конфигурации', e))
+        .catch(e => {
+          log('Ошибка синхронизации файла конфигурации', e);
+          location.reload();
+        })
         .finally(() => scheduleConfigSync());
     }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
   }

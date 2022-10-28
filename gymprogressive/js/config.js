@@ -94,7 +94,7 @@ let programs = {'list':[
       {
         'name':'Отжимания',
         'excersises':[
-          {'name':'Отжимания от стены'},
+          {'name':'Отжимания от стены','levels':[{'sets':'','reps':''},{'sets':'','reps':''},{'sets':'','reps':''}]},
           {'name':'Отжимания в наклоне'},
           {'name':'Отжимания на коленях'},
           {'name':'Неполные отжимания'},
@@ -178,4 +178,8 @@ let programs = {'list':[
       }
     ]
   }
-]}
+]};
+
+let excersises = {'list':[
+  {'id':1,'name':'Отжимания от стены','description':'','level':'','group':'Отжимания','links':[]}
+]};
