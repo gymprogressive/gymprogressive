@@ -454,6 +454,58 @@ function scheduleConfigSync(delay) {
   }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
 }
 
+
+// внедрить в основную логику приложения
+let checkTokenSuccess = (gisInited) => {
+  // если токен закончился запускаем проверку элементов управления
+  if (!gisInited) checkApp;
+};
+
+function checkToken(cbSuccess) {
+  if (!isLoggedIn) {
+    // выходим, если не входили
+    return;
+  }
+  
+  try {
+    if (access_token) {
+      
+      let now = new Date().getTime(); // текущее время в милисекундах
+      
+      TokenExpires(now,expires_in);
+
+      if (now > expires_in) {
+        gisInited = false;
+      }
+
+      cbSuccess(gisInited);
+
+    }
+    // проверка завершена
+    log('Проверка токена завершена');
+  } catch(e) {
+    throw e;
+  }
+}
+
+function scheduleCheckToken(delay, cbSuccess) {
+  log('Запущен таймер проверки токена','info');
+  // сбрасываем старый таймер, если он был
+  if (tokenSyncTimeoutId) {
+    clearTimeout(tokenSyncTimeoutId);
+  }
+  tokenSyncTimeoutId = setTimeout(() => {
+    // выполняем синхронизацию и шедулим снова
+    checkToken(cbSuccess)
+      .catch(e => {
+        log('Ошибка проверки токена', e);
+        location.reload();
+      })
+      .finally(() => scheduleCheckToken(SYNC_PERIOD, cbSuccess));
+  }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
+}
+
+
 /**
  * %=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%
  * %=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%
@@ -728,19 +780,18 @@ async function getConfigFileId() {
   return configFileId;
 }
 
-
 /**
  * Получение файла конфигурации из локального хранилища либо
  * из перменной с настройками по умолчанию
  * @returns 
  */
 function getConfig() {
-    let ret;
-    try {
-        ret = JSON.parse(localStorage.getItem(app_name + '_config'));
-    } catch(e) {}
+  let ret;
+  try {
+    ret = JSON.parse(localStorage.getItem(app_name + '_config'));
+  } catch(e) {}
     // если сохраненного конфига нет, возвращаем копию дефолтного
-    return ret || {...CONFIG};
+  return ret || {...CONFIG};
 }
 
 /**
@@ -748,14 +799,14 @@ function getConfig() {
  * @param {*} newConfig 
  */
 async function saveConfig(newConfig) {
-    // эту функцию зовем всегда, когда надо изменить конфиг
-    localStorage.setItem(app_name + '_config', JSON.stringify(newConfig))
-    if (isLoggedIn()) {
-        // получаем config file ID
-        const configFileId = await getConfigFileId();
-        // заливаем новый конфиг в Google Drive
-        uploadFile(configFileId, newConfig);
-    }
+  // эту функцию зовем всегда, когда надо изменить конфиг
+  localStorage.setItem(app_name + '_config', JSON.stringify(newConfig))
+  if (isLoggedIn()) {
+    // получаем config file ID
+    const configFileId = await getConfigFileId();
+    // заливаем новый конфиг в Google Drive
+    uploadFile(configFileId, newConfig);
+  }
 }
 
 /*
