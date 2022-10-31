@@ -194,7 +194,7 @@ not expired:  ${!isExpired()}`,'MidnightBlue');
     log ('Активация элементов управления','info');
     //log(access_token,'White','Tomato');
     
-    USER = getUserProfileData(access_token);
+    USER = getUserProfileData(access_token, cbUserProfileSuccess, cbUserProfileError);
 
     $C.mnuStart.classList.remove('disabled');
     $C.mnuSettings.classList.remove('disabled');
@@ -289,63 +289,62 @@ function revokeToken() {
 }
 
 /**
- * Запрос данных профиля
- * @param {*} accessToken 
- * @returns 
+ * Обратный вызов при успешном запросе профиля пользователя
+ * @param {*} result 
  */
-// Подумать над промисификацией
-// И вынести присвоение значений элементам управления за рамки функции
-// очистить её
-async function getUserProfileData (accessToken) {
-  //let data;
+let cbUserProfileSuccess = ( result ) => {
+  // надо перенести функцию в объект $C
+  // чтобы при удачном запросе обработка проходила внутри объекта
+  log(result);
+
+  $C.profileAvatar.src = $C.imgAvatar.src = result.picture;
+  $C.profileName.innerText = result.name;
+  $C.profileEmail.innerText = result.email;
   
-  //try {
-  
-    const request = 'https://www.googleapis.com/oauth2/v3/userinfo';
-    const headers = new Headers();
-        
-    headers.append('Authorization', `Bearer ${accessToken}`);
-    const response = await fetch(request, {headers})
-      .then(async (response)=>{
-        log('Статус запроса данных пользователя: ' + response.status);
-        if (response.status >= 400 && response.status < 600) {
-          // читать здесь
-          // https://stackoverflow.com/questions/783818/how-do-i-create-a-custom-error-in-javascript
-          throw new Error('Неудачная попытка получить данные с сервера');
-        }
-        return response.json();
-      })
-      .then((data)=>{
-        log(data);
+}
 
-        $C.profileAvatar.src = C.imgAvatar.src = data.picture;
-        $C.profileName.innerText = data.name;
-        $C.profileEmail.innerText = data.email;
+/**
+ * Обратный вызов при ошибке запроса профиля пользователя
+ * @param {*} result 
+ */
+let cbUserProfileError = ( result ) => {
+  // надо перенести функцию в объект $C
+  // чтобы при удачном запросе обработка проходила внутри объекта
+  log('' + result,'error');
+  $C.imgAvatar.src='placeholder.png';
+  gisInited = false;
 
-        return(data);
-      })
-      .catch((err) => {
-        log('' + err,'error');
-        $C.imgAvatar.src='placeholder.png';
-        gisInited = false;
+  checkApp();
+}
 
-        checkApp();
-      });
-    /*
-    const response = await fetch(request, headers).then((response) => {
-      if (response.status >= 400 && response.status < 600) {
-        throw new Error('Неудачная попытка получить данные с сервера');
-      }
-      return response;
-    }).then((returnedResponse) => {
-      // Your response to manipulate
-      this.setState({
-        complete: true
-      });
-    }).catch((error) => {
-      // Your error is here!
-      log(error)
-    });*/
+/**
+ * Запрос данных профиля
+ * @param {*} accessToken
+ * @param {*} cbSuccess 
+ * @param {*} cbError 
+ */
+async function getUserProfileData (accessToken, cbSuccess, cbError) {
+  const request = 'https://www.googleapis.com/oauth2/v3/userinfo';
+  const headers = new Headers();
+      
+  headers.append('Authorization', `Bearer ${accessToken}`);
+  const response = await fetch(request, {headers})
+  .then(async (response)=>{
+    log('Статус запроса данных пользователя: ' + response.status);
+    if (response.status >= 400 && response.status < 600) {
+      // читать здесь
+      // https://stackoverflow.com/questions/783818/how-do-i-create-a-custom-error-in-javascript
+      throw new Error('Неудачная попытка получить данные с сервера');
+    }
+    return response.json();
+  })
+  .then((data)=>{
+    cbSuccess(data);
+    return(data);
+  })
+  .catch((err) => {
+    cbError(err);
+  });
 }
 
 /**
@@ -375,9 +374,9 @@ async function listFiles() {
 }
 
 /**
-       * Print all Labels in the authorized user's inbox. If no labels
-       * are found an appropriate message is printed.
-       */
+  * Print all Labels in the authorized user's inbox. If no labels
+  * are found an appropriate message is printed.
+*/
  async function listLabels() {
   let response;
   try {
@@ -401,7 +400,10 @@ async function listFiles() {
 }
 
 
-
+/**
+ * Синхронизация конфига
+ * @returns 
+ */
 async function syncConfig() {
   if (!isLoggedIn) {
       return;
@@ -431,6 +433,10 @@ async function syncConfig() {
   }
 }
 
+/**
+ * Шедуллер синхронизации конфига
+ * @param {*} delay 
+ */
 function scheduleConfigSync(delay) {
   log('Запущен таймер синхронизации конфига','info');
   // сбрасываем старый таймер, если он был
@@ -464,19 +470,19 @@ function scheduleConfigSync(delay) {
  * @returns 
  */
 function prom(gapiCall, argObj) {
-    return new Promise((resolve, reject) => {
-        gapiCall(argObj).then(resp => {
-            if (resp && (resp.status < 200 || resp.status > 299)) {
-                console.log('Вызов GAPI вернул плохой статус', resp);
-                reject(resp);
-            } else {
-                resolve(resp);
-            }
-        }, err => {
-            console.log('Вызов GAPI неудался', err);
-            reject(err);
-        })
-    });
+  return new Promise((resolve, reject) => {
+    gapiCall(argObj).then(response => {
+      if (response && (response.status < 200 || response.status > 299)) {
+        console.log('Вызов GAPI вернул плохой статус', response);
+        reject(response);
+      } else {
+        resolve(response);
+      }
+    }, err => {
+      console.log('Вызов GAPI неудался', err);
+      reject(err);
+    })
+  });
 }
 
 /**
@@ -486,7 +492,7 @@ function prom(gapiCall, argObj) {
  */ 
 // Подумать над промисификацией
  async function getAppDataFileId(fileName) {
-  /*
+  
     // тест для промисификации
     const data = await prom(gapi.client.drive.files.list,{
       q: 'name="' + fileName + '"',
@@ -501,8 +507,8 @@ function prom(gapiCall, argObj) {
     }
 
     return data.result.files[0].id;
-  */
-  return await gapi.client.drive.files.list({
+  
+  /*return await gapi.client.drive.files.list({
     q: 'name="' + fileName + '"',
     spaces: 'appDataFolder',
     fields: 'files(id)',
@@ -515,7 +521,7 @@ function prom(gapiCall, argObj) {
       }
       return data.result.files[0].id;
     }
-  );
+  );*/
 };
 
 /**
@@ -525,20 +531,20 @@ function prom(gapiCall, argObj) {
  * @returns 
  */
 async function createEmptyFile(name, mimeType) {
-    const resp = await prom(gapi.client.drive.files.create, {
-        resource: {
-            name: name,
-            // для создания папки используйте
-            // mimeType = 'application/vnd.google-apps.folder'
-            mimeType: mimeType || 'text/plain',
-            // вместо 'appDataFolder' можно использовать ID папки
-            parents: ['appDataFolder']
-        },
-        fields: 'id'
-    });
-    console("Создан файл " + name);
-    // функция возвращает строку — идентификатор нового файла
-    return resp.result.id;
+  const resp = await prom(gapi.client.drive.files.create, {
+    resource: {
+      name: name,
+      // для создания папки используйте
+      // mimeType = 'application/vnd.google-apps.folder'
+      mimeType: mimeType || 'text/plain',
+      // вместо 'appDataFolder' можно использовать ID папки
+      parents: ['appDataFolder']
+    },
+    fields: 'id'
+  });
+  console("Создан файл " + name);
+  // функция возвращает строку — идентификатор нового файла
+  return resp.result.id;
 }
 
 /**
@@ -547,26 +553,25 @@ async function createEmptyFile(name, mimeType) {
  * @returns 
  */
 async function find(query) {
-    let ret = [];
-    let token;
-    do {
-        const resp = await prom(gapi.client.drive.files.list, {
-            // вместо 'appDataFolder' можно использовать ID папки
-            spaces: 'appDataFolder',
-            fields: 'files(id, name), nextPageToken',
-            pageSize: 100,
-            pageToken: token,
-            orderBy: 'createdTime',
-            q: query
-        })
-        ret = ret.concat(resp.result.files);
-        token = resp.result.nextPageToken;
-    } while (token)
-    // результат: массив объектов вида [{id: '...', name: '...'}], 
-    // отсортированных по времени создания
-    return ret;
+  let ret = [];
+  let token;
+  do {
+    const resp = await prom(gapi.client.drive.files.list, {
+      // вместо 'appDataFolder' можно использовать ID папки
+      spaces: 'appDataFolder',
+      fields: 'files(id, name), nextPageToken',
+      pageSize: 100,
+      pageToken: token,
+      orderBy: 'createdTime',
+      q: query
+    })
+    ret = ret.concat(resp.result.files);
+    token = resp.result.nextPageToken;
+  } while (token)
+  // результат: массив объектов вида [{id: '...', name: '...'}], 
+  // отсортированных по времени создания
+  return ret;
 }
-
 
 /**
  * Удаление файла с идентификатором
@@ -574,17 +579,17 @@ async function find(query) {
  * @returns 
  */
 async function deleteFile(fileId) {
-    try {
-        await prom(gapi.client.drive.files.delete, {
-            fileId: fileId
-        })
-        return true;
-    } catch (err) {
-        if (err.status === 404) {
-            return false;
-        }
-        throw err;
+  try {
+    await prom(gapi.client.drive.files.delete, {
+        fileId: fileId
+    })
+    return true;
+  } catch (err) {
+    if (err.status === 404) {
+        return false;
     }
+    throw err;
+  }
 }
 
 /**
@@ -594,22 +599,20 @@ async function deleteFile(fileId) {
  */ 
 async function findFile(query) {
 return await prom(gapi.client.drive.files.list, {
-    // вместо 'appDataFolder' можно использовать ID папки
-    spaces: 'appDataFolder',
-    fields: 'files(id,name)',
-    pageSize: 100,
-    orderBy: 'createdTime',
-    q: 'name="' + query + '"'
-}).then(
-    function (data) {
-    if (_.isEmpty(data.result.files)) {
-        throw 'Файлы не найдены';
-    }
-    // результат: массив объектов вида [{id: '...', name: '...'}], 
-    // отсортированных по времени создания
-    return data.result.files;
-    }
-);
+  // вместо 'appDataFolder' можно использовать ID папки
+  spaces: 'appDataFolder',
+  fields: 'files(id,name)',
+  pageSize: 100,
+  orderBy: 'createdTime',
+  q: 'name="' + query + '"'
+}).then( function (data) {
+  if (_.isEmpty(data.result.files)) {
+    throw 'Файлы не найдены';
+  }
+  // результат: массив объектов вида [{id: '...', name: '...'}], 
+  // отсортированных по времени создания
+  return data.result.files;
+  });
 };
 
 /**
@@ -622,10 +625,10 @@ async function uploadFile(fileId, content) {
 log('Сохранено содержимое файла с идентификатором ' + fileId);
 // функция принимает либо строку, либо объект, который можно сериализовать в JSON
 return prom(gapi.client.request, {
-    path: `/upload/drive/v3/files/${fileId}`,
-    method: 'PATCH',
-    params: {uploadType: 'media'},
-    body: typeof content === 'string' ? content : JSON.stringify(content)
+  path: `/upload/drive/v3/files/${fileId}`,
+  method: 'PATCH',
+  params: {uploadType: 'media'},
+  body: typeof content === 'string' ? content : JSON.stringify(content)
 })
 }
 
@@ -635,17 +638,17 @@ return prom(gapi.client.request, {
  * @returns 
  */
 async function downloadFile(fileId) {
-const resp = await prom(gapi.client.drive.files.get, {
+  const resp = await prom(gapi.client.drive.files.get, {
     fileId: fileId,
     alt: 'media'
-});
-// resp.body хранит ответ в виде строки
-// resp.result — это попытка интерпретировать resp.body как JSON.
-// Если она провалилась, значение resp.result будет false
-// Т.о. функция возвращает либо объект, либо строку
-log('Загружен файл с идентификатором ' + fileId);
+  });
+  // resp.body хранит ответ в виде строки
+  // resp.result — это попытка интерпретировать resp.body как JSON.
+  // Если она провалилась, значение resp.result будет false
+  // Т.о. функция возвращает либо объект, либо строку
+  log('Загружен файл с идентификатором ' + fileId);
 
-return resp.result || resp.body;
+  return resp.result || resp.body;
 }
 
 /**
@@ -659,45 +662,41 @@ function createConfigFile() {
  * Загрузка файла конфигурации на Google диск
  */
 function saveConfigFile() {
-getConfigFileId().then(
-  function(response) {
-    configFileId = response;
-    log('Сохранение конфигурации в файл с идентификатором ' + configFileId);
-    
-    uploadFile(configFileId, DEFAULT_CONFIG);
-  }
-);
+  getConfigFileId().then(
+    function(response) {
+      configFileId = response;
+      log('Сохранение конфигурации в файл с идентификатором ' + configFileId);
+      
+      uploadFile(configFileId, DEFAULT_CONFIG);
+    }
+  );
 }
 
 /**
  * Скачивание файла конфигурации с Google диска
  */
 function loadConfigFile() {
-  log('JJJ');
-  getConfigFileId().then(
-    function(response) {
+  log('Попытка загрузки файла конфигурации');
+  getConfigFileId().then( function(response) {
     configFileId = response;
+
     log('Загрузка файла конфигурации с идентификатором ' + configFileId);
     
-    downloadFile(configFileId).then(
-        function(appData){
-        log(appData);
+    downloadFile(configFileId).then( function(appData){
+      log(appData);
     });   
-  }
-);
-
+  });
 }
 
 /**
  * Удаление файла конфигурации из локального хранилища и Google диска
  */
 async function deleteConfigFile() {
-configFileId = await getConfigFileId();
-deleteFile(configFileId).then(
-    function(info){
+  configFileId = await getConfigFileId();
+  deleteFile(configFileId).then( function(info){
     localStorage.removeItem(app_name + '_configFileId');
-        if (info) log('Файл конфигурации удалён','warning');
-});
+    if (info) log('Файл конфигурации удалён','warning');
+  });
 }
 
 /**
@@ -708,23 +707,23 @@ async function getConfigFileId() {
   // берем configFileId
   let configFileId = localStorage.getItem(app_name + '_configFileId');
   if (!configFileId) {
-  try {
+    try {
       // ищем нужный файл на Google Drive
       const configFiles = await find('name = "' + configFileName + '"');
       if (configFiles.length > 0) {
-          // берем первый (раньше всех созданный) файл
-          configFileId = configFiles[0].id;
+        // берем первый (раньше всех созданный) файл
+        configFileId = configFiles[0].id;
       } else {
-          // создаем новый
-          configFileId = await createEmptyFile(configFileName);
+        // создаем новый
+        configFileId = await createEmptyFile(configFileName);
       }
       // сохраняем ID
       localStorage.setItem(app_name + '_configFileId', configFileId);
-  } catch(e){
+    } catch(e){
       // в случае ошибки перегружаем страницу
       log(e.status,'error');
-      location.reload();
-  }
+      location.reload(); // обработку ошибки надо вынести в обратный вызов
+    }
   }
   return configFileId;
 }
