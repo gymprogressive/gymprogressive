@@ -203,7 +203,11 @@ not expired:  ${!isExpired()}`,'MidnightBlue');
     $C.btnGetToken.style.display='none';
     $C.btnRevokeToken.style.display='block';
 
+    log('oops','warning');
+    //scheduleCheckToken(SYNC_PERIOD, checkTokenSuccess);
+    log('yahoo','warning');
     scheduleConfigSync();
+    
   } else {
     log ('Дезактивация элементов управления','info');
     $C.mnuStart.classList.add('disabled');
@@ -292,7 +296,7 @@ function revokeToken() {
  * Обратный вызов при успешном запросе профиля пользователя
  * @param {*} result 
  */
-let cbUserProfileSuccess = ( result ) => {
+function cbUserProfileSuccess ( result ) {
   // надо перенести функцию в объект $C
   // чтобы при удачном запросе обработка проходила внутри объекта
   log(result);
@@ -307,7 +311,7 @@ let cbUserProfileSuccess = ( result ) => {
  * Обратный вызов при ошибке запроса профиля пользователя
  * @param {*} result 
  */
-let cbUserProfileError = ( result ) => {
+function cbUserProfileError ( result ) {
   // надо перенести функцию в объект $C
   // чтобы при удачном запросе обработка проходила внутри объекта
   log('' + result,'error');
@@ -456,12 +460,13 @@ function scheduleConfigSync(delay) {
 
 
 // внедрить в основную логику приложения
-let checkTokenSuccess = (gisInited) => {
+function checkTokenSuccess () {
+  log(expires_in,'warning');
   // если токен закончился запускаем проверку элементов управления
-  if (!gisInited) checkApp;
+  //if (isExpired()) checkApp;
 };
 
-function checkToken(cbSuccess) {
+async function checkToken(cbSuccess) {
   if (!isLoggedIn) {
     // выходим, если не входили
     return;
@@ -472,13 +477,13 @@ function checkToken(cbSuccess) {
       
       let now = new Date().getTime(); // текущее время в милисекундах
       
-      TokenExpires(now,expires_in);
+      await TokenExpires(now,expires_in);
 
       if (now > expires_in) {
         gisInited = false;
       }
 
-      cbSuccess(gisInited);
+      cbSuccess();
 
     }
     // проверка завершена
@@ -492,9 +497,11 @@ function scheduleCheckToken(delay, cbSuccess) {
   log('Запущен таймер проверки токена','info');
   // сбрасываем старый таймер, если он был
   if (tokenSyncTimeoutId) {
+    log('Сброс идентификатора таймера проверки токена')
     clearTimeout(tokenSyncTimeoutId);
   }
-  tokenSyncTimeoutId = setTimeout(() => {
+  tokenSyncTimeoutId = setTimeout( runCheckToken(cbSuccess)
+  /*  () => { log('Запуск таймера','info')  
     // выполняем синхронизацию и шедулим снова
     checkToken(cbSuccess)
       .catch(e => {
@@ -502,9 +509,24 @@ function scheduleCheckToken(delay, cbSuccess) {
         location.reload();
       })
       .finally(() => scheduleCheckToken(SYNC_PERIOD, cbSuccess));
-  }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
+  }*/
+  , typeof delay === 'undefined' ? SYNC_PERIOD : delay);
 }
 
+function runCheckToken(cbSuccess) {
+  log('Запуск таймера','info')  
+    // выполняем синхронизацию и шедулим снова
+    checkToken(cbSuccess)
+      .catch(e => {
+        log('Ошибка проверки токена', e);
+        location.reload();
+      })
+      .finally(() => scheduleCheckToken(SYNC_PERIOD, cbSuccess));
+}
+
+function testCheckToken() {
+  scheduleCheckToken(SYNC_PERIOD / 3, checkTokenSuccess);
+}
 
 /**
  * %=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%=%

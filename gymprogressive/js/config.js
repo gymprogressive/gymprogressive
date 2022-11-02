@@ -53,6 +53,7 @@ let CONFIG = {
 
 // храним ID таймера синхронизации, чтобы иметь возможность его сбросить
 let configSyncTimeoutId
+let tokenSyncTimeoutId
 
 let USER;
 
