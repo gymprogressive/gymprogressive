@@ -459,73 +459,41 @@ function scheduleConfigSync(delay) {
 }
 
 
-// внедрить в основную логику приложения
+let tokenCheckTimeoutId = null;
+
 function checkTokenSuccess () {
-  log(expires_in,'warning');
-  // если токен закончился запускаем проверку элементов управления
-  //if (isExpired()) checkApp;
 };
 
-async function checkToken(cbSuccess) {
-  if (!isLoggedIn) {
-    // выходим, если не входили
-    return;
-  }
-  
-  try {
-    if (access_token) {
-      
-      let now = new Date().getTime(); // текущее время в милисекундах
-      
-      await TokenExpires(now,expires_in);
-
-      if (now > expires_in) {
-        gisInited = false;
-      }
-
-      cbSuccess();
-
-    }
-    // проверка завершена
-    log('Проверка токена завершена');
-  } catch(e) {
-    throw e;
-  }
+async function checkToken() {
+// сюда вставляем код проверки
 }
 
-function scheduleCheckToken(delay, cbSuccess) {
+function scheduleCheckToken(delay) {
   log('Запущен таймер проверки токена','info');
   // сбрасываем старый таймер, если он был
-  if (tokenSyncTimeoutId) {
-    log('Сброс идентификатора таймера проверки токена')
-    clearTimeout(tokenSyncTimeoutId);
+  if (tokenCheckTimeoutId) {
+    clearTimeout(tokenCheckTimeoutId);
   }
-  tokenSyncTimeoutId = setTimeout( runCheckToken(cbSuccess)
-  /*  () => { log('Запуск таймера','info')  
-    // выполняем синхронизацию и шедулим снова
-    checkToken(cbSuccess)
+  tokenCheckTimeoutId = setTimeout(() => {
+    // выполняем проверку и шедулим снова
+    checkToken()
       .catch(e => {
         log('Ошибка проверки токена', e);
         location.reload();
       })
-      .finally(() => scheduleCheckToken(SYNC_PERIOD, cbSuccess));
-  }*/
-  , typeof delay === 'undefined' ? SYNC_PERIOD : delay);
+      .finally(() => scheduleCheckToken());
+  }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
 }
 
-function runCheckToken(cbSuccess) {
-  log('Запуск таймера','info')  
-    // выполняем синхронизацию и шедулим снова
-    checkToken(cbSuccess)
-      .catch(e => {
-        log('Ошибка проверки токена', e);
-        location.reload();
-      })
-      .finally(() => scheduleCheckToken(SYNC_PERIOD, cbSuccess));
+function runCheckToken() {
+  scheduleCheckToken(1000 * 60 * 1);
+}
+
+function stopCheckToken() {
 }
 
 function testCheckToken() {
-  scheduleCheckToken(SYNC_PERIOD / 3, checkTokenSuccess);
+  scheduleCheckToken(1000 * 60 * 1);
 }
 
 /**
