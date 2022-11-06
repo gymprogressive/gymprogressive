@@ -32,7 +32,8 @@
       </a>
 
       <ul class='nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0'>
-        <li><a href='#' class='nav-link px-2 link-secondary'>О сайте</a></li>
+        <li><a href='#' class='nav-link px-2 link-secondary'>Главная</a></li>
+        <li><a href='#' class='nav-link px-2 link-dark'>О сайте</a></li>
         <li><a href='#' class='nav-link px-2 link-dark'>Контакты</a></li>
       </ul>
 
@@ -73,12 +74,13 @@
     <button onclick="deleteConfigFile();">Удалить файл конфигурации</button><br><br>
 -->
     <button onclick='listFiles();'>Список файлов</button><br><br>
-
-    <button onclick="getUserProfileData(access_token)">Получить данные пользователя</button><br><br>
+<!--
+    <button onclick="getUserProfileData(access_token, cbUserProfileSuccess, cbUserProfileError)">Получить данные пользователя</button><br><br>
 
     <button onclick="getUserProfileData()">Получить данные пользователя (с ошибкой)</button><br><br>
-    
+
     <button onclick="testCheckToken()">Таймер проверки токена</button><br><br>
+-->
   </main>
   <footer class='pt-5 my-5 text-muted border-top'>
     Создано командой Жим "Прогрессивный" &middot; &copy; 2022

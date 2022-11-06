@@ -37,6 +37,10 @@ function getScopes() {
 
 const app_name = 'gymprogressive';
 
+let tokenCheckTimeoutId;
+
+const CHECK_PERIOD = 1000 * 60 * 1;     // 1 минута
+
 const configFileName = app_name + '_config.json';
 
 let configFileId;
@@ -82,9 +86,12 @@ let TokenExpires = (now, expires_in) => {
     second: 'numeric'
   };
 
-  log ('Текущее время:   ' + new Date(now).toLocaleString("ru", options));
   log ('Время токена до: ' + new Date(expires_in).toLocaleString("ru", options));
-  if (now > expires_in) log('Текущее время больше времени действия токена','warning');
+  
+  if ((expires_in - now) > 0) { log ('Осталось: ' + Math.round((expires_in - now)/1000) + ' cекунд');
+  } else { log ('Токен истёк','warning'); }
+
+  return expires_in - now;
 }
 
 let programs = {'list':[
@@ -183,3 +190,6 @@ let programs = {'list':[
 let excersises = {'list':[
   {'id':1,'name':'Отжимания от стены','description':'','level':'','group':'Отжимания','links':[]}
 ]};
+
+// async / await
+// https://habr.com/ru/company/skillbox/blog/458950/?ysclid=la4x7huwo4850619620

@@ -203,9 +203,7 @@ not expired:  ${!isExpired()}`,'MidnightBlue');
     $C.btnGetToken.style.display='none';
     $C.btnRevokeToken.style.display='block';
 
-    log('oops','warning');
-    //scheduleCheckToken(SYNC_PERIOD, checkTokenSuccess);
-    log('yahoo','warning');
+    scheduleCheckToken();
     scheduleConfigSync();
     
   } else {
@@ -458,44 +456,24 @@ function scheduleConfigSync(delay) {
   }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
 }
 
-
-let tokenCheckTimeoutId;
-
-function checkTokenSuccess () {
+function tokenExpired () {
+  gisInited = false;
+  checkApp();
 };
 
 async function checkToken() {
   if (!isLoggedIn) {
     return;
   }
-  // сюда вставляем код проверки
-  // получаем config file ID
-  
-  try {
-    // загружаем конфиг
-    const configFileId = await getConfigFileId();
-    if (!configFileId) {
-      gisInited = false;
-      checkApp();
-    }
-    let now = new Date().getTime(); // текущее время в милисекундах
-      
-    TokenExpires(now,expires_in);
 
-    if (now > expires_in) {
-      gisInited = false;
-      checkApp();
-    }
+  let now = new Date().getTime(); // текущее время в милисекундах
 
-    // проверка токена завершена
-    log('Проверка токена завершена');
-  } catch(e) {
-    if (e.status === 404) {
-      checkToken();
-    } else {
-      throw e;
-    }
+  if (TokenExpires(now,expires_in) < 0) {
+    throw Error('Токен не активен');
   }
+
+  // проверка токена завершена
+  log('Проверка токена завершена');
 }
 
 function scheduleCheckToken(delay) {
@@ -508,21 +486,16 @@ function scheduleCheckToken(delay) {
     // выполняем проверку и шедулим снова
     checkToken()
       .catch(e => {
-        log('Ошибка проверки токена', e);
+        log('Ошибка: ' + e,'error');
+        tokenExpired();
       })
       .finally(() => scheduleCheckToken());
-  }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
+  }, typeof delay === 'undefined' ? CHECK_PERIOD : delay);
 }
 
-function runCheckToken() {
-  scheduleCheckToken(1000 * 60 * 1);
-}
-
-function stopCheckToken() {
-}
-
+// Удалить после завершения тестирования
 function testCheckToken() {
-  scheduleCheckToken(1000 * 60 * 1);
+  scheduleCheckToken(1000 * 60 * 1/3);
 }
 
 /**
