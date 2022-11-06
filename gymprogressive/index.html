@@ -100,21 +100,24 @@
       </div>
       <div id='about' class='container tab-pane fade'><br>
         <h3>О САЙТЕ</h3>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>Этот сайт - приложение для отслеживания тренировок с собственным весом.</p>
       </div>
       <div id='contacts' class='container tab-pane fade'><br>
         <h3>КОНТАКТЫ</h3>
-        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+        <p>Если Вам есть, что сообщить, отправьте нам электронное письмо.<br>И мы постараемся Вам ответить.</p>
         <div class='mb-3'>
-          <label for='contactsEmail' class='form-label'>Email address</label>
-          <input type='email' class='form-control' id='contactsEmail' placeholder='name@example.com'>
+          <label for='contactsEmail' class='form-label'>Адрес электронной почты</label>
+          <input type='email' class='form-control' id='contactsEmail' placeholder='gym.progressive@gmail.com' value='gym.progressive@gmail.com' disabled>
         </div>
         <div class='mb-3'>
-          <label for='contactsTextarea' class='form-label'>Example textarea</label>
-          <textarea class='form-control' id='contactsTextarea' rows='3'></textarea>
+          <label for='contactsTextarea' class='form-label'>Текст сообщения</label>
+          <textarea class='form-control' id='contactsTextarea' rows='3' disabled></textarea>
         </div>
         <div class='mb-3'>
-          <button type='submit' class='btn btn-primary'>Submit</button>
+          <label id='contactsAlert' class='text-danger small'>Для отправки сообщения необходимо авторизоваться</label>
+        </div>
+        <div class='mb-3'>
+          <button id='contactsSubmit' type='submit' class='btn btn-primary' disabled>Отправить</button>
         </div>
       </div>
     </div>
@@ -164,6 +167,9 @@
               </div>-->
           </div>
         </div>
+
+        <label for="exampleColorInput" class="form-label">Color picker</label>
+        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
       </div>
 
       <!-- Подвал модального окна -->

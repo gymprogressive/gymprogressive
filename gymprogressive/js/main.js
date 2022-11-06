@@ -46,15 +46,24 @@ function id( s ) { return document.getElementById( s ); }
 
 $C['btnGetToken'] = id('_getToken');
 $C['btnRevokeToken'] = id('_revokeToken');
+
 $C['imgAvatar'] = id('_imgAvatar');
+
 $C['mnuStart'] = id('itemStart');
 $C['mnuSettings'] = id('itemSettings');
 $C['mnuProfile'] = id('itemProfile');
-$C['profile'] = id('modProfile');
+
 $C['settings'] = id('modSettings');
+
+$C['profile'] = id('modProfile');
 $C['profileAvatar'] = id('profile_avatar');
 $C['profileName'] = id('profile_name');
 $C['profileEmail'] = id('profile_email');
+
+$C['contactsEmail'] = id('contactsEmail');
+$C['contactsTextarea'] = id('contactsTextarea');
+$C['contactsAlert'] = id('contactsAlert');
+$C['contactsSubmit'] = id('contactsSubmit');
 
 let modProfile = new bootstrap.Modal($C.profile, {});
 let modSettings = new bootstrap.Modal($C.settings, {});
@@ -202,6 +211,9 @@ not expired:  ${!isExpired()}`,'MidnightBlue');
     
     $C.btnGetToken.style.display='none';
     $C.btnRevokeToken.style.display='block';
+
+    $C.contactsTextarea.removeAttribute("disabled");
+    $C.contactsSubmit.removeAttribute("disabled");
 
     scheduleCheckToken();
     scheduleConfigSync();
