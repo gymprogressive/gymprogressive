@@ -459,13 +459,43 @@ function scheduleConfigSync(delay) {
 }
 
 
-let tokenCheckTimeoutId = null;
+let tokenCheckTimeoutId;
 
 function checkTokenSuccess () {
 };
 
 async function checkToken() {
-// сюда вставляем код проверки
+  if (!isLoggedIn) {
+    return;
+  }
+  // сюда вставляем код проверки
+  // получаем config file ID
+  
+  try {
+    // загружаем конфиг
+    const configFileId = await getConfigFileId();
+    if (!configFileId) {
+      gisInited = false;
+      checkApp();
+    }
+    let now = new Date().getTime(); // текущее время в милисекундах
+      
+    TokenExpires(now,expires_in);
+
+    if (now > expires_in) {
+      gisInited = false;
+      checkApp();
+    }
+
+    // проверка токена завершена
+    log('Проверка токена завершена');
+  } catch(e) {
+    if (e.status === 404) {
+      checkToken();
+    } else {
+      throw e;
+    }
+  }
 }
 
 function scheduleCheckToken(delay) {
@@ -479,7 +509,6 @@ function scheduleCheckToken(delay) {
     checkToken()
       .catch(e => {
         log('Ошибка проверки токена', e);
-        location.reload();
       })
       .finally(() => scheduleCheckToken());
   }, typeof delay === 'undefined' ? SYNC_PERIOD : delay);
