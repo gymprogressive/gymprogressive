@@ -226,6 +226,9 @@ not expired:  ${!isExpired()}`,'MidnightBlue');
     
     $C.btnGetToken.style.display='block';
     $C.btnRevokeToken.style.display='none';
+
+    $C.contactsTextarea.setAttribute('disabled', '');
+    $C.contactsSubmit.setAttribute('disabled', '');
     
     $C.imgAvatar.src='placeholder.png';
   }
