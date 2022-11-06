@@ -193,3 +193,5 @@ let excersises = {'list':[
 
 // async / await
 // https://habr.com/ru/company/skillbox/blog/458950/?ysclid=la4x7huwo4850619620
+// Google Workspace browser samples
+// https://github.com/googleworkspace/browser-samples

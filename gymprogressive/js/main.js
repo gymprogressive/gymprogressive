@@ -212,8 +212,9 @@ not expired:  ${!isExpired()}`,'MidnightBlue');
     $C.btnGetToken.style.display='none';
     $C.btnRevokeToken.style.display='block';
 
-    $C.contactsTextarea.removeAttribute("disabled");
-    $C.contactsSubmit.removeAttribute("disabled");
+    $C.contactsTextarea.removeAttribute('disabled');
+    $C.contactsAlert.classList.add('d-none');    
+    $C.contactsSubmit.removeAttribute('disabled');
 
     scheduleCheckToken();
     scheduleConfigSync();
@@ -228,6 +229,7 @@ not expired:  ${!isExpired()}`,'MidnightBlue');
     $C.btnRevokeToken.style.display='none';
 
     $C.contactsTextarea.setAttribute('disabled', '');
+    $C.contactsAlert.classList.remove('d-none');
     $C.contactsSubmit.setAttribute('disabled', '');
     
     $C.imgAvatar.src='placeholder.png';
