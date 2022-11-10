@@ -195,3 +195,6 @@ let excersises = {'list':[
 // https://habr.com/ru/company/skillbox/blog/458950/?ysclid=la4x7huwo4850619620
 // Google Workspace browser samples
 // https://github.com/googleworkspace/browser-samples
+// https://developers.google.com/gmail/api/quickstart/js
+// https://smtpjs.com/
+// https://app.elasticemail.com/
