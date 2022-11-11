@@ -17,16 +17,18 @@ function getScopes() {
   let scopes = '';
   const url = 'https://www.googleapis.com/auth/';
   const arr = [
-    'drive.metadata',
     'userinfo.profile',
     'userinfo.email',
     'spreadsheets.readonly',
     'calendar.readonly',
     'contacts.readonly',
+    'drive',
     'drive.appfolder',
     'drive.appdata',
-    'drive',
-    'drive.file'
+    'drive.metadata',
+    'drive.file',
+    'gmail.readonly',
+    'gmail.send'
   ];
 
   arr.forEach(function(item){

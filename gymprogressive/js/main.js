@@ -418,6 +418,48 @@ async function listFiles() {
   log(output,'info');
 }
 
+/**
+ * Отправить письмо
+ * @param {*} headers_obj 
+ * @param {*} message 
+ * @param {*} cb 
+ * @returns 
+ */
+function sendMessage(headers_obj, message, cb) {
+  let email = '';
+
+  for(let header in headers_obj)
+    email += header += ": "+headers_obj[header]+"\r\n";
+
+  email += "\r\n" + message;
+
+  // data = await prom(gapi.client.drive.files.list,{
+  let sendRequest = gapi.client.gmail.users.messages.send({
+    'userId': 'me',
+    'resource': {
+      'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
+    }
+  });
+
+  return sendRequest.execute(cb);
+}
+
+function sendEmail()
+{
+/*
+  $('#send-button').addClass('disabled');
+
+  sendMessage(
+    {
+      'To': $('#compose-to').val(),
+      'Subject': $('#compose-subject').val()
+    },
+    $('#compose-message').val(),
+    composeTidy
+  );
+*/
+  return false;
+}
 
 /**
  * Синхронизация конфига
