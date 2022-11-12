@@ -68,7 +68,6 @@ $C['contactsSubmit'] = id('contactsSubmit');
 let modProfile = new bootstrap.Modal($C.profile, {});
 let modSettings = new bootstrap.Modal($C.settings, {});
 
-
 /**
  * Проверка входа в приложение
  * @returns 
@@ -444,21 +443,24 @@ function sendMessage(headers_obj, message, cb) {
   return sendRequest.execute(cb);
 }
 
-function sendEmail()
+function sendEmail(to, subject, message)
 {
-/*
-  $('#send-button').addClass('disabled');
+//  $('#send-button').addClass('disabled');
 
   sendMessage(
     {
-      'To': $('#compose-to').val(),
-      'Subject': $('#compose-subject').val()
+      'To': to,
+      'Subject': subject
     },
-    $('#compose-message').val(),
-    composeTidy
+    message,
+    sendMessageCallback
   );
-*/
+
   return false;
+}
+
+function sendMessageCallback() {
+
 }
 
 /**
