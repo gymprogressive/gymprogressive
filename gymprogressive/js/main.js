@@ -106,6 +106,7 @@ async function gapiStart() {
         gisInited = false;
       }
       
+      gapi.client.load('gmail', 'v1');
       gapi.client.load('drive', 'v3');
       gapi.client.load('sheets', 'v4');
       gapi.client.load('calendar','v3');
@@ -439,6 +440,8 @@ function sendMessage(headers_obj, message, cb) {
       'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
     }
   });
+
+  // https://stackoverflow.com/questions/62078087/how-to-use-gapi-for-sending-email-in-angular-9
 
   return sendRequest.execute(cb);
 }

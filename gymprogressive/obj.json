@@ -1,0 +1,319 @@
+{
+    "AuthType": {
+      "V6": "auto",
+      "NONE": "none",
+      "M$": "oauth2",
+      "Y8": "1p",
+      "AUTO": "auto",
+      "OAUTH2": "oauth2",
+      "FIRST_PARTY": "1p"
+    },
+    "drive": {
+      "about": {},
+      "CJ": {
+        "servicePath": "drive/v3/",
+        "parameters": {
+          "alt": {
+            "type": "string",
+            "description": "Data format for the response.",
+            "default": "json",
+            "enum": [
+              "json"
+            ],
+            "enumDescriptions": [
+              "Responses with Content-Type of application/json"
+            ],
+            "location": "query"
+          },
+          "fields": {
+            "type": "string",
+            "description": "Selector specifying which fields to include in a partial response.",
+            "location": "query"
+          },
+          "key": {
+            "type": "string",
+            "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+            "location": "query"
+          },
+          "oauth_token": {
+            "type": "string",
+            "description": "OAuth 2.0 token for the current user.",
+            "location": "query"
+          },
+          "prettyPrint": {
+            "type": "boolean",
+            "description": "Returns response with indentations and line breaks.",
+            "default": "true",
+            "location": "query"
+          },
+          "quotaUser": {
+            "type": "string",
+            "description": "An opaque string that represents a user for quota purposes. Must not exceed 40 characters.",
+            "location": "query"
+          },
+          "userIp": {
+            "type": "string",
+            "description": "Deprecated. Please use quotaUser instead.",
+            "location": "query"
+          }
+        },
+        "apiId": "drive:v3"
+      },
+      "changes": {},
+      "channels": {},
+      "comments": {},
+      "drives": {},
+      "files": {},
+      "permissions": {},
+      "replies": {},
+      "revisions": {},
+      "teamdrives": {}
+    },
+    "gmail": {
+      "users": {
+        "threads": {},
+        "drafts": {},
+        "history": {},
+        "labels": {},
+        "settings": {
+          "forwardingAddresses": {},
+          "delegates": {},
+          "filters": {},
+          "sendAs": {
+            "smimeInfo": {}
+          }
+        },
+        "messages": {
+          "attachments": {}
+        }
+      },
+      "CJ": {
+        "servicePath": "",
+        "parameters": {
+          "access_token": {
+            "type": "string",
+            "description": "OAuth access token.",
+            "location": "query"
+          },
+          "uploadType": {
+            "type": "string",
+            "location": "query",
+            "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\")."
+          },
+          "prettyPrint": {
+            "type": "boolean",
+            "default": "true",
+            "description": "Returns response with indentations and line breaks.",
+            "location": "query"
+          },
+          "callback": {
+            "type": "string",
+            "description": "JSONP",
+            "location": "query"
+          },
+          "fields": {
+            "location": "query",
+            "description": "Selector specifying which fields to include in a partial response.",
+            "type": "string"
+          },
+          "$.xgafv": {
+            "enum": [
+              "1",
+              "2"
+            ],
+            "enumDescriptions": [
+              "v1 error format",
+              "v2 error format"
+            ],
+            "location": "query",
+            "description": "V1 error format.",
+            "type": "string"
+          },
+          "key": {
+            "type": "string",
+            "location": "query",
+            "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token."
+          },
+          "upload_protocol": {
+            "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+            "location": "query",
+            "type": "string"
+          },
+          "quotaUser": {
+            "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+            "location": "query",
+            "type": "string"
+          },
+          "alt": {
+            "type": "string",
+            "enum": [
+              "json",
+              "media",
+              "proto"
+            ],
+            "location": "query",
+            "description": "Data format for response.",
+            "enumDescriptions": [
+              "Responses with Content-Type of application/json",
+              "Media download with context-dependent Content-Type",
+              "Responses with Content-Type of application/x-protobuf"
+            ],
+            "default": "json"
+          },
+          "oauth_token": {
+            "type": "string",
+            "location": "query",
+            "description": "OAuth 2.0 token for the current user."
+          }
+        },
+        "apiId": "gmail:v1"
+      }
+    },
+    "calendar": {
+      "channels": {},
+      "CJ": {
+        "servicePath": "calendar/v3/",
+        "parameters": {
+          "quotaUser": {
+            "description": "An opaque string that represents a user for quota purposes. Must not exceed 40 characters.",
+            "location": "query",
+            "type": "string"
+          },
+          "fields": {
+            "location": "query",
+            "description": "Selector specifying which fields to include in a partial response.",
+            "type": "string"
+          },
+          "prettyPrint": {
+            "description": "Returns response with indentations and line breaks.",
+            "type": "boolean",
+            "location": "query",
+            "default": "true"
+          },
+          "oauth_token": {
+            "type": "string",
+            "location": "query",
+            "description": "OAuth 2.0 token for the current user."
+          },
+          "key": {
+            "type": "string",
+            "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+            "location": "query"
+          },
+          "userIp": {
+            "type": "string",
+            "location": "query",
+            "description": "Deprecated. Please use quotaUser instead."
+          },
+          "alt": {
+            "type": "string",
+            "default": "json",
+            "enum": [
+              "json"
+            ],
+            "description": "Data format for the response.",
+            "location": "query",
+            "enumDescriptions": [
+              "Responses with Content-Type of application/json"
+            ]
+          }
+        },
+        "apiId": "calendar:v3"
+      },
+      "colors": {},
+      "acl": {},
+      "calendars": {},
+      "settings": {},
+      "freebusy": {},
+      "events": {},
+      "calendarList": {}
+    },
+    "sheets": {
+      "spreadsheets": {
+        "sheets": {},
+        "values": {},
+        "developerMetadata": {}
+      },
+      "CJ": {
+        "servicePath": "",
+        "parameters": {
+          "prettyPrint": {
+            "default": "true",
+            "description": "Returns response with indentations and line breaks.",
+            "location": "query",
+            "type": "boolean"
+          },
+          "fields": {
+            "description": "Selector specifying which fields to include in a partial response.",
+            "type": "string",
+            "location": "query"
+          },
+          "oauth_token": {
+            "location": "query",
+            "description": "OAuth 2.0 token for the current user.",
+            "type": "string"
+          },
+          "quotaUser": {
+            "type": "string",
+            "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+            "location": "query"
+          },
+          "alt": {
+            "enum": [
+              "json",
+              "media",
+              "proto"
+            ],
+            "description": "Data format for response.",
+            "enumDescriptions": [
+              "Responses with Content-Type of application/json",
+              "Media download with context-dependent Content-Type",
+              "Responses with Content-Type of application/x-protobuf"
+            ],
+            "location": "query",
+            "type": "string",
+            "default": "json"
+          },
+          "key": {
+            "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+            "type": "string",
+            "location": "query"
+          },
+          "upload_protocol": {
+            "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+            "type": "string",
+            "location": "query"
+          },
+          "access_token": {
+            "description": "OAuth access token.",
+            "location": "query",
+            "type": "string"
+          },
+          "callback": {
+            "description": "JSONP",
+            "location": "query",
+            "type": "string"
+          },
+          "uploadType": {
+            "type": "string",
+            "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+            "location": "query"
+          },
+          "$.xgafv": {
+            "location": "query",
+            "type": "string",
+            "enum": [
+              "1",
+              "2"
+            ],
+            "enumDescriptions": [
+              "v1 error format",
+              "v2 error format"
+            ],
+            "description": "V1 error format."
+          }
+        },
+        "apiId": "sheets:v4"
+      }
+    }
+  }

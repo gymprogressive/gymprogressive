@@ -62,7 +62,26 @@ let configSyncTimeoutId;
 
 let USER;
 
-let Logo = () => {
+/*
+
+gapi.client.gmail.CJ
+                 .users
+                       .threads
+                       .dratfs
+                       .history
+                       .labels
+                       .settings
+                                .forwardingAddresses
+                                .delegates
+                                .filters
+                                .sendAs
+                       .messages
+                                .attachments
+
+*/
+
+let Logo = async () => {
+  log(await gapi.client);
 let str = `
  +--------------------------------------+\ 
  |                                      |\ 
