@@ -392,6 +392,25 @@ async function listFiles() {
   log(output);
 }
 
+/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * https://developers.google.com/gmail/api/reference/rest
+ ** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 /**
   * Print all Labels in the authorized user's inbox. If no labels
   * are found an appropriate message is printed.
@@ -419,6 +438,48 @@ async function listFiles() {
 }
 
 /**
+ * gmail.users.getProfile
+ * @returns 
+ */
+async function getProfile() {
+  let sendRequest = await prom(gapi.client.gmail.users.getProfile,{
+    'userId': 'me'
+  }).then((response) => {
+    const result = response.result;
+    if (result.status == 200) {
+      log(result);
+      return result;
+    } else {
+      throw new Error(response);
+    }
+
+    /*
+      {
+        "result": {
+          "emailAddress": "gym.progressive@gmail.com",
+          "messagesTotal": 36,
+          "threadsTotal": 30,
+          "historyId": "4915"
+        },
+        "body": "{\n  \"emailAddress\": \"gym.progressive@gmail.com\",\n  \"messagesTotal\": 36,\n  \"threadsTotal\": 30,\n  \"historyId\": \"4915\"\n}\n",
+        "headers": {
+          "cache-control": "private",
+          "content-encoding": "gzip",
+          "content-length": "113",
+          "content-type": "application/json; charset=UTF-8",
+          "date": "Sun, 13 Nov 2022 10:00:17 GMT",
+          "server": "ESF",
+          "vary": "Origin, X-Origin, Referer"
+        },
+        "status": 200,
+        "statusText": "OK"
+      }
+  */
+  });
+  return sendRequest;
+}
+
+/**
  * Отправить письмо
  * @param {*} headers_obj 
  * @param {*} message 
@@ -433,17 +494,21 @@ function sendMessage(headers_obj, message, cb) {
 
   email += "\r\n" + message;
 
-  // data = await prom(gapi.client.drive.files.list,{
-  let sendRequest = gapi.client.gmail.users.messages.send({
+  let sendRequest = prom(gapi.client.gmail.users.messages.send,{
     'userId': 'me',
     'resource': {
       'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
     }
+  }).then(function (response) {
+
+    cb(response);
+
+    return response;
   });
 
   // https://stackoverflow.com/questions/62078087/how-to-use-gapi-for-sending-email-in-angular-9
 
-  return sendRequest.execute(cb);
+  return sendRequest;
 }
 
 function sendEmail(to, subject, message)
@@ -462,8 +527,44 @@ function sendEmail(to, subject, message)
   return false;
 }
 
-function sendMessageCallback() {
+function testMail(){
+  sendEmail('m89265729463@gmail.com','test gym','yahoo');
+}
 
+function sendMessageCallback(response) {
+  
+  const msg_id = response.result.id;
+  const msg_date = response.headers.date; 
+  const msg_status = response.status;
+  const msg_statusText = response.statusText; 
+  
+  log(msg_status, 'warning');
+
+  log(response);
+
+/*
+  {
+    "result": {
+      "id": "184705210440bc96",
+      "threadId": "184705210440bc96",
+      "labelIds": [
+        "SENT"
+      ]
+    },
+    "body": "{\n  \"id\": \"184705210440bc96\",\n  \"threadId\": \"184705210440bc96\",\n  \"labelIds\": [\n    \"SENT\"\n  ]\n}\n",
+    "headers": {
+      "cache-control": "private",
+      "content-encoding": "gzip",
+      "content-length": "85",
+      "content-type": "application/json; charset=UTF-8",
+      "date": "Sun, 13 Nov 2022 09:28:57 GMT",
+      "server": "ESF",
+      "vary": "Origin, X-Origin, Referer"
+    },
+    "status": 200,
+    "statusText": "OK"
+  }
+*/
 }
 
 /**

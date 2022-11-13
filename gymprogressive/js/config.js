@@ -1,3 +1,5 @@
+// https://stackoverflow.com/questions/783818/how-do-i-create-a-custom-error-in-javascript
+
 /**
  * Ключи доступа
  */ 
