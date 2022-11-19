@@ -480,6 +480,68 @@ async function getProfile() {
 }
 
 /**
+ * users.drafts
+ * users.drafts.create
+ *  parameters: userId
+ * users.drafts.delete
+ *  parameters: userId, id
+ * users.drafts.get
+ *  parameters: userId, id
+ *  query parameters: format
+ * users.drafts.list
+ *  parameters: userId
+ *  query parameters: maxResults, pageToken, q, includeSpamTrash
+ * users.drafts.send
+ *  parameters: userId
+ * users.drafts.update
+ *  parameters: userId, id
+ * 
+ * users.history
+ * users.history.list
+ *  parameters: userId
+ *  query parameters: maxResults, pageToken, startHistoryId, labelId, historyTypes[]
+ * 
+ * users.labels
+ * users.labels.create
+ * users.labels.delete
+ * users.labels.get
+ * users.labels.list
+ * users.labels.patch
+ * users.labels.update
+ *  
+ * users.messages
+ * users.messages.batchDelete
+ * users.messages.batchModify
+ * users.messages.delete
+ * users.messages.get
+ * users.messages.import
+ * users.messages.insert
+ * users.messages.list
+ * users.messages.modify
+ * users.messages.send
+ * users.messages.trash
+ * users.messages.untrash
+ * 
+ * users.messages.attachments
+ * users.messages.attachments.get
+ * 
+ * users.settings
+ * 
+ * users.settings.delegates
+ * 
+ * users.settings.filters
+ * 
+ * users.settings.forwardingAddresses
+ * 
+ * users.settings.sendAs
+ * 
+ * users.settings.sendAs.smimeInfo
+ * 
+ * users.threads
+ *  */ 
+
+
+/**
  * Отправить письмо
  * @param {*} headers_obj 
  * @param {*} message 
