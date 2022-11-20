@@ -195,7 +195,7 @@ function checkApp() {
   $C.contactsSubmit.onclick=function(){
     log('Нажата кнопка Отправить');
     
-    sendEmail($C.contactsEmail.value,'Gym.Progressive From: '+USER.email,$C.contactsTextarea.value);
+    sendEmail($C.contactsEmail.value,'Жим "Прогрессивный" От: '+USER.email,$C.contactsTextarea.value);
   }
 
   log(` Проверка элементов управления.\ 
@@ -460,29 +460,6 @@ async function getProfile() {
     } else {
       throw new Error(response);
     }
-
-    /*
-      {
-        "result": {
-          "emailAddress": "gym.progressive@gmail.com",
-          "messagesTotal": 36,
-          "threadsTotal": 30,
-          "historyId": "4915"
-        },
-        "body": "{\n  \"emailAddress\": \"gym.progressive@gmail.com\",\n  \"messagesTotal\": 36,\n  \"threadsTotal\": 30,\n  \"historyId\": \"4915\"\n}\n",
-        "headers": {
-          "cache-control": "private",
-          "content-encoding": "gzip",
-          "content-length": "113",
-          "content-type": "application/json; charset=UTF-8",
-          "date": "Sun, 13 Nov 2022 10:00:17 GMT",
-          "server": "ESF",
-          "vary": "Origin, X-Origin, Referer"
-        },
-        "status": 200,
-        "statusText": "OK"
-      }
-  */
   });
   return sendRequest;
 }
@@ -511,14 +488,21 @@ async function getProfile() {
  * 
  * users.labels
  * users.labels.create
+ *  parameters: userId
  * users.labels.delete
+ *  parameters: userId, id
  * users.labels.get
+ *  parameters: userId, id
  * users.labels.list
+ *  parameters: userId
  * users.labels.patch
+ *  parameters: userId, id
  * users.labels.update
+ *  parameters: userId, id
  *  
  * users.messages
  * users.messages.batchDelete
+ *  parameters: userId
  * users.messages.batchModify
  * users.messages.delete
  * users.messages.get
@@ -534,18 +518,58 @@ async function getProfile() {
  * users.messages.attachments.get
  * 
  * users.settings
+ * users.settings.getAutoForwarding
+ * users.settings.getImap
+ * users.settings.getLanguage
+ * users.settings.getPop
+ * users.settings.getVacation
+ * users.settings.updateAutoForwarding
+ * users.settings.updateImap
+ * users.settings.updateLanguage
+ * users.settings.updatePop
+ * users.settings.updateVacation
  * 
  * users.settings.delegates
+ * users.settings.delegates.create
+ * users.settings.delegates.delete
+ * users.settings.delegates.get
+ * users.settings.delegates.list
  * 
  * users.settings.filters
+ * users.settings.filters.create
+ * users.settings.filters.delete
+ * users.settings.filters.get
+ * users.settings.filters.list
  * 
  * users.settings.forwardingAddresses
+ * users.settings.forwardingAddresses.create
+ * users.settings.forwardingAddresses.delete
+ * users.settings.forwardingAddresses.get
+ * users.settings.forwardingAddresses.list
  * 
  * users.settings.sendAs
+ * users.settings.sendAs.create
+ * users.settings.sendAs.delete
+ * users.settings.sendAs.get
+ * users.settings.sendAs.list
+ * users.settings.sendAs.patch
+ * users.settings.sendAs.update
+ * users.settings.sendAs.verify
  * 
  * users.settings.sendAs.smimeInfo
+ * users.settings.sendAs.smimeInfo.delete
+ * users.settings.sendAs.smimeInfo.get
+ * users.settings.sendAs.smimeInfo.insert
+ * users.settings.sendAs.smimeInfo.list
+ * users.settings.sendAs.smimeInfo.setDefault
  * 
  * users.threads
+ * users.threads.delete
+ * users.threads.get
+ * users.threads.list
+ * users.threads.modify
+ * users.threads.trash
+ * users.threads.untrash
  *  */ 
 
 /**
