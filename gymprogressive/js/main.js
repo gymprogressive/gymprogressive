@@ -192,6 +192,12 @@ function checkApp() {
     //myInput.focus()
   })
 
+  $C.contactsSubmit.onclick=function(){
+    log('Нажата кнопка Отправить');
+    
+    sendEmail($C.contactsEmail.value,'Gym.Progressive From: '+USER.email,$C.contactsTextarea.value);
+  }
+
   log(` Проверка элементов управления.\ 
 Параметры
 -------------------- 
@@ -319,7 +325,9 @@ function cbUserProfileSuccess ( result ) {
   $C.profileAvatar.src = $C.imgAvatar.src = result.picture;
   $C.profileName.innerText = result.name;
   $C.profileEmail.innerText = result.email;
-  
+  USER.email = result.email;
+  USER.picture = result.picture;
+  USER.name = result.name;
 }
 
 /**
@@ -540,7 +548,6 @@ async function getProfile() {
  * users.threads
  *  */ 
 
-
 /**
  * Отправить письмо
  * @param {*} headers_obj 
@@ -555,11 +562,19 @@ function sendMessage(headers_obj, message, cb) {
     email += header += ": "+headers_obj[header]+"\r\n";
 
   email += "\r\n" + message;
+  
+  let raw = window.btoa(unescape(encodeURIComponent(email)));
+
+/*
+//https://stackoverflow.com/questions/27695749/gmail-api-not-respecting-utf-encoding-in-subject
+  let decode = decodeURIComponent(escape(window.atob(raw)));
+  log(decode);
+*/
 
   let sendRequest = prom(gapi.client.gmail.users.messages.send,{
     'userId': 'me',
     'resource': {
-      'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
+      'raw': raw
     }
   }).then(function (response) {
 
@@ -575,22 +590,24 @@ function sendMessage(headers_obj, message, cb) {
 
 function sendEmail(to, subject, message)
 {
-//  $('#send-button').addClass('disabled');
-
+  log(to);
+  log(subject);
+  log(message);
   sendMessage(
     {
       'To': to,
-      'Subject': subject
+      'Subject': '=?UTF-8?B?' + window.btoa(unescape(encodeURIComponent(subject))) + '?=',
+      'Content-Type': 'text/html; charset=UTF-8',
+      'Content-Transfer-Encoding': 'base64'
     },
     message,
     sendMessageCallback
   );
-
-  return false;
 }
 
 function testMail(){
-  sendEmail('m89265729463@gmail.com','test gym','yahoo');
+  //sendEmail('m89265729463@gmail.com','Test','Test');
+  sendEmail('gym.progressive@gmail.com','От: ' + USER.email,'Яхууу');
 }
 
 function sendMessageCallback(response) {
