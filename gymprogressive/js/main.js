@@ -26,17 +26,7 @@ let $C = new Object();
 /**
  * Элементы управления
  */
-/*
- let btnGetToken = document.getElementById('_getToken');
- let btnRevokeToken = document.getElementById('_revokeToken');
- let imgAvatar = document.getElementById('_imgAvatar');
- let itemStart = document.getElementById('itemStart')
- let itemSettings = document.getElementById('itemSettings')
- let itemProfile = document.getElementById('itemProfile')
- 
- let profile = document.getElementById('modProfile');
- let settings = document.getElementById('modSettings');
-*/
+
 /**
  * Псевдоним для document.getElementById( s )
  * @param {*} s 
