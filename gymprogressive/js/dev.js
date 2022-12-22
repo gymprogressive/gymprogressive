@@ -100,9 +100,13 @@
  * 
  * users.messages.attachments
  * users.messages.attachments.get
+ *  parameters: userId, messageId, Id
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Messages$Attachments.html#get
  * 
  * users.settings
  * users.settings.getAutoForwarding
+ *  parameters: userId
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#getAutoForwarding
  * users.settings.getImap
  * users.settings.getLanguage
  * users.settings.getPop
