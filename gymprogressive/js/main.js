@@ -454,12 +454,14 @@ async function getProfile() {
     'userId': 'me'
   }).then((response) => {
     const result = response.result;
-    if (result.status == 200) {
+
+    if (response.status == 200) {
       log(result);
       return result;
     } else {
       throw new Error(response);
     }
+
   });
   return sendRequest;
 }
