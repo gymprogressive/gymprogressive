@@ -108,10 +108,20 @@
  *  parameters: userId
  *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#getAutoForwarding
  * users.settings.getImap
+ *  parameters: userId
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#getImap
  * users.settings.getLanguage
+ *  parameters: userId
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#getLanguage
  * users.settings.getPop
+ *  parameters: userId
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#getPop
  * users.settings.getVacation
+ *  parameters: userId
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#getVacation
  * users.settings.updateAutoForwarding
+ *  parameters: userId
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#updateAutoForwarding
  * users.settings.updateImap
  * users.settings.updateLanguage
  * users.settings.updatePop
