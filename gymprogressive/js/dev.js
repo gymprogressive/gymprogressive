@@ -104,6 +104,8 @@
  *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Messages$Attachments.html#get
  * 
  * users.settings
+ * users.settings.cse.identities
+ * users.settings.cse.keypairs
  * users.settings.getAutoForwarding
  *  parameters: userId
  *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#getAutoForwarding
@@ -146,11 +148,25 @@
  *  requestBody:
  *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings$Delegates.html#create
  * users.settings.delegates.delete
+ *  parameters: userId, cseEmailAddress
+ *  requestBody:
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings$Delegates.html#delete
  * users.settings.delegates.get
+ *  parameters: userId, cseEmailAddress
+ *  requestBody:
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings$Delegates.html#get
  * users.settings.delegates.list
+ *  parameters: userId
+ *  query parameters: pageToken, pageSize
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings$Delegates.html#list
+ * users.settings.delegates.patch
+ *  parameters: userId, emailAddress
+ *  requestBody:
+ *  https://developers.google.com/gmail/api/reference/rest/v1/users.settings.cse.identities#CseIdentity
  * 
  * users.settings.filters
  * users.settings.filters.create
+ *  
  * users.settings.filters.delete
  * users.settings.filters.get
  * users.settings.filters.list
