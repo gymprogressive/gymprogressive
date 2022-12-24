@@ -121,14 +121,30 @@
  *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#getVacation
  * users.settings.updateAutoForwarding
  *  parameters: userId
+ *  requestBody:
  *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#updateAutoForwarding
  * users.settings.updateImap
+ *  parameters: userId
+ *  requestBody:
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#updateImap
  * users.settings.updateLanguage
+ *  parameters: userId
+ *  requestBody:
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#updateLanguage
  * users.settings.updatePop
+ *  parameters: userId
+ *  requestBody:
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#updatePop
  * users.settings.updateVacation
+ *  parameters: userId
+ *  requestBody:
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings.html#updateVacation
  * 
  * users.settings.delegates
  * users.settings.delegates.create
+ *  parameters: userId
+ *  requestBody:
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings$Delegates.html#create
  * users.settings.delegates.delete
  * users.settings.delegates.get
  * users.settings.delegates.list
