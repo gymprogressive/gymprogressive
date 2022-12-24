@@ -166,7 +166,9 @@
  * 
  * users.settings.filters
  * users.settings.filters.create
- *  
+ *  parameters: userId
+ *  requestBody:
+ *  https://googleapis.dev/nodejs/googleapis/latest/gmail/classes/Resource$Users$Settings$Filters.html#create
  * users.settings.filters.delete
  * users.settings.filters.get
  * users.settings.filters.list
