@@ -390,6 +390,28 @@ async function listFiles() {
   log(output);
 }
 
+
+/**
+ * sandbox
+ */
+
+const sandbox = document.getElementById('sandbox');
+
+const elem = document.querySelector('input[name="datepicker"]');
+const datepicker = new Datepicker(elem, {
+  // ...options
+  buttonClass: 'btn',
+  autohide: true,
+  calendarWeeks: true,
+  clearBtn: true,
+  daysOfWeekHighlighted: [0,6],
+  language: 'ru',
+  showDaysOfWeek: true,
+  todayBtn: true,
+  todayBtnMode: 0,
+  todayHighlight: true
+}); 
+
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
  * 
