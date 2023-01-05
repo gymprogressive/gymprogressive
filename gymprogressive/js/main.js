@@ -27,6 +27,37 @@ let $C = new Object();
  * Элементы управления
  */
 
+/*
+    //‰%%%%%%%%%%%%%%%%%%%
+    
+    // alias for addEventListener
+    EventTarget.prototype.on = EventTarget.prototype.addEventListener;
+
+    // alias for HTMLElement methods
+    HTMLElement.prototype.find = HTMLElement.prototype.querySelector;
+    HTMLElement.prototype.findAll = HTMLElement.prototype.querySelectorAll;
+
+    // alias for document
+    const $d = document;
+
+    // alias for window
+    const $w = window;
+
+    // alias for getElementById
+    function ById(id) { return document.getElementById(id); }
+
+    // alias for getElementsByClassName 
+    function ByClass(cls) { return document.getElementsByClassName(cls); }
+
+    // alias for 
+    const ByTagName = $d.getElementsByTagName;
+
+    // aliases for querySelector
+    $d.find = $d.querySelector;
+    $d.findAll = $d.querySelectorAll;
+
+*/
+
 /**
  * Псевдоним для document.getElementById( s )
  * @param {*} s 
