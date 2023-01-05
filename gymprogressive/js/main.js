@@ -395,22 +395,92 @@ async function listFiles() {
  * sandbox
  */
 
-const sandbox = document.getElementById('sandbox');
+const sandbox = id('sandbox');
 
-const elem = document.querySelector('input[name="datepicker"]');
-const datepicker = new Datepicker(elem, {
-  // ...options
-  buttonClass: 'btn',
-  autohide: true,
-  calendarWeeks: true,
-  clearBtn: true,
-  daysOfWeekHighlighted: [0,6],
-  language: 'ru',
-  showDaysOfWeek: true,
-  todayBtn: true,
-  todayBtnMode: 0,
-  todayHighlight: true
-}); 
+const datepicker = addDatePicker(sandbox);
+
+/**
+ * addDatePicker
+ * @param {*} sandbox 
+ * @returns 
+ */
+function addDatePicker(sandbox) {
+  // https://mymth.github.io/vanillajs-datepicker/#/
+  const div = document.createElement('div');
+  div.setAttribute('class','mb-3');
+  sandbox.appendChild(div);
+
+  const elem = document.createElement('input');
+
+  elem.setAttribute('name','datepicker');
+  elem.setAttribute('type','text');
+  elem.setAttribute('class','form-control date text-center');
+
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  let yyyy = today.getFullYear();
+
+  today = dd + '/' + mm + '/' + yyyy;
+  elem.value = today;
+  div.appendChild(elem);
+
+  const datepicker = new Datepicker(elem, {
+    // ...options
+    buttonClass: 'btn',
+    autohide: true,
+    calendarWeeks: true,
+    clearBtn: true,
+    daysOfWeekHighlighted: [0,6],
+    language: 'ru',
+    showDaysOfWeek: true,
+    todayBtn: true,
+    todayBtnMode: 0,
+    todayHighlight: true
+  });
+  
+  return datepicker;
+}
+
+/**
+ * changeDate, changeMonth, changeView, changeYear, hide, show
+ */
+
+// const elem = document.querySelector('input[name="foo"]');
+datepicker.inputField.addEventListener('changeDate', (e) => {
+  console.log(e);
+});
+
+
+
+/*
+        <div class='row'>
+          <div class='input-group mt-3 mb-3'>
+            <div class='input-group-text d-flex justify-content-center'>Отжимания</div>
+            <button type='button' class='btn btn-secondary dropdown-toggle' data-bs-toggle='dropdown'>
+              Отжимания от стены
+            </button>
+            <ul class='dropdown-menu text-center'>
+              <li><a class='dropdown-item' href='#'>Отжимания от стены</a></li>
+              <li><a class='dropdown-item' href='#'>Отжимания в наклоне</a></li>
+              <li><a class='dropdown-item' href='#'>Отжимания на коленях</a></li>
+              <li><a class='dropdown-item' href='#'>Неполные отжимания</a></li>
+              <li><a class='dropdown-item' href='#'>Полные отжимания</a></li>
+              <li><a class='dropdown-item' href='#'>Узкие отжимания</a></li>
+              <li><a class='dropdown-item' href='#'>Разновысокие отжимания</a></li>
+              <li><a class='dropdown-item' href='#'>Неполные отжимания на одной руке</a></li>
+              <li><a class='dropdown-item' href='#'>Отжимания на одной руке с поддержкой</a></li>
+              <li><a class='dropdown-item' href='#'>Отжимания на одной руке</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class='input-group mt-3 mb-3 row'>  
+          <input type='text' class='form-control text-center' placeholder='1'>
+          <input type='text' class='form-control text-center' placeholder='2'>
+          <input type='text' class='form-control text-center' placeholder='3'>
+        </div>
+      */
+
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 

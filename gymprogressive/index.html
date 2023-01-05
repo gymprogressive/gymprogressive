@@ -20,9 +20,10 @@
 
     <script src='js/base64.js'></script>
     <link href='css/main.css' rel='stylesheet'>
-<!--
+
+    <!-- https://mymth.github.io/vanillajs-datepicker/#/
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker.min.css">
--->
+    -->
     <link rel="stylesheet" href="css/datepicker.min.css">
     <link rel="stylesheet" type="text/css" href="css/datepicker-bs5.css">
     <script src='js/datepicker-full.js'></script>
@@ -83,13 +84,33 @@
         <h3>ГЛАВНАЯ</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 
-        <div id='sandbox'>
-          <div class="mb-3">
-            <input type="text" name="datepicker" class="form-control date datepicker-input">
-            
+        <div id='sandbox'></div>
+                
+        <div class='row'>
+          <div class='input-group mt-3 mb-3'>
+            <div class='input-group-text d-flex justify-content-center'>Отжимания</div>
+            <button type='button' class='btn btn-secondary dropdown-toggle' data-bs-toggle='dropdown'>
+              Отжимания от стены
+            </button>
+            <ul class='dropdown-menu text-center'>
+              <li><a class='dropdown-item' href='#'>Отжимания от стены</a></li>
+              <li><a class='dropdown-item' href='#'>Отжимания в наклоне</a></li>
+              <li><a class='dropdown-item' href='#'>Отжимания на коленях</a></li>
+              <li><a class='dropdown-item' href='#'>Неполные отжимания</a></li>
+              <li><a class='dropdown-item' href='#'>Полные отжимания</a></li>
+              <li><a class='dropdown-item' href='#'>Узкие отжимания</a></li>
+              <li><a class='dropdown-item' href='#'>Разновысокие отжимания</a></li>
+              <li><a class='dropdown-item' href='#'>Неполные отжимания на одной руке</a></li>
+              <li><a class='dropdown-item' href='#'>Отжимания на одной руке с поддержкой</a></li>
+              <li><a class='dropdown-item' href='#'>Отжимания на одной руке</a></li>
+            </ul>
           </div>
         </div>
-
+        <div class='input-group mt-3 mb-3 row'>  
+          <input type='text' class='form-control text-center' placeholder='1'>
+          <input type='text' class='form-control text-center' placeholder='2'>
+          <input type='text' class='form-control text-center' placeholder='3'>
+        </div>
 
         <h1>Авторизация через GSI и GAPI</h1>
 
