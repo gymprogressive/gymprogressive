@@ -65,6 +65,28 @@ let $C = new Object();
  */
 function id( s ) { return document.getElementById( s ); }
 
+/**
+ * Псевдоним для document.getElementById( s )
+ * @param {*} s 
+ * @returns 
+ */
+function byid( s ) { return document.getElementById( s ); }
+
+/**
+ * Псевдоним для document.getElementsByClassName(cls)
+ * @param {*} cls 
+ * @returns 
+ */
+function byclass(cls) { return document.getElementsByClassName(cls); }
+
+// alias for addEventListener
+EventTarget.prototype.on = EventTarget.prototype.addEventListener;
+
+// alias for HTMLElement methods
+HTMLElement.prototype.find = HTMLElement.prototype.querySelector;
+HTMLElement.prototype.findAll = HTMLElement.prototype.querySelectorAll;
+
+
 $C['btnGetToken'] = id('_getToken');
 $C['btnRevokeToken'] = id('_revokeToken');
 
