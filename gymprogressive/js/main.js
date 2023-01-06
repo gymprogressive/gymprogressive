@@ -28,33 +28,9 @@ let $C = new Object();
  */
 
 /*
-    //‰%%%%%%%%%%%%%%%%%%%
-    
-    // alias for addEventListener
-    EventTarget.prototype.on = EventTarget.prototype.addEventListener;
-
-    // alias for HTMLElement methods
-    HTMLElement.prototype.find = HTMLElement.prototype.querySelector;
-    HTMLElement.prototype.findAll = HTMLElement.prototype.querySelectorAll;
-
-    // alias for document
-    const $d = document;
-
-    // alias for window
-    const $w = window;
-
-    // alias for getElementById
-    function ById(id) { return document.getElementById(id); }
-
-    // alias for getElementsByClassName 
-    function ByClass(cls) { return document.getElementsByClassName(cls); }
 
     // alias for 
     const ByTagName = $d.getElementsByTagName;
-
-    // aliases for querySelector
-    $d.find = $d.querySelector;
-    $d.findAll = $d.querySelectorAll;
 
 */
 
@@ -79,34 +55,49 @@ function byid( s ) { return document.getElementById( s ); }
  */
 function byclass(cls) { return document.getElementsByClassName(cls); }
 
-// alias for addEventListener
-EventTarget.prototype.on = EventTarget.prototype.addEventListener;
+/**
+ * Псевдоним для document.getElementsByTagName(tag)
+ * @param {*} tag 
+ * @returns 
+ */
+function baytag(tag) { return document.getElementsByTagName(tag); }
 
-// alias for HTMLElement methods
+
+// aliases for EventListener
+EventTarget.prototype.on = EventTarget.prototype.addEventListener;
+EventTarget.prototype.off = EventTarget.prototype.removeEventListener;
+
+// aliases for HTMLElement methods
 HTMLElement.prototype.find = HTMLElement.prototype.querySelector;
 HTMLElement.prototype.findAll = HTMLElement.prototype.querySelectorAll;
 
+//HTMLElement.prototype.addClass = HTMLElement.prototype.classList.add;
+//HTMLElement.prototype.removeClass = HTMLElement.prototype.classList.remove;
+//HTMLElement.prototype.replaceClass = HTMLElement.prototype.classList.replace;
 
-$C['btnGetToken'] = id('_getToken');
-$C['btnRevokeToken'] = id('_revokeToken');
+//HTMLElement.prototype.setAttr = HTMLElement.prototype.setAttribute;
+//HTMLElement.prototype.removeAttr = HTMLElement.prototype.removeAttribute;
 
-$C['imgAvatar'] = id('_imgAvatar');
+$C['btnGetToken'] =byid('_getToken');
+$C['btnRevokeToken'] = byid('_revokeToken');
 
-$C['mnuStart'] = id('itemStart');
-$C['mnuSettings'] = id('itemSettings');
-$C['mnuProfile'] = id('itemProfile');
+$C['imgAvatar'] = byid('_imgAvatar');
 
-$C['settings'] = id('modSettings');
+$C['mnuStart'] = byid('itemStart');
+$C['mnuSettings'] = byid('itemSettings');
+$C['mnuProfile'] = byid('itemProfile');
 
-$C['profile'] = id('modProfile');
-$C['profileAvatar'] = id('profile_avatar');
-$C['profileName'] = id('profile_name');
-$C['profileEmail'] = id('profile_email');
+$C['settings'] = byid('modSettings');
 
-$C['contactsEmail'] = id('contactsEmail');
-$C['contactsTextarea'] = id('contactsTextarea');
-$C['contactsAlert'] = id('contactsAlert');
-$C['contactsSubmit'] = id('contactsSubmit');
+$C['profile'] = byid('modProfile');
+$C['profileAvatar'] = byid('profile_avatar');
+$C['profileName'] = byid('profile_name');
+$C['profileEmail'] = byid('profile_email');
+
+$C['contactsEmail'] = byid('contactsEmail');
+$C['contactsTextarea'] = byid('contactsTextarea');
+$C['contactsAlert'] = byid('contactsAlert');
+$C['contactsSubmit'] = byid('contactsSubmit');
 
 let modProfile = new bootstrap.Modal($C.profile, {});
 let modSettings = new bootstrap.Modal($C.settings, {});
@@ -225,12 +216,12 @@ function checkApp() {
     modProfile.show();
   }
 
-  $C.settings.addEventListener('shown.bs.modal', function () {
+  $C.settings.on('shown.bs.modal', function () {
     log("Окно 'Настройки' открыто",'warning');
   })
 
   //var myInput = document.getElementById('myInput')
-  $C.profile.addEventListener('shown.bs.modal', function () {
+  $C.profile.on('shown.bs.modal', function () {
     log("Окно 'Профиль' открыто",'warning');
     //myInput.focus()
   })
@@ -448,7 +439,7 @@ async function listFiles() {
  * sandbox
  */
 
-const sandbox = id('sandbox');
+const sandbox = byid('sandbox');
 
 const datepicker = addDatePicker(sandbox);
 
@@ -463,11 +454,11 @@ function addDatePicker(sandbox) {
   div.setAttribute('class','mb-3');
   sandbox.appendChild(div);
 
-  const elem = document.createElement('input');
+  const elt = document.createElement('input');
 
-  elem.setAttribute('name','datepicker');
-  elem.setAttribute('type','text');
-  elem.setAttribute('class','form-control date text-center');
+  elt.setAttribute('name','datepicker');
+  elt.setAttribute('type','text');
+  elt.setAttribute('class','form-control date text-center');
 
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
@@ -475,10 +466,10 @@ function addDatePicker(sandbox) {
   let yyyy = today.getFullYear();
 
   today = dd + '/' + mm + '/' + yyyy;
-  elem.value = today;
-  div.appendChild(elem);
+  elt.value = today;
+  div.appendChild(elt);
 
-  const datepicker = new Datepicker(elem, {
+  const datepicker = new Datepicker(elt, {
     // ...options
     buttonClass: 'btn',
     autohide: true,
@@ -499,17 +490,66 @@ function addDatePicker(sandbox) {
  * changeDate, changeMonth, changeView, changeYear, hide, show
  */
 
-// const elem = document.querySelector('input[name="foo"]');
-datepicker.inputField.addEventListener('changeDate', (e) => {
-  console.log(e);
+// const elt = document.querySelector('input[name="foo"]');
+datepicker.inputField.on('changeDate', (e) => {
+  log(e);
 });
 
+const row1 = addRowProgression(sandbox, programs.list[0].progressions[0]);
 
+function addRowProgression(parent, row) {
+  log(row,'info');
+  const excersises = row.excersises;
+
+  const eltRow = document.createElement('div');
+  eltRow.classList.add('row');
+  parent.appendChild(eltRow);
+  
+  const eltNameCol = document.createElement('div');
+  eltNameCol.classList.add('input-group', 'mt-3', 'mb-3', 'justify-content-center');
+  eltRow.appendChild(eltNameCol);
+
+  const eltNameText = document.createElement('div');
+  eltNameText.classList.add('input-group-text', 'd-flex');
+  eltNameText.innerText = row.name;
+  eltNameCol.appendChild(eltNameText);
+
+  const eltExcersiseCol = document.createElement('div');
+  eltExcersiseCol.classList.add('input-group', 'mt-3', 'mb-3', 'justify-content-center');
+  eltRow.appendChild(eltExcersiseCol);
+
+  const eltExcersiseBtn = document.createElement('div');
+  eltExcersiseBtn.classList.add('btn', 'btn-secondary', 'dropdown-toggle');
+  eltExcersiseBtn.setAttribute('type','button');
+  eltExcersiseBtn.setAttribute('data-bs-toggle','dropdown');
+  eltExcersiseBtn.innerText = row.excersises[0].name;
+  eltExcersiseCol.appendChild(eltExcersiseBtn);
+
+  const eltExcersiseUl = document.createElement('ul');
+  eltExcersiseUl.classList.add('dropdown-menu','text-center');
+  eltExcersiseCol.appendChild(eltExcersiseUl);
+
+  excersises.forEach(element => {
+    const eltExcersiseLi = document.createElement('li');
+    eltExcersiseUl.appendChild(eltExcersiseLi);
+
+    const eltExcersiseA = document.createElement('a');
+    eltExcersiseA.classList.add('dropdown-item');
+    eltExcersiseA.setAttribute('href','#');
+    eltExcersiseA.innerText = element.name;
+    eltExcersiseLi.appendChild(eltExcersiseA);
+
+  });
+
+}
 
 /*
         <div class='row'>
-          <div class='input-group mt-3 mb-3'>
-            <div class='input-group-text d-flex justify-content-center'>Отжимания</div>
+          <div class='input-group mt-3 mb-3 justify-content-center'>
+            <div class='input-group-text d-flex'>Отжимания</div>
+          </div>
+
+          <div class='input-group mt-3 mb-3 justify-content-center'>  
             <button type='button' class='btn btn-secondary dropdown-toggle' data-bs-toggle='dropdown'>
               Отжимания от стены
             </button>
@@ -527,10 +567,17 @@ datepicker.inputField.addEventListener('changeDate', (e) => {
             </ul>
           </div>
         </div>
-        <div class='input-group mt-3 mb-3 row'>  
-          <input type='text' class='form-control text-center' placeholder='1'>
-          <input type='text' class='form-control text-center' placeholder='2'>
-          <input type='text' class='form-control text-center' placeholder='3'>
+
+        <div class='mt-3 mb-3 row justify-content-center'>
+          <div class='mt-3 mb-3 col-sm-2'>
+            <input type='text' class='form-control text-center' placeholder='1'>
+          </div>
+          <div class='mt-3 mb-3 col-sm-2'>
+            <input type='text' class='form-control text-center' placeholder='2'>
+          </div>
+          <div class='mt-3 mb-3 col-sm-2'>
+            <input type='text' class='form-control text-center' placeholder='3'>
+          </div>
         </div>
       */
 
