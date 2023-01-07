@@ -555,6 +555,7 @@ function addRowProgression(parent, row) {
     eltExcersiseA.on('click', (e) => {
       log(e, 'info');
       log(e.target.innerText);
+      eltExcersiseBtn.innerText = e.target.innerText;
     });
     eltExcersiseLi.appendChild(eltExcersiseA);
 
