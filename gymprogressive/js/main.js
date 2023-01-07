@@ -442,6 +442,19 @@ async function listFiles() {
 const sandbox = byid('sandbox');
 
 const datepicker = addDatePicker(sandbox);
+/**
+ * Возвращает текущую дату строкой
+ * @returns today
+ */
+function getToday() {
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  let yyyy = today.getFullYear();
+
+  today = dd + '/' + mm + '/' + yyyy;
+  return today;
+}
 
 /**
  * addDatePicker
@@ -450,24 +463,23 @@ const datepicker = addDatePicker(sandbox);
  */
 function addDatePicker(sandbox) {
   // https://mymth.github.io/vanillajs-datepicker/#/
+
   const div = document.createElement('div');
-  div.setAttribute('class','mb-3');
+  div.classList.add('row','mt-2','mb-2','justify-content-center');
   sandbox.appendChild(div);
+
+  const divInputGroup = document.createElement('div');
+  divInputGroup.classList.add('mt-2', 'mb-2', 'col-sm-3');
+  div.appendChild(divInputGroup);
 
   const elt = document.createElement('input');
 
   elt.setAttribute('name','datepicker');
   elt.setAttribute('type','text');
-  elt.setAttribute('class','form-control date text-center');
+  elt.classList.add('form-control','text-center');
 
-  let today = new Date();
-  let dd = String(today.getDate()).padStart(2, '0');
-  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  let yyyy = today.getFullYear();
-
-  today = dd + '/' + mm + '/' + yyyy;
-  elt.value = today;
-  div.appendChild(elt);
+  elt.value = getToday();
+  divInputGroup.appendChild(elt);
 
   const datepicker = new Datepicker(elt, {
     // ...options
@@ -494,8 +506,11 @@ function addDatePicker(sandbox) {
 datepicker.inputField.on('changeDate', (e) => {
   log(e);
 });
+const progressions = programs.list[0].progressions;
 
-const row1 = addRowProgression(sandbox, programs.list[0].progressions[0]);
+progressions.forEach(element => {
+  const row = addRowProgression(sandbox, element);
+});
 
 function addRowProgression(parent, row) {
   log(row,'info');
@@ -506,7 +521,7 @@ function addRowProgression(parent, row) {
   parent.appendChild(eltRow);
   
   const eltNameCol = document.createElement('div');
-  eltNameCol.classList.add('input-group', 'mt-3', 'mb-3', 'justify-content-center');
+  eltNameCol.classList.add('input-group', 'mt-2', 'mb-2', 'justify-content-center');
   eltRow.appendChild(eltNameCol);
 
   const eltNameText = document.createElement('div');
@@ -515,7 +530,7 @@ function addRowProgression(parent, row) {
   eltNameCol.appendChild(eltNameText);
 
   const eltExcersiseCol = document.createElement('div');
-  eltExcersiseCol.classList.add('input-group', 'mt-3', 'mb-3', 'justify-content-center');
+  eltExcersiseCol.classList.add('input-group', 'mt-2', 'mb-2', 'justify-content-center');
   eltRow.appendChild(eltExcersiseCol);
 
   const eltExcersiseBtn = document.createElement('div');
@@ -537,37 +552,61 @@ function addRowProgression(parent, row) {
     eltExcersiseA.classList.add('dropdown-item');
     eltExcersiseA.setAttribute('href','#');
     eltExcersiseA.innerText = element.name;
+    eltExcersiseA.on('click', (e) => {
+      log(e, 'info');
+      log(e.target.innerText);
+    });
     eltExcersiseLi.appendChild(eltExcersiseA);
 
   });
 
-}
+  const eltRowReps = document.createElement('div');
+  eltRowReps.classList.add('row','mt-2','mb-2','justify-content-center');
+  parent.appendChild(eltRowReps);
+
+  const eltRowCol1 = document.createElement('div');
+  eltRowCol1.classList.add('mt-2', 'mb-2', 'col-sm-2');
+  eltRowReps.appendChild(eltRowCol1);
+
+  const eltRowCol1Input = document.createElement('input');
+  eltRowCol1Input.classList.add('form-control','text-center');
+  eltRowCol1Input.setAttribute('type','text');
+  eltRowCol1Input.setAttribute('placeholder','1');
+  eltRowCol1Input.on('change', (e) => {
+    log(e, 'info');
+    log(e.target.value);
+  });
+  eltRowCol1.appendChild(eltRowCol1Input);
+
+  const eltRowCol2 = document.createElement('div');
+  eltRowCol2.classList.add('mt-2', 'mb-2', 'col-sm-2');
+  eltRowReps.appendChild(eltRowCol2);
+
+  const eltRowCol2Input = document.createElement('input');
+  eltRowCol2Input.classList.add('form-control','text-center');
+  eltRowCol2Input.setAttribute('type','text');
+  eltRowCol2Input.setAttribute('placeholder','2');
+  eltRowCol2Input.on('change', (e) => {
+    log(e, 'info');
+    log(e.target.value);
+  });
+  eltRowCol2.appendChild(eltRowCol2Input);
+
+  const eltRowCol3 = document.createElement('div');
+  eltRowCol3.classList.add('mt-2', 'mb-2', 'col-sm-2');
+  eltRowReps.appendChild(eltRowCol3);
+
+  const eltRowCol3Input = document.createElement('input');
+  eltRowCol3Input.classList.add('form-control','text-center');
+  eltRowCol3Input.setAttribute('type','text');
+  eltRowCol3Input.setAttribute('placeholder','3');
+  eltRowCol3Input.on('change', (e) => {
+    log(e, 'info');
+    log(e.target.value);
+  });
+  eltRowCol3.appendChild(eltRowCol3Input);
 
 /*
-        <div class='row'>
-          <div class='input-group mt-3 mb-3 justify-content-center'>
-            <div class='input-group-text d-flex'>Отжимания</div>
-          </div>
-
-          <div class='input-group mt-3 mb-3 justify-content-center'>  
-            <button type='button' class='btn btn-secondary dropdown-toggle' data-bs-toggle='dropdown'>
-              Отжимания от стены
-            </button>
-            <ul class='dropdown-menu text-center'>
-              <li><a class='dropdown-item' href='#'>Отжимания от стены</a></li>
-              <li><a class='dropdown-item' href='#'>Отжимания в наклоне</a></li>
-              <li><a class='dropdown-item' href='#'>Отжимания на коленях</a></li>
-              <li><a class='dropdown-item' href='#'>Неполные отжимания</a></li>
-              <li><a class='dropdown-item' href='#'>Полные отжимания</a></li>
-              <li><a class='dropdown-item' href='#'>Узкие отжимания</a></li>
-              <li><a class='dropdown-item' href='#'>Разновысокие отжимания</a></li>
-              <li><a class='dropdown-item' href='#'>Неполные отжимания на одной руке</a></li>
-              <li><a class='dropdown-item' href='#'>Отжимания на одной руке с поддержкой</a></li>
-              <li><a class='dropdown-item' href='#'>Отжимания на одной руке</a></li>
-            </ul>
-          </div>
-        </div>
-
         <div class='mt-3 mb-3 row justify-content-center'>
           <div class='mt-3 mb-3 col-sm-2'>
             <input type='text' class='form-control text-center' placeholder='1'>
@@ -579,8 +618,26 @@ function addRowProgression(parent, row) {
             <input type='text' class='form-control text-center' placeholder='3'>
           </div>
         </div>
-      */
+*/
 
+}
+
+const divRow = document.createElement('div');
+divRow.classList.add('row');
+sandbox.appendChild(divRow);
+
+const divRowInputGroup = document.createElement('div');
+divRowInputGroup.classList.add('input-group', 'mt-3', 'mb-3', 'col-sm-3', 'justify-content-center');
+divRow.appendChild(divRowInputGroup);
+
+const divRowBtn = document.createElement('button');
+divRowBtn.classList.add('btn','btn-primary');
+divRowBtn.setAttribute('type','button');
+divRowBtn.innerText = 'Сохранить';
+divRowBtn.on('click', (e) => {
+  log(e, 'info');
+});
+divRowInputGroup.appendChild(divRowBtn);
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
