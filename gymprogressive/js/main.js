@@ -436,7 +436,11 @@ async function listFiles() {
 
 
 /**
- * sandbox
+ *  ################################
+ * 
+ *           sandbox
+ * 
+ *  ################################
  */
 
 const sandbox = byid('sandbox');
@@ -506,45 +510,91 @@ function addDatePicker(sandbox) {
 datepicker.inputField.on('changeDate', (e) => {
   log(e);
 });
-const progressions = programs.list[0].progressions;
 
-progressions.forEach(element => {
-  const row = addRowProgression(sandbox, element);
-});
+let progressions = programs.list[0].progressions;
+let progression_selection = 0;
+let excersise_selection = 0;
 
-function addRowProgression(parent, row) {
-  log(row,'info');
-  const excersises = row.excersises;
+addProgressionSelect(sandbox, progressions);
+
+function addProgressionSelect(parent, progressions) {
+  log(progressions);
 
   const eltRow = document.createElement('div');
   eltRow.classList.add('row');
   parent.appendChild(eltRow);
+
+  // Колонка для выбора прогрессии 
+  const eltProgressionCol = document.createElement('div');
+  eltProgressionCol.classList.add('input-group', 'mt-1', 'mb-1', 'justify-content-center');
+  eltRow.appendChild(eltProgressionCol);
+
+  // Кнопка выбора
+  const eltProgressionBtn = document.createElement('div');
+  eltProgressionBtn.classList.add('btn', 'btn-secondary', 'dropdown-toggle');
+  eltProgressionBtn.setAttribute('type','button');
+  eltProgressionBtn.setAttribute('data-bs-toggle','dropdown');
+  eltProgressionBtn.innerText = progressions[0].name;
+  eltProgressionCol.appendChild(eltProgressionBtn);
+
+  // Список
+  const eltProgressionUl = document.createElement('ul');
+  eltProgressionUl.classList.add('dropdown-menu','text-center');
+  eltProgressionCol.appendChild(eltProgressionUl);
+
+  // Элементы списка
+  progressions.forEach((element, i) => {
+    const eltProgressionLi = document.createElement('li');
+    eltProgressionUl.appendChild(eltProgressionLi);
+
+    const eltProgressionA = document.createElement('a');
+    eltProgressionA.classList.add('dropdown-item');
+    eltProgressionA.setAttribute('href','#');
+    eltProgressionA.innerText = element.name;
+    eltProgressionA.on('click', (e) => {
+      log(e, 'info');
+      log(e.target.innerText);
+      eltProgressionBtn.innerText = e.target.innerText;
+      document.getElementById('ExcersiseCol').remove();
+      progression_selection = i;
+      excersise_selection = 0; // сбросить индекс выбранного упражнения
+      
+      addExcersiseBtn(eltRow, element);
+    });
+    eltProgressionLi.appendChild(eltProgressionA);
+  });
+
+  addExcersiseBtn(eltRow, progressions[progression_selection]);
+
+  addRowReps(parent);
+
+}
+
+function addExcersiseBtn(parent, element) {
+// Список упражнений
   
-  const eltNameCol = document.createElement('div');
-  eltNameCol.classList.add('input-group', 'mt-2', 'mb-2', 'justify-content-center');
-  eltRow.appendChild(eltNameCol);
-
-  const eltNameText = document.createElement('div');
-  eltNameText.classList.add('input-group-text', 'd-flex');
-  eltNameText.innerText = row.name;
-  eltNameCol.appendChild(eltNameText);
-
+  // Колонка для прогрессии 
   const eltExcersiseCol = document.createElement('div');
-  eltExcersiseCol.classList.add('input-group', 'mt-2', 'mb-2', 'justify-content-center');
-  eltRow.appendChild(eltExcersiseCol);
+  eltExcersiseCol.setAttribute('id','ExcersiseCol');
+  eltExcersiseCol.classList.add('input-group', 'mt-1', 'mb-1', 'justify-content-center');
+  parent.appendChild(eltExcersiseCol);
 
+  // Кнопка выбора
   const eltExcersiseBtn = document.createElement('div');
   eltExcersiseBtn.classList.add('btn', 'btn-secondary', 'dropdown-toggle');
   eltExcersiseBtn.setAttribute('type','button');
   eltExcersiseBtn.setAttribute('data-bs-toggle','dropdown');
-  eltExcersiseBtn.innerText = row.excersises[0].name;
+  eltExcersiseBtn.innerText = element.excersises[0].name;
   eltExcersiseCol.appendChild(eltExcersiseBtn);
 
+  // Список
   const eltExcersiseUl = document.createElement('ul');
   eltExcersiseUl.classList.add('dropdown-menu','text-center');
   eltExcersiseCol.appendChild(eltExcersiseUl);
 
-  excersises.forEach(element => {
+  // Элементы списка
+  
+  element.excersises.forEach((element,element_i) => {
     const eltExcersiseLi = document.createElement('li');
     eltExcersiseUl.appendChild(eltExcersiseLi);
 
@@ -556,17 +606,42 @@ function addRowProgression(parent, row) {
       log(e, 'info');
       log(e.target.innerText);
       eltExcersiseBtn.innerText = e.target.innerText;
+      excersise_selection = element_i;
+
+      log(element_i,'warning');
     });
     eltExcersiseLi.appendChild(eltExcersiseA);
-
   });
+}
 
+function addRowReps(parent) {
+  let n = 3;
+  let arrReps = [...Array(n).keys()];
+
+  // Строка с повторениями
   const eltRowReps = document.createElement('div');
-  eltRowReps.classList.add('row','mt-2','mb-2','justify-content-center');
+  eltRowReps.classList.add('row','mt-1','mb-1','justify-content-center');
   parent.appendChild(eltRowReps);
 
+  arrReps.forEach((element, i)=>{
+    const eltRowCol = document.createElement('div');
+    eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
+    eltRowReps.appendChild(eltRowCol);
+
+    const eltRowColInput = document.createElement('input');
+    eltRowColInput.classList.add('form-control','text-center');
+    eltRowColInput.setAttribute('type','text');
+    eltRowColInput.setAttribute('placeholder',i+1);
+    eltRowColInput.on('change', (e) => {
+      log(e, 'info');
+      log(e.target.value);
+    });
+    eltRowCol.appendChild(eltRowColInput);
+  });
+
+  /*
   const eltRowCol1 = document.createElement('div');
-  eltRowCol1.classList.add('mt-2', 'mb-2', 'col-sm-2');
+  eltRowCol1.classList.add('mt-1', 'mb-1', 'col-sm-2');
   eltRowReps.appendChild(eltRowCol1);
 
   const eltRowCol1Input = document.createElement('input');
@@ -580,7 +655,7 @@ function addRowProgression(parent, row) {
   eltRowCol1.appendChild(eltRowCol1Input);
 
   const eltRowCol2 = document.createElement('div');
-  eltRowCol2.classList.add('mt-2', 'mb-2', 'col-sm-2');
+  eltRowCol2.classList.add('mt-1', 'mb-1', 'col-sm-2');
   eltRowReps.appendChild(eltRowCol2);
 
   const eltRowCol2Input = document.createElement('input');
@@ -594,7 +669,7 @@ function addRowProgression(parent, row) {
   eltRowCol2.appendChild(eltRowCol2Input);
 
   const eltRowCol3 = document.createElement('div');
-  eltRowCol3.classList.add('mt-2', 'mb-2', 'col-sm-2');
+  eltRowCol3.classList.add('mt-1', 'mb-1', 'col-sm-2');
   eltRowReps.appendChild(eltRowCol3);
 
   const eltRowCol3Input = document.createElement('input');
@@ -606,39 +681,52 @@ function addRowProgression(parent, row) {
     log(e.target.value);
   });
   eltRowCol3.appendChild(eltRowCol3Input);
+  */
 
-/*
-        <div class='mt-3 mb-3 row justify-content-center'>
-          <div class='mt-3 mb-3 col-sm-2'>
-            <input type='text' class='form-control text-center' placeholder='1'>
-          </div>
-          <div class='mt-3 mb-3 col-sm-2'>
-            <input type='text' class='form-control text-center' placeholder='2'>
-          </div>
-          <div class='mt-3 mb-3 col-sm-2'>
-            <input type='text' class='form-control text-center' placeholder='3'>
-          </div>
-        </div>
-*/
+  const divRowButtons = document.createElement('div');
+  divRowButtons.classList.add('btn-group','mt-1', 'mb-1', 'col-sm-2');
+  eltRowReps.appendChild(divRowButtons);
 
+
+  const divRowBtnMinus = document.createElement('button');
+  divRowBtnMinus.classList.add('btn','btn-success');
+  divRowBtnMinus.setAttribute('type','button');
+  divRowBtnMinus.innerText = '-';
+  divRowBtnMinus.on('click', (e) => {
+    log("-", 'info');
+  });
+  divRowButtons.appendChild(divRowBtnMinus);
+
+  const divRowBtnPlus = document.createElement('button');
+  divRowBtnPlus.classList.add('btn','btn-success');
+  divRowBtnPlus.setAttribute('type','button');
+  divRowBtnPlus.innerText = '+';
+  divRowBtnPlus.on('click', (e) => {
+    log("+", 'info');
+  });
+  divRowButtons.appendChild(divRowBtnPlus);
 }
 
-const divRow = document.createElement('div');
-divRow.classList.add('row');
-sandbox.appendChild(divRow);
+addSaveBtn(sandbox);
 
-const divRowInputGroup = document.createElement('div');
-divRowInputGroup.classList.add('input-group', 'mt-3', 'mb-3', 'col-sm-3', 'justify-content-center');
-divRow.appendChild(divRowInputGroup);
+function addSaveBtn(parent) {
+  const divRow = document.createElement('div');
+  divRow.classList.add('row');
+  parent.appendChild(divRow);
 
-const divRowBtn = document.createElement('button');
-divRowBtn.classList.add('btn','btn-primary');
-divRowBtn.setAttribute('type','button');
-divRowBtn.innerText = 'Сохранить';
-divRowBtn.on('click', (e) => {
-  log(e, 'info');
-});
-divRowInputGroup.appendChild(divRowBtn);
+  const divRowInputGroup = document.createElement('div');
+  divRowInputGroup.classList.add('input-group', 'mt-3', 'mb-3', 'col-sm-3', 'justify-content-center');
+  divRow.appendChild(divRowInputGroup);
+
+  const divRowBtn = document.createElement('button');
+  divRowBtn.classList.add('btn','btn-primary');
+  divRowBtn.setAttribute('type','button');
+  divRowBtn.innerText = 'Сохранить';
+  divRowBtn.on('click', (e) => {
+    log(e, 'info');
+  });
+  divRowInputGroup.appendChild(divRowBtn);
+}
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
