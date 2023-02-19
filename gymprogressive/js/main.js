@@ -669,7 +669,7 @@ function addRowReps(parent, element) {
   const divRowButtons = document.createElement('div');
   divRowButtons.classList.add('btn-group','mt-1', 'mb-1', 'col-sm-1');
   eltRowReps.appendChild(divRowButtons);
-
+/*
   // Кнопка минус
   const divRowBtnMinus = document.createElement('button');
   divRowBtnMinus.classList.add('btn','btn-success');
@@ -682,18 +682,28 @@ function addRowReps(parent, element) {
     // нужен массив ссылок на элементы html
   });
   divRowButtons.appendChild(divRowBtnMinus);
+*/
 
-  function addMinusBtn(parent, cb) {
+  addBtnMinus(divRowButtons, btnMinusClick);
+
+  function btnMinusClick(e) {
+    log(e);
+  }
+
+  function addBtnMinus(parent, cb) {
     // Кнопка минус
     const divRowBtnMinus = document.createElement('button');
     divRowBtnMinus.classList.add('btn','btn-success');
     divRowBtnMinus.setAttribute('type','button');
     divRowBtnMinus.innerText = '-';
     divRowBtnMinus.on('click', (e) => {
+      cb(e);
+      /*
       log("-", 'info');
       arrReps.pop();
       // при удалении поля удалить элемент массива и перестроить html
       // нужен массив ссылок на элементы html
+      */
     });
     parent.appendChild(divRowBtnMinus);
   }
