@@ -723,12 +723,12 @@ function addRowReps(parent, element) {
   function btnMinusClick(e) {
     log(e, 'info');
 
-    let elt_id_ = arrReps.length-1; // мндекс удаленном элемента
+    let elt_id_ = arrReps.length-1; // индекс удаляемого элемента
     
-    arrReps.pop();
-    // при удалении поля удалить элемент массива и перестроить html
-    // нужен массив ссылок на элементы html
-    removeInputRep(elt_id_);
+    if (elt_id_ != 0) {
+      arrReps.pop();
+      removeInputRep(elt_id_);
+    }
   }
 
   function addBtnMinus(parent, cb) {
@@ -748,13 +748,12 @@ function addRowReps(parent, element) {
 
   function btnPlusClick(e) {
     log(e, 'info');
-    arrReps.push(arrReps.length-1);
-
-    let elt_id_ = arrReps.length-1;
-    log('rep_' + elt_id_,'warning');
-    // при добавлении поля добавить элемент массива и добавить элемент html
-    // нужен массив ссылок на элементы html
-    insertInputRep(elt_id_, level);
+    let elt_id_ = arrReps.length;
+      // максимальное число подходов - 5
+    if (elt_id_ < 5) {
+      arrReps.push(arrReps.length-1);
+      insertInputRep(elt_id_, level);
+    }
   }
 
   function addBtnPlus(parent, cb) {
@@ -799,34 +798,6 @@ function addBtnSave(parent, cb) {
   });
   divRowInputGroup.appendChild(divRowBtn);
 }
-
-/*
-  const divRowBtnMinus = document.createElement('button');
-  divRowBtnMinus.classList.add('btn','btn-success');
-  divRowBtnMinus.setAttribute('type','button');
-  divRowBtnMinus.innerText = '-';
-  divRowBtnMinus.on('click', (e) => {
-    log("-", 'info');
-    arrReps.pop();
-    // при удалении поля удалить элемент массива и перестроить html
-    // нужен массив ссылок на элементы html
-  });
-  divRowButtons.appendChild(divRowBtnMinus);
-*/
-
-/*
-  const divRowBtnPlus = document.createElement('button');
-  divRowBtnPlus.classList.add('btn','btn-success');
-  divRowBtnPlus.setAttribute('type','button');
-  divRowBtnPlus.innerText = '+';
-  divRowBtnPlus.on('click', (e) => {
-    log("+", 'info');
-    arrReps.push(arrReps.length-1);
-    // при добавлении поля добавить элемент массива и добавить элемент html
-    // нужен массив ссылок на элементы html
-  });
-  divRowButtons.appendChild(divRowBtnPlus);
-*/
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
