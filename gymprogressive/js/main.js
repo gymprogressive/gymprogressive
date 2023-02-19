@@ -650,6 +650,7 @@ function addRowReps(parent, element) {
   parent.appendChild(eltRowReps);
 
   arrReps.forEach((element, i)=>{
+
     const eltRowCol = document.createElement('div');
     eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
     eltRowReps.appendChild(eltRowCol);
@@ -663,6 +664,7 @@ function addRowReps(parent, element) {
       log(e.target.value);
     });
     eltRowCol.appendChild(eltRowColInput);
+    
   });
 
   // Кнопки
@@ -675,6 +677,9 @@ function addRowReps(parent, element) {
 
   function btnMinusClick(e) {
     log(e, 'info');
+
+    let el_id_ = arrReps.length-1; // мндекс удаленном элемента
+    
     arrReps.pop();
     // при удалении поля удалить элемент массива и перестроить html
     // нужен массив ссылок на элементы html
@@ -688,12 +693,6 @@ function addRowReps(parent, element) {
     divRowBtnMinus.innerText = '-';
     divRowBtnMinus.on('click', (e) => {
       cb(e);
-      /*
-      log("-", 'info');
-      arrReps.pop();
-      // при удалении поля удалить элемент массива и перестроить html
-      // нужен массив ссылок на элементы html
-      */
     });
     parent.appendChild(divRowBtnMinus);
   }
@@ -704,6 +703,8 @@ function addRowReps(parent, element) {
   function btnPlusClick(e) {
     log(e, 'info');
     arrReps.push(arrReps.length-1);
+
+    let el_id_ = arrReps.length-1;
     // при добавлении поля добавить элемент массива и добавить элемент html
     // нужен массив ссылок на элементы html
   }
@@ -716,12 +717,6 @@ function addRowReps(parent, element) {
     divRowBtnPlus.innerText = '+';
     divRowBtnPlus.on('click', (e) => {
       cb(e);
-      /*
-      log("+", 'info');
-      arrReps.push(arrReps.length-1);
-      // при добавлении поля добавить элемент массива и добавить элемент html
-      // нужен массив ссылок на элементы html
-      */
     });
     parent.appendChild(divRowBtnPlus);
   }
