@@ -728,6 +728,7 @@ function addRowReps(parent, element) {
     arrReps.pop();
     // при удалении поля удалить элемент массива и перестроить html
     // нужен массив ссылок на элементы html
+    removeInputRep(elt_id_);
   }
 
   function addBtnMinus(parent, cb) {
