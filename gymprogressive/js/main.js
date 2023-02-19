@@ -649,8 +649,10 @@ function addRowReps(parent, element) {
   eltRowReps.classList.add('row','mt-1','mb-1','justify-content-center');
   parent.appendChild(eltRowReps);
 
+  // Поля для ввода повторений
   arrReps.forEach((element, i)=>{
-
+    addInputRep(i, level);
+    /*
     const eltRowCol = document.createElement('div');
     eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
     eltRowReps.appendChild(eltRowCol);
@@ -664,8 +666,25 @@ function addRowReps(parent, element) {
       log(e.target.value);
     });
     eltRowCol.appendChild(eltRowColInput);
-    
+    */
   });
+
+  function addInputRep(i, level) {
+    const eltRowCol = document.createElement('div');
+    eltRowCol.setAttribute('id','rep_' +  i);
+    eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
+    eltRowReps.appendChild(eltRowCol);
+
+    const eltRowColInput = document.createElement('input');
+    eltRowColInput.classList.add('form-control','text-center');
+    eltRowColInput.setAttribute('type','text');
+    eltRowColInput.setAttribute('placeholder',level.reps);
+    eltRowColInput.on('change', (e) => {
+      log(e, 'info');
+      log(e.target.value);
+    });
+    eltRowCol.appendChild(eltRowColInput);
+  }
 
   // Кнопки
   const divRowButtons = document.createElement('div');
