@@ -435,13 +435,13 @@ async function listFiles() {
 }
 
 
-/**
- *  ################################
+/** ***************************************************
+ *  ************************************************
  * 
- *           sandbox
+ *     песочница для размещения логики приложения
  * 
- *  ################################
- */
+ *  ************************************************
+ *  ***************************************************/
 
 const sandbox = byid('sandbox');
 
@@ -457,6 +457,7 @@ function getToday() {
   let yyyy = today.getFullYear();
 
   today = dd + '/' + mm + '/' + yyyy;
+
   return today;
 }
 
@@ -503,6 +504,7 @@ function addDatePicker(sandbox) {
 }
 
 /**
+ * datepicker Events
  * changeDate, changeMonth, changeView, changeYear, hide, show
  */
 
@@ -512,8 +514,10 @@ datepicker.inputField.on('changeDate', (e) => {
 });
 
 let progressions = programs.list[0].progressions;
-let progression_selection = 0;
-let excersise_selection = 0;
+
+let pr_selection = 0;
+let ex_selection = 0;
+let lv_selection = 0;
 
 addProgressionSelect(sandbox, progressions);
 
@@ -556,22 +560,23 @@ function addProgressionSelect(parent, progressions) {
       log(e.target.innerText);
       eltProgressionBtn.innerText = e.target.innerText;
       document.getElementById('ExcersiseCol').remove();
-      progression_selection = i;
-      excersise_selection = 0; // сбросить индекс выбранного упражнения
+      
+      pr_selection = i;
+      ex_selection = 0; // сбросить индекс выбранного упражнения
       
       addExcersiseBtn(eltRow, element);
     });
     eltProgressionLi.appendChild(eltProgressionA);
   });
 
-  addExcersiseBtn(eltRow, progressions[progression_selection]);
+  addExcersiseBtn(eltRow, progressions[pr_selection]);
 
-  addRowReps(parent);
+  addRowReps(parent, progressions[pr_selection]);
 
 }
 
 function addExcersiseBtn(parent, element) {
-// Список упражнений
+  // Список упражнений
   
   // Колонка для прогрессии 
   const eltExcersiseCol = document.createElement('div');
@@ -594,7 +599,7 @@ function addExcersiseBtn(parent, element) {
 
   // Элементы списка
   
-  element.excersises.forEach((element,element_i) => {
+  element.excersises.forEach((element, i) => {
     const eltExcersiseLi = document.createElement('li');
     eltExcersiseUl.appendChild(eltExcersiseLi);
 
@@ -606,17 +611,38 @@ function addExcersiseBtn(parent, element) {
       log(e, 'info');
       log(e.target.innerText);
       eltExcersiseBtn.innerText = e.target.innerText;
-      excersise_selection = element_i;
+      ex_selection = i;
 
-      log(element_i,'warning');
+      log(i,'warning');
     });
     eltExcersiseLi.appendChild(eltExcersiseA);
   });
 }
 
-function addRowReps(parent) {
-  let n = 3;
+function getExcersise(element, ex_selection) {
+  return element.excersises[ex_selection];
+}
+
+function getLevel(element, ex_selection, lv_selection) {
+  let excersise = element.excersises[ex_selection];
+  return excersise.levels[lv_selection];
+}
+
+function addRowReps(parent, element) {
+  log('------------');
+  log(element);
+  log('------------');
+  let excersise = element.excersises[ex_selection];
+  log(excersise);
+  log('------------');
+  let level = excersise.levels[lv_selection];
+  log(level);
+  log('------------');
+
+  let n = level.sets;
   let arrReps = [...Array(n).keys()];
+
+  log(arrReps);
 
   // Строка с повторениями
   const eltRowReps = document.createElement('div');
@@ -631,7 +657,7 @@ function addRowReps(parent) {
     const eltRowColInput = document.createElement('input');
     eltRowColInput.classList.add('form-control','text-center');
     eltRowColInput.setAttribute('type','text');
-    eltRowColInput.setAttribute('placeholder',i+1);
+    eltRowColInput.setAttribute('placeholder',level.reps);
     eltRowColInput.on('change', (e) => {
       log(e, 'info');
       log(e.target.value);
@@ -639,77 +665,74 @@ function addRowReps(parent) {
     eltRowCol.appendChild(eltRowColInput);
   });
 
-  /*
-  const eltRowCol1 = document.createElement('div');
-  eltRowCol1.classList.add('mt-1', 'mb-1', 'col-sm-2');
-  eltRowReps.appendChild(eltRowCol1);
-
-  const eltRowCol1Input = document.createElement('input');
-  eltRowCol1Input.classList.add('form-control','text-center');
-  eltRowCol1Input.setAttribute('type','text');
-  eltRowCol1Input.setAttribute('placeholder','1');
-  eltRowCol1Input.on('change', (e) => {
-    log(e, 'info');
-    log(e.target.value);
-  });
-  eltRowCol1.appendChild(eltRowCol1Input);
-
-  const eltRowCol2 = document.createElement('div');
-  eltRowCol2.classList.add('mt-1', 'mb-1', 'col-sm-2');
-  eltRowReps.appendChild(eltRowCol2);
-
-  const eltRowCol2Input = document.createElement('input');
-  eltRowCol2Input.classList.add('form-control','text-center');
-  eltRowCol2Input.setAttribute('type','text');
-  eltRowCol2Input.setAttribute('placeholder','2');
-  eltRowCol2Input.on('change', (e) => {
-    log(e, 'info');
-    log(e.target.value);
-  });
-  eltRowCol2.appendChild(eltRowCol2Input);
-
-  const eltRowCol3 = document.createElement('div');
-  eltRowCol3.classList.add('mt-1', 'mb-1', 'col-sm-2');
-  eltRowReps.appendChild(eltRowCol3);
-
-  const eltRowCol3Input = document.createElement('input');
-  eltRowCol3Input.classList.add('form-control','text-center');
-  eltRowCol3Input.setAttribute('type','text');
-  eltRowCol3Input.setAttribute('placeholder','3');
-  eltRowCol3Input.on('change', (e) => {
-    log(e, 'info');
-    log(e.target.value);
-  });
-  eltRowCol3.appendChild(eltRowCol3Input);
-  */
-
+  // Кнопки
   const divRowButtons = document.createElement('div');
-  divRowButtons.classList.add('btn-group','mt-1', 'mb-1', 'col-sm-2');
+  divRowButtons.classList.add('btn-group','mt-1', 'mb-1', 'col-sm-1');
   eltRowReps.appendChild(divRowButtons);
 
-
+  // Кнопка минус
   const divRowBtnMinus = document.createElement('button');
   divRowBtnMinus.classList.add('btn','btn-success');
   divRowBtnMinus.setAttribute('type','button');
   divRowBtnMinus.innerText = '-';
   divRowBtnMinus.on('click', (e) => {
     log("-", 'info');
+    arrReps.pop();
+    // при удалении поля удалить элемент массива и перестроить html
+    // нужен массив ссылок на элементы html
   });
   divRowButtons.appendChild(divRowBtnMinus);
 
+  function addMinusBtn(parent, cb) {
+    // Кнопка минус
+    const divRowBtnMinus = document.createElement('button');
+    divRowBtnMinus.classList.add('btn','btn-success');
+    divRowBtnMinus.setAttribute('type','button');
+    divRowBtnMinus.innerText = '-';
+    divRowBtnMinus.on('click', (e) => {
+      log("-", 'info');
+      arrReps.pop();
+      // при удалении поля удалить элемент массива и перестроить html
+      // нужен массив ссылок на элементы html
+    });
+    parent.appendChild(divRowBtnMinus);
+  }
+
+  // Кнопка плюс
   const divRowBtnPlus = document.createElement('button');
   divRowBtnPlus.classList.add('btn','btn-success');
   divRowBtnPlus.setAttribute('type','button');
   divRowBtnPlus.innerText = '+';
   divRowBtnPlus.on('click', (e) => {
     log("+", 'info');
+    arrReps.push(arrReps.length-1);
+    // при добавлении поля добавить элемент массива и добавить элемент html
+    // нужен массив ссылок на элементы html
   });
   divRowButtons.appendChild(divRowBtnPlus);
+
+  function addPlusBtn(parent, cb) {
+    // Кнопка плюс
+    const divRowBtnPlus = document.createElement('button');
+    divRowBtnPlus.classList.add('btn','btn-success');
+    divRowBtnPlus.setAttribute('type','button');
+    divRowBtnPlus.innerText = '+';
+    divRowBtnPlus.on('click', (e) => {
+      log("+", 'info');
+      arrReps.push(arrReps.length-1);
+      // при добавлении поля добавить элемент массива и добавить элемент html
+      // нужен массив ссылок на элементы html
+    });
+    parent.appendChild(divRowBtnPlus);
+  }
+
 }
 
 addSaveBtn(sandbox);
 
 function addSaveBtn(parent) {
+  // передать ссылку на callback
+  // кнопка сохранить
   const divRow = document.createElement('div');
   divRow.classList.add('row');
   parent.appendChild(divRow);
@@ -724,6 +747,7 @@ function addSaveBtn(parent) {
   divRowBtn.innerText = 'Сохранить';
   divRowBtn.on('click', (e) => {
     log(e, 'info');
+    // надо callback здесь
   });
   divRowInputGroup.appendChild(divRowBtn);
 }
