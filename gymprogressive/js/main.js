@@ -671,24 +671,10 @@ function addRowReps(parent, element) {
   eltRowReps.appendChild(divRowButtons);
 
   // Кнопка минус
-/*
-  const divRowBtnMinus = document.createElement('button');
-  divRowBtnMinus.classList.add('btn','btn-success');
-  divRowBtnMinus.setAttribute('type','button');
-  divRowBtnMinus.innerText = '-';
-  divRowBtnMinus.on('click', (e) => {
-    log("-", 'info');
-    arrReps.pop();
-    // при удалении поля удалить элемент массива и перестроить html
-    // нужен массив ссылок на элементы html
-  });
-  divRowButtons.appendChild(divRowBtnMinus);
-*/
-
   addBtnMinus(divRowButtons, btnMinusClick);
 
   function btnMinusClick(e) {
-    log(e);
+    log(e, 'info');
     arrReps.pop();
     // при удалении поля удалить элемент массива и перестроить html
     // нужен массив ссылок на элементы html
@@ -713,24 +699,10 @@ function addRowReps(parent, element) {
   }
 
   // Кнопка плюс
-/*
-  const divRowBtnPlus = document.createElement('button');
-  divRowBtnPlus.classList.add('btn','btn-success');
-  divRowBtnPlus.setAttribute('type','button');
-  divRowBtnPlus.innerText = '+';
-  divRowBtnPlus.on('click', (e) => {
-    log("+", 'info');
-    arrReps.push(arrReps.length-1);
-    // при добавлении поля добавить элемент массива и добавить элемент html
-    // нужен массив ссылок на элементы html
-  });
-  divRowButtons.appendChild(divRowBtnPlus);
-*/
-
   addBtnPlus(divRowButtons, btnPlusClick);
 
   function btnPlusClick(e) {
-    log(e);
+    log(e, 'info');
     arrReps.push(arrReps.length-1);
     // при добавлении поля добавить элемент массива и добавить элемент html
     // нужен массив ссылок на элементы html
@@ -756,9 +728,15 @@ function addRowReps(parent, element) {
 
 }
 
-addSaveBtn(sandbox);
+// Кнопка сохранить
+addBtnSave(sandbox, btnSaveCLick);
 
-function addSaveBtn(parent) {
+function btnSaveCLick(e) {
+  log(e, 'info');
+  // надо callback здесь
+}
+
+function addBtnSave(parent, cb) {
   // передать ссылку на callback
   // кнопка сохранить
   const divRow = document.createElement('div');
@@ -774,11 +752,38 @@ function addSaveBtn(parent) {
   divRowBtn.setAttribute('type','button');
   divRowBtn.innerText = 'Сохранить';
   divRowBtn.on('click', (e) => {
-    log(e, 'info');
-    // надо callback здесь
+    cb(e);
   });
   divRowInputGroup.appendChild(divRowBtn);
 }
+
+/*
+  const divRowBtnMinus = document.createElement('button');
+  divRowBtnMinus.classList.add('btn','btn-success');
+  divRowBtnMinus.setAttribute('type','button');
+  divRowBtnMinus.innerText = '-';
+  divRowBtnMinus.on('click', (e) => {
+    log("-", 'info');
+    arrReps.pop();
+    // при удалении поля удалить элемент массива и перестроить html
+    // нужен массив ссылок на элементы html
+  });
+  divRowButtons.appendChild(divRowBtnMinus);
+*/
+
+/*
+  const divRowBtnPlus = document.createElement('button');
+  divRowBtnPlus.classList.add('btn','btn-success');
+  divRowBtnPlus.setAttribute('type','button');
+  divRowBtnPlus.innerText = '+';
+  divRowBtnPlus.on('click', (e) => {
+    log("+", 'info');
+    arrReps.push(arrReps.length-1);
+    // при добавлении поля добавить элемент массива и добавить элемент html
+    // нужен массив ссылок на элементы html
+  });
+  divRowButtons.appendChild(divRowBtnPlus);
+*/
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * 
