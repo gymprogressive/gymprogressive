@@ -669,8 +669,9 @@ function addRowReps(parent, element) {
   const divRowButtons = document.createElement('div');
   divRowButtons.classList.add('btn-group','mt-1', 'mb-1', 'col-sm-1');
   eltRowReps.appendChild(divRowButtons);
-/*
+
   // Кнопка минус
+/*
   const divRowBtnMinus = document.createElement('button');
   divRowBtnMinus.classList.add('btn','btn-success');
   divRowBtnMinus.setAttribute('type','button');
@@ -688,6 +689,9 @@ function addRowReps(parent, element) {
 
   function btnMinusClick(e) {
     log(e);
+    arrReps.pop();
+    // при удалении поля удалить элемент массива и перестроить html
+    // нужен массив ссылок на элементы html
   }
 
   function addBtnMinus(parent, cb) {
@@ -709,6 +713,7 @@ function addRowReps(parent, element) {
   }
 
   // Кнопка плюс
+/*
   const divRowBtnPlus = document.createElement('button');
   divRowBtnPlus.classList.add('btn','btn-success');
   divRowBtnPlus.setAttribute('type','button');
@@ -720,18 +725,31 @@ function addRowReps(parent, element) {
     // нужен массив ссылок на элементы html
   });
   divRowButtons.appendChild(divRowBtnPlus);
+*/
 
-  function addPlusBtn(parent, cb) {
+  addBtnPlus(divRowButtons, btnPlusClick);
+
+  function btnPlusClick(e) {
+    log(e);
+    arrReps.push(arrReps.length-1);
+    // при добавлении поля добавить элемент массива и добавить элемент html
+    // нужен массив ссылок на элементы html
+  }
+
+  function addBtnPlus(parent, cb) {
     // Кнопка плюс
     const divRowBtnPlus = document.createElement('button');
     divRowBtnPlus.classList.add('btn','btn-success');
     divRowBtnPlus.setAttribute('type','button');
     divRowBtnPlus.innerText = '+';
     divRowBtnPlus.on('click', (e) => {
+      cb(e);
+      /*
       log("+", 'info');
       arrReps.push(arrReps.length-1);
       // при добавлении поля добавить элемент массива и добавить элемент html
       // нужен массив ссылок на элементы html
+      */
     });
     parent.appendChild(divRowBtnPlus);
   }
