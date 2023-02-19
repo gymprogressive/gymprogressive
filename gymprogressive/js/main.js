@@ -683,7 +683,40 @@ function addRowReps(parent, element) {
       log(e, 'info');
       log(e.target.value);
     });
+    
     eltRowCol.appendChild(eltRowColInput);
+    let refElt = byid('rep' + i);
+    log(refElt);
+    //insertAfter(refElt, eltRowCol);
+  }
+
+  function insertInputRep(i, level) {
+    const eltRowCol = document.createElement('div');
+    eltRowCol.setAttribute('id','rep_' +  i);
+    eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
+    eltRowReps.appendChild(eltRowCol);
+
+    const eltRowColInput = document.createElement('input');
+    eltRowColInput.classList.add('form-control','text-center');
+    eltRowColInput.setAttribute('type','text');
+    eltRowColInput.setAttribute('placeholder',level.reps);
+    eltRowColInput.on('change', (e) => {
+      log(e, 'info');
+      log(e.target.value);
+    });
+    
+    let refElt = byid('rep' + i-1);
+    log(refElt);
+    insertAfter(refElt, eltRowCol);
+  }
+
+  function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  }
+
+  function removeInputRep(i) {
+    let elt = byid('rep_' + i);
+    elt.remove();
   }
 
   // Кнопки
@@ -697,7 +730,7 @@ function addRowReps(parent, element) {
   function btnMinusClick(e) {
     log(e, 'info');
 
-    let el_id_ = arrReps.length-1; // мндекс удаленном элемента
+    let elt_id_ = arrReps.length-1; // мндекс удаленном элемента
     
     arrReps.pop();
     // при удалении поля удалить элемент массива и перестроить html
@@ -723,9 +756,10 @@ function addRowReps(parent, element) {
     log(e, 'info');
     arrReps.push(arrReps.length-1);
 
-    let el_id_ = arrReps.length-1;
+    let elt_id_ = arrReps.length-1;
     // при добавлении поля добавить элемент массива и добавить элемент html
     // нужен массив ссылок на элементы html
+    insertInputRep(elt_id_, level);
   }
 
   function addBtnPlus(parent, cb) {
