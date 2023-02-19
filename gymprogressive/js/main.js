@@ -650,30 +650,19 @@ function addRowReps(parent, element) {
   parent.appendChild(eltRowReps);
 
   // Поля для ввода повторений
-  arrReps.forEach((element, i)=>{
-    addInputRep(i, level);
-    /*
-    const eltRowCol = document.createElement('div');
-    eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
-    eltRowReps.appendChild(eltRowCol);
+  addRowReps(eltRowReps);
 
-    const eltRowColInput = document.createElement('input');
-    eltRowColInput.classList.add('form-control','text-center');
-    eltRowColInput.setAttribute('type','text');
-    eltRowColInput.setAttribute('placeholder',level.reps);
-    eltRowColInput.on('change', (e) => {
-      log(e, 'info');
-      log(e.target.value);
+  function addRowReps(parent){
+    arrReps.forEach((element, i)=>{
+      addInputRep(parent, i, level);
     });
-    eltRowCol.appendChild(eltRowColInput);
-    */
-  });
+  }
 
-  function addInputRep(i, level) {
+  function addInputRep(parent, i, level) {
     const eltRowCol = document.createElement('div');
     eltRowCol.setAttribute('id','rep_' +  i);
-    eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
-    eltRowReps.appendChild(eltRowCol);
+    eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-1');
+    parent.appendChild(eltRowCol);
 
     const eltRowColInput = document.createElement('input');
     eltRowColInput.classList.add('form-control','text-center');
@@ -692,7 +681,7 @@ function addRowReps(parent, element) {
 
     const eltRowCol = document.createElement('div');
     eltRowCol.setAttribute('id','rep_' +  i);
-    eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
+    eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-1');
     eltRef.after(eltRowCol);
 
     const eltRowColInput = document.createElement('input');
