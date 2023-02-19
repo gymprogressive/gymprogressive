@@ -685,16 +685,15 @@ function addRowReps(parent, element) {
     });
     
     eltRowCol.appendChild(eltRowColInput);
-    let refElt = byid('rep' + i);
-    log(refElt);
-    //insertAfter(refElt, eltRowCol);
   }
 
   function insertInputRep(i, level) {
+    let eltRef = byid('rep_' + (i-1));
+
     const eltRowCol = document.createElement('div');
     eltRowCol.setAttribute('id','rep_' +  i);
     eltRowCol.classList.add('mt-1', 'mb-1', 'col-sm-2');
-    eltRowReps.appendChild(eltRowCol);
+    eltRef.after(eltRowCol);
 
     const eltRowColInput = document.createElement('input');
     eltRowColInput.classList.add('form-control','text-center');
@@ -704,14 +703,8 @@ function addRowReps(parent, element) {
       log(e, 'info');
       log(e.target.value);
     });
-    
-    let refElt = byid('rep' + i-1);
-    log(refElt);
-    insertAfter(refElt, eltRowCol);
-  }
 
-  function insertAfter(referenceNode, newNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    eltRowCol.appendChild(eltRowColInput);
   }
 
   function removeInputRep(i) {
@@ -757,6 +750,7 @@ function addRowReps(parent, element) {
     arrReps.push(arrReps.length-1);
 
     let elt_id_ = arrReps.length-1;
+    log('rep_' + elt_id_,'warning');
     // при добавлении поля добавить элемент массива и добавить элемент html
     // нужен массив ссылок на элементы html
     insertInputRep(elt_id_, level);
