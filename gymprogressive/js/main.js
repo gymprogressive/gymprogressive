@@ -27,13 +27,6 @@ let $C = new Object();
  * Элементы управления
  */
 
-/*
-
-    // alias for 
-    const ByTagName = $d.getElementsByTagName;
-
-*/
-
 /**
  * Псевдоним для document.getElementById( s )
  * @param {*} s 
@@ -60,7 +53,7 @@ function byclass(cls) { return document.getElementsByClassName(cls); }
  * @param {*} tag 
  * @returns 
  */
-function baytag(tag) { return document.getElementsByTagName(tag); }
+function bytag(tag) { return document.getElementsByTagName(tag); }
 
 
 // aliases for EventListener
@@ -77,6 +70,200 @@ HTMLElement.prototype.findAll = HTMLElement.prototype.querySelectorAll;
 
 //HTMLElement.prototype.setAttr = HTMLElement.prototype.setAttribute;
 //HTMLElement.prototype.removeAttr = HTMLElement.prototype.removeAttribute;
+
+/**
+ * Modals
+ */
+
+function addModal(parent, params) {
+  const div = document.createElement('div');
+  div.classList.add('modal');
+  div.setAttribute('id', params.id);
+
+  const div_m_dialog = document.createElement('div');
+  div_m_dialog.classList.add('modal-dialog');
+
+  const div_m_content = document.createElement('div');
+  div_m_content.classList.add('modal-content','bg-dark','text-light');
+
+  const div_m_header = document.createElement('div');
+  div_m_header.classList.add('modal-header');
+
+  const h4_title = document.createElement('h4');
+  h4_title.classList.add('modal-title');
+  h4_title.innerHTML = params.title;
+
+  const btn_close = document.createElement('button');
+  btn_close.setAttribute('type', 'button');
+  btn_close.classList.add('btn-close', 'btn-close-white');
+  btn_close.setAttribute('data-bs-dismiss', 'modal');
+  
+  div_m_header.appendChild(h4_title);
+  div_m_header.appendChild(btn_close);
+
+  const div_m_body = document.createElement('div');
+  div_m_body.classList.add('modal-body','bg-light','text-dark');
+
+  const div_m_footer = document.createElement('div');
+  div_m_footer.classList.add('modal-footer');
+
+  div_m_content.appendChild(div_m_header);
+  div_m_content.appendChild(div_m_body);
+  div_m_content.appendChild(div_m_footer);
+
+  div_m_dialog.appendChild(div_m_content);
+  div.appendChild(div_m_dialog);
+  parent.appendChild(div);
+
+  return div_m_body;
+}
+
+function addModProfile() {
+  const modProfile_body = addModal(bytag('body')[0], {
+    'id':'modProfile',
+    'title':'Профиль'
+  });
+
+  const h3 = document.createElement('h3');
+  h3.classList.add('mt-2','mb-0');
+  h3.innerText = 'Учётная запись Google';
+  modProfile_body.appendChild(h3);
+
+  const div_card = document.createElement('div');
+  div_card.classList.add('card','p-3','py-4');
+
+  const div_avatar = document.createElement('div');
+  div_avatar.classList.add('text-center');
+
+  const img_avatar = document.createElement('img');
+  img_avatar.setAttribute('id', 'profile_avatar');
+  img_avatar.setAttribute('src', '');
+  img_avatar.setAttribute('width', 100);
+  img_avatar.classList.add('rounded-circle');
+  
+  div_avatar.appendChild(img_avatar);
+  div_card.appendChild(div_avatar);
+
+  const div_name = document.createElement('div');
+  div_name.classList.add('text-center','mt-3');
+    
+  const h5_name = document.createElement('h5');
+  h5_name.setAttribute('id', 'profile_name');
+  h5_name.classList.add('mt-2','mb-0');
+  h5_name.innerText = '...';
+  div_name.appendChild(h5_name);
+
+  const span = document.createElement('span');
+  div_name.appendChild(span);
+  
+  const div_email = document.createElement('div');
+  div_email.classList.add('px-4','mt-1');
+
+  const br = document.createElement('br');
+  div_email.appendChild(br);
+
+  const p = document.createElement('p');
+  p.setAttribute('id', 'profile_email');
+  p.classList.add('fonts');
+  p.innerText = '...';
+  div_email.appendChild(p);
+
+  div_name.appendChild(div_email);
+
+  div_card.appendChild(div_name);
+
+  modProfile_body.appendChild(div_card);
+
+  const label = document.createElement('label');
+  label.setAttribute('for', 'exampleColorInput');
+  label.classList.add('form-label');
+  label.innerText = 'Color picker';
+  modProfile_body.appendChild(label);
+  
+  const input = document.createElement('input');
+  input.setAttribute('type', 'color');
+  input.classList.add('form-control','form-control-color');
+  input.setAttribute('id', 'exampleColorInput');
+  input.setAttribute('value', '#563d7c');
+  input.setAttribute('title', 'Choose your color');
+  modProfile_body.appendChild(input);
+  /*
+          <h3 class='mt-2 mb-0'>Учётная запись Google</h3>
+          <div class='card p-3 py-4'>
+            
+            <div class='text-center'>
+                <img id='profile_avatar' src='' width='100' class='rounded-circle'>
+            </div>
+
+            <div class='text-center mt-3'>
+                <h5 id='profile_name' class='mt-2 mb-0'>...</h5>
+                <span> </span>
+                <div class='px-4 mt-1'>
+                    <br><p id='profile_email' class='fonts'>...</p>
+                </div>
+            </div>
+          </div>
+
+          <label for='exampleColorInput' class='form-label'>Color picker</label>
+          <input type='color' class='form-control form-control-color' id='exampleColorInput' value="#563d7c" title="Choose your color">    
+  */
+}
+
+addModProfile();
+
+/*
+<!-- Профиль -->
+<div class='modal' id='modProfile'>
+  <div class='modal-dialog'>
+    <div class='modal-content bg-dark text-light'>
+
+      <!-- Заголовок модального окна -->
+      <div class='modal-header'>
+        <h4 class='modal-title'>Профиль</h4>
+        <button type='button' class='btn-close btn-close-white' data-bs-dismiss='modal'></button>
+      </div>
+
+      <!-- Тело модального окна -->
+      <div class='modal-body bg-light text-dark'>
+        <h3 class='mt-2 mb-0'>Учётная запись Google</h3>
+        <div class='card p-3 py-4'>
+          <div class='text-center'>
+              <img id='profile_avatar' src='' width='100' class='rounded-circle'>
+          </div>
+          <div class='text-center mt-3'>
+              <!--<span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>-->
+              <h5 id='profile_name' class='mt-2 mb-0'>...</h5>
+              <span> </span>
+              <div class='px-4 mt-1'>
+                  <br><p id='profile_email' class='fonts'>...</p>
+              </div>
+              <!--<ul class="social-list">
+                  <li><i class="fa fa-facebook"></i></li>
+                  <li><i class="fa fa-dribbble"></i></li>
+                  <li><i class="fa fa-instagram"></i></li>
+                  <li><i class="fa fa-linkedin"></i></li>
+                  <li><i class="fa fa-google"></i></li>
+              </ul>
+              <div class="buttons">
+                  <button class="btn btn-outline-primary px-4">Message</button>
+                  <button class="btn btn-primary px-4 ms-3">Contact</button>
+              </div>-->
+          </div>
+        </div>
+
+        <label for='exampleColorInput' class='form-label'>Color picker</label>
+        <input type='color' class='form-control form-control-color' id='exampleColorInput' value="#563d7c" title="Choose your color">
+      </div>
+
+      <!-- Подвал модального окна -->
+      <div class='modal-footer'>
+        <button type='button' class='btn btn-danger' data-bs-dismiss='modal'>Закрыть</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+*/
 
 $C['btnGetToken'] =byid('_getToken');
 $C['btnRevokeToken'] = byid('_revokeToken');
@@ -99,8 +286,13 @@ $C['contactsTextarea'] = byid('contactsTextarea');
 $C['contactsAlert'] = byid('contactsAlert');
 $C['contactsSubmit'] = byid('contactsSubmit');
 
+
 let modProfile = new bootstrap.Modal($C.profile, {});
 let modSettings = new bootstrap.Modal($C.settings, {});
+
+/**
+ * End Modals
+ */
 
 /**
  * Проверка входа в приложение
@@ -437,9 +629,11 @@ async function listFiles() {
 
 /** ***************************************************
  *  ************************************************
+ *  *********************************************
  * 
  *     песочница для размещения логики приложения
  * 
+ *  *********************************************
  *  ************************************************
  *  ***************************************************/
 
@@ -513,6 +707,12 @@ datepicker.inputField.on('changeDate', (e) => {
   log(e);
 });
 
+/**
+ * 
+ * 
+ * 
+ * 
+ */
 let progressions = programs.list[0].progressions;
 
 let pr_selection = 0;
@@ -572,7 +772,6 @@ function addProgressionSelect(parent, progressions) {
   addExcersiseBtn(eltRow, progressions[pr_selection]);
 
   addRowReps(parent, progressions[pr_selection]);
-
 }
 
 function addExcersiseBtn(parent, element) {
@@ -598,7 +797,6 @@ function addExcersiseBtn(parent, element) {
   eltExcersiseCol.appendChild(eltExcersiseUl);
 
   // Элементы списка
-  
   element.excersises.forEach((element, i) => {
     const eltExcersiseLi = document.createElement('li');
     eltExcersiseUl.appendChild(eltExcersiseLi);
@@ -756,7 +954,6 @@ function addRowReps(parent, element) {
     });
     parent.appendChild(divRowBtnPlus);
   }
-
 }
 
 // Кнопка сохранить
