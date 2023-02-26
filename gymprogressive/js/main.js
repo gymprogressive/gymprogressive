@@ -71,48 +71,109 @@ HTMLElement.prototype.findAll = HTMLElement.prototype.querySelectorAll;
 //HTMLElement.prototype.setAttr = HTMLElement.prototype.setAttribute;
 //HTMLElement.prototype.removeAttr = HTMLElement.prototype.removeAttribute;
 
+// custom functions
+function createElt (type, params, parent) {
+  const elt = document.createElement(type);
+
+  let id_ = _.get(params, 'id');
+  if (id_ != undefined) {
+    elt.setAttribute('id', id_);
+  }
+
+  let type_ = _.get(params, 'type');
+  if (type_ != undefined) {
+    elt.setAttribute('type', type_);
+  }
+
+  let class_ = _.get(params, 'class');
+  if (class_ != undefined) {
+    elt.setAttribute('class', class_);
+  }
+
+  let href_ = _.get(params, 'href');
+  if (href_ != undefined) {
+    elt.setAttribute('href', href_);
+  }
+
+  let classes_ = _.get(params, 'classes');
+  if (classes_ != undefined) {
+    classes_.forEach((item)=>{
+      elt.classList.add(item);
+    });
+  }
+  
+  let attrs_ = _.get(params, 'attrs');
+  if (attrs_ != undefined) {
+    attrs_.forEach((item)=>{
+      elt.setAttribute(item[0], item[1]);;
+    });
+  }
+
+  let inner_ = _.get(params, 'inner');
+  if (inner_ != undefined) {
+    elt.innerHTML = inner_;
+  }
+
+  if (parent != undefined) {
+    parent.appendChild(elt);
+  }
+
+  return elt;
+}
 /**
  * Modals
  */
 
 function addModal(parent, params) {
-  const div = document.createElement('div');
-  div.classList.add('modal');
-  div.setAttribute('id', params.id);
+  const div = createElt('div', {
+    'id': params.id, 
+    'classes':['modal']
+  });
 
-  const div_m_dialog = document.createElement('div');
-  div_m_dialog.classList.add('modal-dialog');
+  const div_m_dialog = createElt('div', {
+    'classes':['modal-dialog']
+  });
 
-  const div_m_content = document.createElement('div');
-  div_m_content.classList.add('modal-content','bg-dark','text-light');
+  const div_m_content = createElt('div', {
+    'classes':['modal-content','bg-dark','text-light']
+  });
 
-  const div_m_header = document.createElement('div');
-  div_m_header.classList.add('modal-header');
+  const div_m_header = createElt('div', {
+    'classes':['modal-header']
+  });
 
-  const h4_title = document.createElement('h4');
-  h4_title.classList.add('modal-title');
-  h4_title.innerHTML = params.title;
+  const h4_title = createElt('h4', {
+    'classes':['modal-title'],
+    'inner':params.title
+  });
 
-  const btn_close = document.createElement('button');
-  btn_close.setAttribute('type', 'button');
-  btn_close.classList.add('btn-close', 'btn-close-white');
-  btn_close.setAttribute('data-bs-dismiss', 'modal');
-  
+  const btn_close = createElt('button',{
+    'classes':['btn-close', 'btn-close-white'],
+    'attrs':[
+      ['type','button'],
+      ['data-bs-dismiss','modal']
+    ]
+  });
+
   div_m_header.appendChild(h4_title);
   div_m_header.appendChild(btn_close);
 
-  const div_m_body = document.createElement('div');
-  div_m_body.classList.add('modal-body','bg-light','text-dark');
+  const div_m_body = createElt('div', {
+    'classes':['modal-body','bg-light','text-dark']
+  });
 
-  const div_m_footer = document.createElement('div');
-  div_m_footer.classList.add('modal-footer');
+  const div_m_footer = createElt('div', {
+    'classes':['modal-footer']
+  });
 
   div_m_content.appendChild(div_m_header);
   div_m_content.appendChild(div_m_body);
   div_m_content.appendChild(div_m_footer);
 
   div_m_dialog.appendChild(div_m_content);
+
   div.appendChild(div_m_dialog);
+
   parent.appendChild(div);
 
   return div_m_body;
@@ -124,89 +185,71 @@ function addModProfile() {
     'title':'Профиль'
   });
 
-  const h3 = document.createElement('h3');
-  h3.classList.add('mt-2','mb-0');
-  h3.innerText = 'Учётная запись Google';
+  const h3 = createElt('h3', {
+    'classes':['mt-2','mb-0'],
+    'inner':'Учётная запись Google'
+  });
   modProfile_body.appendChild(h3);
 
-  const div_card = document.createElement('div');
-  div_card.classList.add('card','p-3','py-4');
+  const div_card = createElt('div', {
+    'classes':['card','p-3','py-4']
+  }, modProfile_body);
 
-  const div_avatar = document.createElement('div');
-  div_avatar.classList.add('text-center');
+  const div_avatar = createElt('div', {
+    'classes':['text-center']
+  });
 
-  const img_avatar = document.createElement('img');
-  img_avatar.setAttribute('id', 'profile_avatar');
-  img_avatar.setAttribute('src', '');
-  img_avatar.setAttribute('width', 100);
-  img_avatar.classList.add('rounded-circle');
+  const img_avatar = createElt('img', {
+    'attrs':[
+      ['id', 'profile_avatar'],
+      ['src', ''],
+      ['width', 100]
+    ],
+    'classes':['rounded-circle']
+  });
   
   div_avatar.appendChild(img_avatar);
   div_card.appendChild(div_avatar);
 
-  const div_name = document.createElement('div');
-  div_name.classList.add('text-center','mt-3');
-    
-  const h5_name = document.createElement('h5');
-  h5_name.setAttribute('id', 'profile_name');
-  h5_name.classList.add('mt-2','mb-0');
-  h5_name.innerText = '...';
-  div_name.appendChild(h5_name);
+  const div_name = createElt('div', {
+    'classes':['text-center','mt-3']
+  }, div_card);
 
-  const span = document.createElement('span');
-  div_name.appendChild(span);
-  
-  const div_email = document.createElement('div');
-  div_email.classList.add('px-4','mt-1');
+  const h5_name = createElt('h5', {
+    'id':'profile_name',
+    'classes':['mt-2','mb-0'],
+    'inner':'...'
+  }, div_name);
 
-  const br = document.createElement('br');
-  div_email.appendChild(br);
+  const span = createElt('span', {}, div_name);
 
-  const p = document.createElement('p');
-  p.setAttribute('id', 'profile_email');
-  p.classList.add('fonts');
-  p.innerText = '...';
-  div_email.appendChild(p);
+  const div_email = createElt('div', {
+    'classes': ['px-4', 'mt-1']
+  }, div_name)
 
-  div_name.appendChild(div_email);
+  const br = createElt('br', {}, div_email);
 
-  div_card.appendChild(div_name);
+  const p = createElt('p', {
+   'id': 'profile_email',
+   'classes': ['fonts'],
+   'inner': '...'
+  }, div_email);
 
-  modProfile_body.appendChild(div_card);
+  const label = createElt('label', {
+    'attrs': [['for', 'exampleColorInput']],
+    'classes': ['form-label'],
+    'inner': 'Color picker'
+  }, modProfile_body);
 
-  const label = document.createElement('label');
-  label.setAttribute('for', 'exampleColorInput');
-  label.classList.add('form-label');
-  label.innerText = 'Color picker';
-  modProfile_body.appendChild(label);
-  
-  const input = document.createElement('input');
-  input.setAttribute('type', 'color');
-  input.classList.add('form-control','form-control-color');
-  input.setAttribute('id', 'exampleColorInput');
-  input.setAttribute('value', '#563d7c');
-  input.setAttribute('title', 'Choose your color');
-  modProfile_body.appendChild(input);
-  /*
-          <h3 class='mt-2 mb-0'>Учётная запись Google</h3>
-          <div class='card p-3 py-4'>
-            
-            <div class='text-center'>
-                <img id='profile_avatar' src='' width='100' class='rounded-circle'>
-            </div>
-
-            <div class='text-center mt-3'>
-                <h5 id='profile_name' class='mt-2 mb-0'>...</h5>
-                <span> </span>
-                <div class='px-4 mt-1'>
-                    <br><p id='profile_email' class='fonts'>...</p>
-                </div>
-            </div>
-          </div>
-
-          <label for='exampleColorInput' class='form-label'>Color picker</label>
-          <input type='color' class='form-control form-control-color' id='exampleColorInput' value="#563d7c" title="Choose your color">    
-  */
+  const input = createElt('input', {
+    'id': 'exampleColorInput',
+    'type': 'color',
+    'classes': ['form-control','form-control-color'],
+    'attrs': [
+      ['value', '#563d7c'],
+      ['title', 'Choose your color']
+    ]
+  }, modProfile_body);
 }
 
 addModProfile();
@@ -225,6 +268,7 @@ addModProfile();
 
       <!-- Тело модального окна -->
       <div class='modal-body bg-light text-dark'>
+
         <h3 class='mt-2 mb-0'>Учётная запись Google</h3>
         <div class='card p-3 py-4'>
           <div class='text-center'>
@@ -253,6 +297,7 @@ addModProfile();
 
         <label for='exampleColorInput' class='form-label'>Color picker</label>
         <input type='color' class='form-control form-control-color' id='exampleColorInput' value="#563d7c" title="Choose your color">
+      
       </div>
 
       <!-- Подвал модального окна -->
@@ -264,6 +309,411 @@ addModProfile();
   </div>
 </div>
 */
+
+function addModSettings() {
+  const modSettings_body = addModal(bytag('body')[0], {
+    'id':'modSettings',
+    'title':'Настройки'
+  });
+
+  const ul_nav_tabs = createElt('ul', {
+    'classes':['nav','nav-tabs']
+  },modSettings_body);
+
+  const li_basics = createElt('li', {
+    'classes':['nav-item']
+  }, ul_nav_tabs);
+
+  const a_basics = createElt('a', {
+    'classes': ['nav-link', 'text-dark', 'active'],
+    'href': '#basics',
+    'attrs': [['data-bs-toggle','tab']],
+    'inner': 'Основные'
+  }, li_basics);
+
+  const li_notifications = createElt('li', {
+    'classes':['nav-item']
+  }, ul_nav_tabs);
+
+  const a_notifications = createElt('a', {
+    'classes': ['nav-link', 'text-dark'],
+    'href': '#notifications',
+    'attrs': [['data-bs-toggle','tab']],
+    'inner': 'Уведомления'
+  }, li_notifications);
+
+  const li_tasks = createElt('li', {
+    'classes':['nav-item']
+  }, ul_nav_tabs);
+
+  const a_tasks = createElt('a', {
+    'classes': ['nav-link', 'text-dark'],
+    'href': '#tasks',
+    'attrs': [['data-bs-toggle','tab']],
+    'inner': 'Задачи'
+  }, li_tasks);
+
+  // Страницы
+  const div_tab_content = createElt('div', {
+    'classes': ['tab-content']
+  },modSettings_body);
+
+  // Основные
+  const div_tab_pane_basics = createElt('div', {
+    'id':'basics',
+    'classes': ['tab-pane', 'container', 'active']
+  }, div_tab_content);
+
+  const h5_notifications = createElt('h5', {
+    'classes': ['mb-0', 'mt-5'],
+    'inner': 'Notifications Settings'
+  }, div_tab_pane_basics);
+
+  const p_1 = createElt('p', {
+    'inner': 'Select notification you want to receive'
+  }, div_tab_pane_basics);
+  /*
+            <h5 class="mb-0 mt-5">Notifications Settings</h5>
+            <p>Select notification you want to receive</p>
+            
+            <hr class="my-4" />
+            <strong class="mb-0">Security</strong>
+            <p>Control security alert you will be notified.</p>
+            <div class="list-group mb-5 shadow">
+              <div class="list-group-item">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <strong class="mb-0">Unusual activity notifications</strong>
+                    <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="check1" checked>
+                      <label class="form-check-label" for="check1"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group-item">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <strong class="mb-0">Unauthorized financial activity</strong>
+                    <p class="text-muted mb-0">Fusce lacinia elementum eros, sed vulputate urna eleifend nec.</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="check2">
+                      <label class="form-check-label" for="check2"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <strong class="mb-0">System</strong>
+            <p>Please enable system alert you will get.</p>
+            <div class="list-group mb-5 shadow">
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me about new features and updates</strong>
+                          <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check3" checked>
+                          <label class="form-check-label" for="check3"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me by email for latest news</strong>
+                          <p class="text-muted mb-0">Nulla et tincidunt sapien. Sed eleifend volutpat elementum.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check4" checked>
+                          <label class="form-check-label" for="check4"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me about tips on using account</strong>
+                          <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check5">
+                          <label class="form-check-label" for="check5"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+  */
+  // Уведомления
+  const div_tab_pane_notifications = createElt('div', {
+    'id':'notifications',
+    'classes': ['tab-pane', 'container', 'fade']
+  }, div_tab_content);
+
+  const p_tab_pane_notifications = createElt('p', {
+    'inner': '2'
+  }, div_tab_pane_notifications); 
+
+  // Задачи
+  const div_tab_pane_tasks = createElt('div', {
+    'id':'tasks',
+    'classes': ['tab-pane', 'container', 'fade']
+  }, div_tab_content);
+
+  const p_tab_pane_tasks = createElt('p', {
+    'inner': '3'
+  }, div_tab_pane_tasks); 
+  /*
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+          <div class="tab-pane container active" id="basics">
+
+            <h5 class="mb-0 mt-5">Notifications Settings</h5>
+            <p>Select notification you want to receive</p>
+            <hr class="my-4" />
+            <strong class="mb-0">Security</strong>
+            <p>Control security alert you will be notified.</p>
+            <div class="list-group mb-5 shadow">
+              <div class="list-group-item">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <strong class="mb-0">Unusual activity notifications</strong>
+                    <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="check1" checked>
+                      <label class="form-check-label" for="check1"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group-item">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <strong class="mb-0">Unauthorized financial activity</strong>
+                    <p class="text-muted mb-0">Fusce lacinia elementum eros, sed vulputate urna eleifend nec.</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="check2">
+                      <label class="form-check-label" for="check2"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <strong class="mb-0">System</strong>
+            <p>Please enable system alert you will get.</p>
+            <div class="list-group mb-5 shadow">
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me about new features and updates</strong>
+                          <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check3" checked>
+                          <label class="form-check-label" for="check3"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me by email for latest news</strong>
+                          <p class="text-muted mb-0">Nulla et tincidunt sapien. Sed eleifend volutpat elementum.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check4" checked>
+                          <label class="form-check-label" for="check4"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me about tips on using account</strong>
+                          <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check5">
+                          <label class="form-check-label" for="check5"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="tab-pane container fade" id="notifications">
+            <p>2</p>
+          </div>
+
+          <div class="tab-pane container fade" id="tasks">
+            <p>3</p>
+          </div>
+
+        </div>
+  */
+}
+
+addModSettings();
+/*
+<!-- Настройки -->
+<div class="modal" id="modSettings">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bg-dark text-light">
+
+      <!-- Заголовок модального окна -->
+      <div class="modal-header">
+        <h4 class="modal-title">Настройки</h4>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Тело модального окна -->
+      <div class="modal-body bg-light text-dark">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link text-dark active" data-bs-toggle="tab" href="#basics">Основные</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" data-bs-toggle="tab" href="#notifications">Уведомления</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" data-bs-toggle="tab" href="#tasks">Задачи</a>
+          </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane container active" id="basics">
+            <h5 class="mb-0 mt-5">Notifications Settings</h5>
+            <p>Select notification you want to receive</p>
+            <hr class="my-4" />
+            <strong class="mb-0">Security</strong>
+            <p>Control security alert you will be notified.</p>
+            <div class="list-group mb-5 shadow">
+              <div class="list-group-item">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <strong class="mb-0">Unusual activity notifications</strong>
+                    <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="check1" checked>
+                      <label class="form-check-label" for="check1"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group-item">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <strong class="mb-0">Unauthorized financial activity</strong>
+                    <p class="text-muted mb-0">Fusce lacinia elementum eros, sed vulputate urna eleifend nec.</p>
+                  </div>
+                  <div class="col-auto">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="check2">
+                      <label class="form-check-label" for="check2"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <strong class="mb-0">System</strong>
+            <p>Please enable system alert you will get.</p>
+            <div class="list-group mb-5 shadow">
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me about new features and updates</strong>
+                          <p class="text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check3" checked>
+                          <label class="form-check-label" for="check3"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me by email for latest news</strong>
+                          <p class="text-muted mb-0">Nulla et tincidunt sapien. Sed eleifend volutpat elementum.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check4" checked>
+                          <label class="form-check-label" for="check4"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="list-group-item">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <strong class="mb-0">Notify me about tips on using account</strong>
+                          <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
+                      </div>
+                      <div class="col-auto">
+                        <div class="form-check form-switch">
+                          <input class="form-check-input" type="checkbox" id="check5">
+                          <label class="form-check-label" for="check5"></label>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane container fade" id="notifications">
+            <p>2</p>
+          </div>
+          <div class="tab-pane container fade" id="tasks">
+            <p>3</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Подвал модального окна -->
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+*/
+
 
 $C['btnGetToken'] =byid('_getToken');
 $C['btnRevokeToken'] = byid('_revokeToken');
