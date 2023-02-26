@@ -389,19 +389,40 @@ function addModSettings() {
     'classes': ['row', 'align-items-center']
   }, div_list_group_1_item_1);
 
-  const div_list_group_1_item_1_col_1 = createElt('div', {
+  const div_list_group_1_item_1_col = createElt('div', {
     'class': 'col'
   }, div_list_group_1_item_1_row);
 
-  const div_list_group_1_item_1_col_1_strong = createElt('strong', {
+  const div_list_group_1_item_1_col_strong = createElt('strong', {
     'class': 'mb-0',
     'inner': 'Unusual activity notifications'
-  }, div_list_group_1_item_1_col_1);
+  }, div_list_group_1_item_1_col);
 
-  const div_list_group_1_item_1_col_1_p = createElt('p', {
+  const div_list_group_1_item_1_col_p = createElt('p', {
     'classes': ['text-muted', 'mb-0'],
     'inner': 'Donec in quam sed urna bibendum tincidunt quis mollis mauris.'
-  }, div_list_group_1_item_1_col_1);  
+  }, div_list_group_1_item_1_col);
+
+  const div_list_group_1_item_1_col_auto = createElt('div', {
+    'class': 'col-auto'
+  }, div_list_group_1_item_1_row);
+
+  const div_list_group_1_item_1_col_auto_form = createElt('div', {
+    'classes': ['form-check', 'form-switch']
+  }, div_list_group_1_item_1_col_auto);
+
+  const div_list_group_1_item_1_col_auto_form_input = createElt('input', {
+    'class': 'form-check-input',
+    'type': 'checkbox',
+    'id': 'check1',
+    'attrs': [['checked', 'checked']]
+  }, div_list_group_1_item_1_col_auto_form);
+
+  const div_list_group_1_item_1_col_auto_form_label = createElt('label', {
+    'class': 'fform-check-label',
+    'id': 'check1',
+    'attrs': [['for','check1'],['checked', 'checked']]
+  }, div_list_group_1_item_1_col_auto_form);  
   /*
             <h5 class="mb-0 mt-5">Notifications Settings</h5>
             <p>Select notification you want to receive</p>
@@ -416,7 +437,6 @@ function addModSettings() {
                     <strong class="mb-0">Unusual activity notifications</strong>
                     <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
                   </div>
-
                   <div class="col-auto">
                     <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="check1" checked>
@@ -424,7 +444,6 @@ function addModSettings() {
                     </div>
                   </div>
                 </div>
-
               </div>
 
               <div class="list-group-item">
