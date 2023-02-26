@@ -429,8 +429,8 @@ function addModSettings() {
             <hr class="my-4" />
             <strong class="mb-0">Security</strong>
             <p>Control security alert you will be notified.</p>
-
             <div class="list-group mb-5 shadow">
+
               <div class="list-group-item">
                 <div class="row align-items-center">
                   <div class="col">
