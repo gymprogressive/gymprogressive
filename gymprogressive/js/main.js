@@ -128,24 +128,24 @@ function addModal(parent, params) {
   const div = createElt('div', {
     'id': params.id, 
     'classes':['modal']
-  });
+  }, parent);
 
   const div_m_dialog = createElt('div', {
     'classes':['modal-dialog']
-  });
+  }, div);
 
   const div_m_content = createElt('div', {
     'classes':['modal-content','bg-dark','text-light']
-  });
+  }, div_m_dialog);
 
   const div_m_header = createElt('div', {
     'classes':['modal-header']
-  });
+  }, div_m_content);
 
   const h4_title = createElt('h4', {
     'classes':['modal-title'],
     'inner':params.title
-  });
+  }, div_m_header);
 
   const btn_close = createElt('button',{
     'classes':['btn-close', 'btn-close-white'],
@@ -153,28 +153,22 @@ function addModal(parent, params) {
       ['type','button'],
       ['data-bs-dismiss','modal']
     ]
-  });
-
-  div_m_header.appendChild(h4_title);
-  div_m_header.appendChild(btn_close);
+  }, div_m_header);
 
   const div_m_body = createElt('div', {
     'classes':['modal-body','bg-light','text-dark']
-  });
+  }, div_m_content);
 
   const div_m_footer = createElt('div', {
     'classes':['modal-footer']
-  });
+  }, div_m_content);
 
-  div_m_content.appendChild(div_m_header);
-  div_m_content.appendChild(div_m_body);
-  div_m_content.appendChild(div_m_footer);
-
-  div_m_dialog.appendChild(div_m_content);
-
-  div.appendChild(div_m_dialog);
-
-  parent.appendChild(div);
+  const btn_footer_close =  createElt('button', {
+    'type': 'button',
+    'classes': ['btn', 'btn-danger'],
+    'attrs': [['data-bs-dismiss', 'modal']],
+    'inner': 'Закрыть'
+  }, div_m_footer);
 
   return div_m_body;
 }
@@ -197,7 +191,7 @@ function addModProfile() {
 
   const div_avatar = createElt('div', {
     'classes':['text-center']
-  });
+  }, div_card);
 
   const img_avatar = createElt('img', {
     'attrs':[
@@ -206,11 +200,8 @@ function addModProfile() {
       ['width', 100]
     ],
     'classes':['rounded-circle']
-  });
+  }, div_avatar);
   
-  div_avatar.appendChild(img_avatar);
-  div_card.appendChild(div_avatar);
-
   const div_name = createElt('div', {
     'classes':['text-center','mt-3']
   }, div_card);
@@ -372,15 +363,37 @@ function addModSettings() {
   const p_1 = createElt('p', {
     'inner': 'Select notification you want to receive'
   }, div_tab_pane_basics);
+
+  const hr_1 = createElt('hr', {
+    'class': 'my-4'
+  }, div_tab_pane_basics);
+
+  const strong_1 = createElt('strong', {
+    'class': 'mb-0',
+    'inner': 'Security'
+  }, div_tab_pane_basics);
+
+  const p_2 = createElt('p', {
+    'inner': 'Control security alert you will be notified.'
+  }, div_tab_pane_basics);
+
+  const div_list_group_1 = createElt('div', {
+    'classes': ['list-group', 'mb-5', 'shadow']
+  }, div_tab_pane_basics);
+
+  const div_list_group_1_item_1 = createElt('div', {
+    'class': 'list-group-item'
+  }, div_list_group_1);
   /*
             <h5 class="mb-0 mt-5">Notifications Settings</h5>
             <p>Select notification you want to receive</p>
-            
             <hr class="my-4" />
             <strong class="mb-0">Security</strong>
             <p>Control security alert you will be notified.</p>
+
             <div class="list-group mb-5 shadow">
               <div class="list-group-item">
+
                 <div class="row align-items-center">
                   <div class="col">
                     <strong class="mb-0">Unusual activity notifications</strong>
@@ -394,6 +407,7 @@ function addModSettings() {
                   </div>
                 </div>
               </div>
+
               <div class="list-group-item">
                 <div class="row align-items-center">
                   <div class="col">
@@ -409,6 +423,7 @@ function addModSettings() {
                 </div>
               </div>
             </div>
+
             <hr class="my-4" />
             <strong class="mb-0">System</strong>
             <p>Please enable system alert you will get.</p>
