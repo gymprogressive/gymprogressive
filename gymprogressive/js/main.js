@@ -388,6 +388,20 @@ function addModSettings() {
   const div_list_group_1_item_1_row = createElt('div', {
     'classes': ['row', 'align-items-center']
   }, div_list_group_1_item_1);
+
+  const div_list_group_1_item_1_col_1 = createElt('div', {
+    'class': 'col'
+  }, div_list_group_1_item_1_row);
+
+  const div_list_group_1_item_1_col_1_strong = createElt('strong', {
+    'class': 'mb-0',
+    'inner': 'Unusual activity notifications'
+  }, div_list_group_1_item_1_col_1);
+
+  const div_list_group_1_item_1_col_1_p = createElt('p', {
+    'classes': ['text-muted', 'mb-0'],
+    'inner': 'Donec in quam sed urna bibendum tincidunt quis mollis mauris.'
+  }, div_list_group_1_item_1_col_1);  
   /*
             <h5 class="mb-0 mt-5">Notifications Settings</h5>
             <p>Select notification you want to receive</p>
@@ -397,12 +411,12 @@ function addModSettings() {
 
             <div class="list-group mb-5 shadow">
               <div class="list-group-item">
-
                 <div class="row align-items-center">
                   <div class="col">
                     <strong class="mb-0">Unusual activity notifications</strong>
                     <p class="text-muted mb-0">Donec in quam sed urna bibendum tincidunt quis mollis mauris.</p>
                   </div>
+
                   <div class="col-auto">
                     <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="check1" checked>
