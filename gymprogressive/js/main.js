@@ -384,6 +384,10 @@ function addModSettings() {
   const div_list_group_1_item_1 = createElt('div', {
     'class': 'list-group-item'
   }, div_list_group_1);
+
+  const div_list_group_1_item_1_row = createElt('div', {
+    'classes': ['row', 'align-items-center']
+  }, div_list_group_1_item_1);
   /*
             <h5 class="mb-0 mt-5">Notifications Settings</h5>
             <p>Select notification you want to receive</p>
@@ -406,6 +410,7 @@ function addModSettings() {
                     </div>
                   </div>
                 </div>
+
               </div>
 
               <div class="list-group-item">
